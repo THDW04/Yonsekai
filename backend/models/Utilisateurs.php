@@ -32,5 +32,11 @@ class Utilisateurs
 
         return $query->fetch(PDO::FETCH_ASSOC);
     }
+
+    //Récuperer tous les utilisateurs
+    public function getAll() {
+        $query = $this->db->query("SELECT * FROM utilisateurs");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

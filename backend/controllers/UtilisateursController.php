@@ -12,6 +12,12 @@ class UtilisateursController
         $this->userModel = new Utilisateurs($db);
     }
 
+    //Liste des utilisateurs
+    public function getAll() {
+        $users = $this->userModel->getAll();
+        echo json_encode($users);
+    }
+
     //Inscription
     public function register($data)
     {

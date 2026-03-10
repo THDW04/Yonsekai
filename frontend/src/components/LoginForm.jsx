@@ -13,7 +13,7 @@ export const LoginForm = () => {
             password: password
         };
 
-        fetch('http://localhost/yonsekai/backend/api/apiController.php?action=login', {
+        fetch('http://localhost/yonsekai/backend/api/index.php?action=login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

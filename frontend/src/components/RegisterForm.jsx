@@ -17,7 +17,7 @@ export const RegisterForm = () => {
         };
 
         //url provisoire
-        fetch('http://localhost/yonsekai/backend/api/apiController.php?action=register', {
+        fetch('http://localhost/yonsekai/backend/api/index.php?action=register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
