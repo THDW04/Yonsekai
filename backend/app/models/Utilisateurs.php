@@ -12,19 +12,22 @@ class Utilisateurs
     //Créer un utilisateur
     public function createUser($name, $firstName, $mail, $password)
     {
-        $query = $this->db->prepare("INSERT INTO utilisateurs(nom, prenom, mail, mot_de_passe) VALUES (:nom, :prenom, :mail, :mot_de_passe)");
-        $query->execute([
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+        $query = $this->db->prepare("INSERT INTO utilisateurs(role, nom, prenom, mail, mot_de_passe) VALUES (:role, :nom, :prenom, :mail, :mot_de_passe)");
+        return $query->execute([
+            "role" => 'client',
             ":nom" => $name,
             ":prenom" => $firstName,
             ":mail" => $mail,
-            ":mot_de_passe" => $password
+            ":mot_de_passe" => $hashedPassword
         ]);
     }
 
-    //Trouve un utilisateur par son email
+    //Trouve un utilisateur par son mail
     public function findByMail($mail)
     {
-        $query = $this->db->prepare("SELECT * FROM utilisateurs WHERE email = :email");
+        $query = $this->db->prepare("SELECT * FROM utilisateurs WHERE mail = :mail");
         $query->execute([':mail' => $mail]);
 
         return $query->fetch(PDO::FETCH_ASSOC);
