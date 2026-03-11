@@ -1,10 +1,17 @@
-import { useState} from 'react';
+import { useState } from 'react';
 
 export const RegisterForm = () => {
+    //Récupère les valeurs des champs
     const [name, setName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
+
+    //Affiche le mdp en clair
+    const [showPassword, setShowPassword] = useState(false);
+
+    //Feedback form
+    const [message, setMessage] = useState(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -26,11 +33,13 @@ export const RegisterForm = () => {
             body: JSON.stringify(userData),
         })
             .then(response => {
-                if (!response.ok) throw new Error('Erreur serveur');
                 return response.json();
             })
             .then(data => {
-                console.log('Succès:', data);
+                if (!data.success) {
+                    setMessage(data.message);
+                    return;
+                }
             })
             .catch(err => {
                 console.error('Erreur de connexion:', err);
@@ -40,6 +49,7 @@ export const RegisterForm = () => {
 
     return (
         <form onSubmit={handleSubmit}>
+            <p>{message}</p>
             <div>
                 <label htmlFor="name">Nom</label> <br />
                 <input type="text" name="name" id="name" value={name} onChange={e => setName(e.target.value)} required />
@@ -54,7 +64,12 @@ export const RegisterForm = () => {
             </div>
             <div>
                 <label htmlFor="password">Choississez un mot de passe</label><br />
-                <input type="password" name="password" id="password" value={password} onChange={e => setPassword(e.target.value)} required />
+                <input
+                    type={showPassword ? "text" : "password"}
+                    name="password" id="password" value={password} onChange={e => setPassword(e.target.value)} required />
+                <button type="button" onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? "Cacher" : "Afficher"}
+                </button>
             </div>
             <input type="submit" value="S'inscrire" />
         </form>

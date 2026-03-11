@@ -2,9 +2,17 @@ import { useState } from 'react';
 
 export const LoginForm = () => {
 
+    //Récupère les valeurs des champs
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
 
+    //Affiche le mdp en clair
+    const [showPassword, setShowPassword] = useState(false);
+
+    //Erreur dans le formulaire
+    const [error, setError] = useState(null);
+
+    //Fetch de connexion
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -21,20 +29,25 @@ export const LoginForm = () => {
             },
             body: JSON.stringify(userDataLogin),
         })
-        .then(response => {
-            if (!response.ok) throw new Error('Erreur serveur');
-            return response.json();
-        })
-        .then(data => {
-            console.log('Succès:', data);
-        })
-        .catch(err => {
-            console.error('Erreur de connexion:', err);
-        });
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                if (!data.success) {
+                    setError(data.message);
+                    return;
+                }
+                localStorage.setItem('userToken', data.token);
+                window.location.href = "/profil";
+            })
+            .catch(err => {
+                console.error('Erreur de connexion:', err);
+            });
     };
 
     return (
         <form onSubmit={handleSubmit} method='POST'>
+            <p>{error}</p>
             <div>
                 <label htmlFor="mail">Mail</label><br />
                 <input
@@ -49,12 +62,15 @@ export const LoginForm = () => {
             <div>
                 <label htmlFor="password">Mot de passe</label><br />
                 <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     id="password"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     required
                 />
+                <button type="button" onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? "Cacher" : "Afficher"}
+                </button>
             </div>
 
             <button type="submit">Se connecter</button>
