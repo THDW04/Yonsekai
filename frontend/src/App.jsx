@@ -3,6 +3,8 @@ import { Home } from './pages/Home';
 import { Register } from './pages/Register';
 import { Login } from './pages/Login';
 
+import { Admin } from './pages/Admin';
+
 function App() {
 
   return (
@@ -13,6 +15,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/inscription" element={<Register />} />
             <Route path="/connexion" element={<Login />} />
+             <Route path="/admin" element={<Admin />} />
+
           </Routes>
         </BrowserRouter>
       </main>
