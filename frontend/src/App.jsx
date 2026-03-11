@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Register } from './pages/Register';
 import { Login } from './pages/Login';
-import { Profil } from './pages/Profil';
+import { Profile } from './pages/Profile';
 
 function App() {
 
@@ -14,7 +14,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/inscription" element={<Register />} />
             <Route path="/connexion" element={<Login />} />
-            <Route path="/profil" element={<Profil />} />
+            <Route path="/profil" element={<Profile />} />
           </Routes>
         </BrowserRouter>
       </main>
