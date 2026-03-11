@@ -11,13 +11,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once '../config/database.php';
 require_once '../controllers/UtilisateursController.php';
-//require_once '../controllers/ReservationController.php'; //Controleur pour les réservation
+//require_once '../controllers/ReservationController.php';
+require_once '../vendor/autoload.php';
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\KEY;
 
 $db = PDOFactory::getMysqlConnexion();
 
 $action = $_GET['action'] ?? null;
 $method = $_SERVER['REQUEST_METHOD'];
 $input = json_decode(file_get_contents("php://input"), true);
+
+//Vérifie la validité du token
+function verifyToken()
+{
+
+    $headers = getallheaders();
+
+    if (!isset($headers['Authorization'])) {
+        http_response_code(401);
+        echo json_encode(["error" => "Token manquant"]);
+        exit;
+    }
+
+    $key = "une_cle_tres_longue_et_securisee_pour_ma_sae_2026_yonsekai_equipe_dev";
+
+    $token = str_replace("Bearer ", "", $headers['Authorization']);
+
+    try {
+
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+        $userId = $decoded->user_id;
+        return $userId;
+
+    } catch (Exception $e) {
+
+        http_response_code(401);
+        echo json_encode(["error" => "Token invalide"]);
+        exit;
+
+    }
+}
 
 switch ($action) {
     case 'login':
@@ -41,17 +76,24 @@ switch ($action) {
         $controller = new UtilisateursController($db);
         $controller->register($input);
         break;
-        
-    case 'utilisateurs':
-        $users = new UtilisateursController($db);
 
-        if ($method === 'GET') {
-            $users->getAll();
-        }
+    case 'users':
+        verifyToken();
+        $users = new UtilisateursController($db);
+        $users->getAll();
+        break;
+
+    case 'user':
+        $id = verifyToken();
+        $user = new UtilisateursController($db);
+        $user->getProfileWithReservations($id);
         break;
 
     case 'reservations':
         //code pour la réservation (Haya)
+        //verifyToken();
+        //$reservations = new UtilisateursController($db);
+        //$reservations->getAllReservation();
         break;
 
     default:
