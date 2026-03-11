@@ -32,5 +32,21 @@ class Utilisateurs
 
         return $query->fetch(PDO::FETCH_ASSOC);
     }
+
+
+     //Afficher les utilisateurs
+    public function getAllUser()
+    {
+        $query = $this->db->prepare("SELECT * FROM utilisateurs");
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
+
+    //Supprimer un utilisateur
+    public function deleteUser()
+    {
+        $query = $this->db->prepare("DELETE * FROM utilisateurs WHERE :id_user = $id_user");
+        $query->execute([':id_user' => $id_user]);
+    }
+
 }
 ?>
