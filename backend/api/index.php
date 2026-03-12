@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once '../config/database.php';
 require_once '../controllers/UtilisateursController.php';
-//require_once '../controllers/ReservationController.php';
+require_once '../controllers/ReservationController.php';
 require_once '../vendor/autoload.php';
 
 use Firebase\JWT\JWT;
@@ -42,8 +42,10 @@ function verifyToken()
     try {
 
         $decoded = JWT::decode($token, new Key($key, 'HS256'));
-        $userId = $decoded->user_id;
-        return $userId;
+        return [
+            "id" => $decoded->user_id,
+            "role" => $decoded->role
+        ];
 
     } catch (Exception $e) {
 
@@ -52,6 +54,21 @@ function verifyToken()
         exit;
 
     }
+}
+
+//Vérifie si l'utilisateur est admin
+function requireAdmin()
+{
+
+    $user = verifyToken();
+
+    if ($user["role"] !== "admin") {
+        http_response_code(403);
+        echo json_encode(["error" => "Accès réservé aux administrateurs"]);
+        exit;
+    }
+
+    return $user;
 }
 
 switch ($action) {
@@ -84,9 +101,9 @@ switch ($action) {
         break;
 
     case 'user':
-        $id = verifyToken();
+        $idUser = verifyToken();
         $user = new UtilisateursController($db);
-        $user->getProfileWithReservations($id);
+        $user->getProfileWithReservations($idUser['id']);
         break;
 
     case 'reservations':
@@ -94,6 +111,14 @@ switch ($action) {
         //verifyToken();
         //$reservations = new UtilisateursController($db);
         //$reservations->getAllReservation();
+        break;
+
+    case 'dashboard-stats':
+        //requireAdmin();
+        $controller = new ReservationController($db);
+        $debut = $_GET['debut'] ?? date('Y-m-d', strtotime('-7 days'));
+        $fin = $_GET['fin'] ?? date('Y-m-d');
+        $controller->getDashboardStats($debut, $fin);
         break;
 
     default:

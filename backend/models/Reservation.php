@@ -21,7 +21,7 @@ class Reservation
     }
 
     //Graphique : fréquentation par créneau horaire sur une semaine ou autre
-    public function StatsByHour($debut, $fin)
+    public function getStatsByHour($debut, $fin)
     {
         $query = "SELECT horaire, SUM(quantite) AS total FROM reservation
                 JOIN reservation_type ON reservation.id = reservation_type.fk_reservation
@@ -35,7 +35,7 @@ class Reservation
     }
 
     //Graphique : fréquentation par jour de la semaine
-    public function StatsByDay($debut, $fin)
+    public function getStatsByDay($debut, $fin)
     {
         $query = "SELECT DAYNAME(reservation.date) AS jour, SUM(quantite) AS total
                 FROM reservation
@@ -50,7 +50,7 @@ class Reservation
     }
 
     //Graphique : répartition par type de billet
-    public function StatsByTicketType($debut, $fin)
+    public function getStatsByTicketType($debut, $fin)
     {
         $query = "SELECT type_billet.nom, SUM(reservation_type.quantite) AS total
               FROM reservation

@@ -97,6 +97,7 @@ class UtilisateursController
 
             $payload = [
                 "user_id" => $user["id"],
+                "role" => $user["role"],
                 "exp" => time() + 3600
             ];
 
