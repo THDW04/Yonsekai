@@ -7,7 +7,8 @@ export const Home = () =>{
         <p>Vous êtes sur la page d'accueil</p>
         <Link to="/inscription">S'inscrire</Link> <br />
         <Link to="/connexion">Se connecter</Link> <br />
-        <Link to="/profil">Accéder à mon profil</Link>
+        <Link to="/profil">Accéder à mon profil</Link> <br />
+        <Link to="/administration">Accéder à l'administration</Link>
       </div>
     </section>
     )
