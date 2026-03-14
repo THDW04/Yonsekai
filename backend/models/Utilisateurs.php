@@ -49,5 +49,34 @@ class Utilisateurs
         $query->execute();
         return $query->fetch(PDO::FETCH_ASSOC);
     }
+
+    //Supprimer un utilisateur
+    public function deleteFullAccount($userId)
+    {
+        try {
+            $this->db->beginTransaction();
+
+            $queries = [
+                "DELETE FROM reservation_type 
+             WHERE fk_reservation IN (
+                 SELECT id FROM reservation WHERE fk_utilisateur = :id
+             )",
+                "DELETE FROM reservation WHERE fk_utilisateur = :id",
+                "DELETE FROM utilisateurs WHERE id = :id"
+            ];
+
+            foreach ($queries as $sql) {
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute(['id' => $userId]);
+            }
+
+            $this->db->commit();
+            return true;
+
+        } catch (Exception $e) {
+            $this->db->rollBack();
+            throw $e;
+        }
+    }
 }
 ?>

@@ -7,7 +7,7 @@ export const Admin = () => {
         const token = localStorage.getItem("userToken");
 
         if (!token) {
-            window.location.href = "/connexion";
+            window.location.href = "/";
             return;
         }
 
@@ -18,7 +18,7 @@ export const Admin = () => {
             }
         } catch (error) {
             console.error("Token invalide");
-            window.location.href = "/connexion";
+            window.location.href = "/";
         }
     }, []);
 

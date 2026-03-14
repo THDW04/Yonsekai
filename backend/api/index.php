@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -112,6 +112,19 @@ switch ($action) {
         //$reservations->getAllReservation();
         break;
 
+    case 'delete-account':
+        if ($method !== 'DELETE') {
+            http_response_code(405);
+            echo json_encode(["error" => "Méthode non autorisée. Utilisez DELETE."]);
+            exit;
+        }
+
+        $idUser = verifyToken(); 
+
+        $controller = new UtilisateursController($db);
+        $controller->deleteUser($idUser['id']);
+        break;
+
     case 'dashboard-stats':
         requireAdmin();
         $controller = new ReservationController($db);
@@ -124,4 +137,3 @@ switch ($action) {
         http_response_code(404);
         echo json_encode(["error" => "Route not found"]);
 }
-?>

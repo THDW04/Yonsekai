@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ProfileInformation } from "../components/ProfileInformation";
 import { ProfileReservations } from "../components/ProfileReservations";
 import { LogoutBtn } from "../components/LogoutBtn";
+import DeleteAccount from "../components/DeleteAccount";
 
 export const Profile = () => {
 
@@ -67,6 +68,7 @@ export const Profile = () => {
       <ProfileReservations reservations={reservations} />
 
       <LogoutBtn />
+      <DeleteAccount />
     </section>
   );
 };

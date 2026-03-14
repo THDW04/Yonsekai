@@ -118,4 +118,31 @@ class UtilisateursController
             ]);
         }
     }
+
+    //Suppression du compte
+    public function deleteUser($id)
+    {
+        try {
+            $result = $this->userModel->deleteFullAccount($id);
+
+            if ($result) {
+                http_response_code(200);
+                echo json_encode([
+                    "message" => "Utilisateur supprimé"
+                ]);
+            } else {
+                http_response_code(400);
+                echo json_encode([
+                    "message" => "Suppression impossible"
+                ]);
+            }
+
+        } catch (Exception $e) {
+
+            http_response_code(500);
+            echo json_encode([
+                "error" => $e->getMessage()
+            ]);
+        }
+    }
 }
