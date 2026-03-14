@@ -38,6 +38,7 @@ export const LoginForm = () => {
                     return;
                 }
                 localStorage.setItem('userToken', data.token);
+                localStorage.setItem("user", JSON.stringify(data.user));
                 window.location.href = "/profil";
             })
             .catch(err => {

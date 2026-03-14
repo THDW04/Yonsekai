@@ -10,7 +10,8 @@ import {
     Title,
     Tooltip,
     Legend,
-    ArcElement
+    ArcElement,
+    Filler
 } from "chart.js";
 
 ChartJS.register(
@@ -22,10 +23,12 @@ ChartJS.register(
     Title,
     Tooltip,
     Legend,
-    ArcElement
+    ArcElement,
+    Filler
 );
 
 export const DashboardStats = () => {
+    const [periode, setPeriode] = useState("7");
     const [statsHour, setStatsHour] = useState([]);
     const [statsDay, setStatsDay] = useState([]);
     const [statsTicket, setStatsTicket] = useState([]);
@@ -33,23 +36,52 @@ export const DashboardStats = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const token = localStorage.getItem("userToken");
-        /*
-            if (!token) {
-              window.location.href = "/connexion";
-              return;
-            }*/
+    const getDatesFromPeriod = (days) => {
+        const today = new Date();
+        const start = new Date();
 
-        fetch("http://localhost/yonsekai/backend/api/index.php?action=dashboard-stats", {
-            headers: {
-                Authorization: "Bearer " + token
+        start.setDate(today.getDate() - days);
+
+        const formatDate = (d) => d.toISOString().split("T")[0];
+
+        return {
+            debut: formatDate(start),
+            fin: formatDate(today)
+        };
+    };
+
+    const fetchStats = async (periode) => {
+
+        const { debut, fin } = getDatesFromPeriod(periode);
+
+        const params = new URLSearchParams({
+            action: "dashboard-stats",
+            debut: debut,
+            fin: fin
+        });
+
+        const token = localStorage.getItem("userToken");
+
+        const response = await fetch(
+            `http://localhost/yonsekai/backend/api/index.php?${params}`,
+            {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
             }
-        })
-            .then(res => {
-                if (!res.ok) throw new Error("Erreur API");
-                return res.json();
-            })
+        );
+
+        if (!response.ok) {
+            throw new Error("Erreur API");
+        }
+
+        return response.json();
+    };
+
+    useEffect(() => {
+        setLoading(true);
+
+        fetchStats(periode)
             .then(data => {
                 setStatsHour(data.byHour);
                 setStatsDay(data.byDay);
@@ -57,7 +89,8 @@ export const DashboardStats = () => {
             })
             .catch(err => setError(err.message))
             .finally(() => setLoading(false));
-    }, []);
+
+    }, [periode]);
 
     if (loading) return <p>Chargement des statistiques...</p>;
     if (error) return <p>Erreur : {error}</p>;
@@ -78,7 +111,16 @@ export const DashboardStats = () => {
             {
                 label: "Fréquentation par créneau horaire",
                 data: hourData,
-                backgroundColor: "rgba(75, 192, 192, 0.7)"
+                borderColor: '#4b9fc0',
+                borderWidth: 2,
+                borderRadius: 8,
+                backgroundColor: (context) => {
+                    const canvas = context.chart.ctx;
+                    const gradient = canvas.createLinearGradient(0, 0, 0, 400);
+                    gradient.addColorStop(0, 'rgba(75, 159, 201, 0.5)');
+                    gradient.addColorStop(1, 'rgba(75, 159, 201, 0)');
+                    return gradient;
+                }
             }
         ]
     };
@@ -89,11 +131,17 @@ export const DashboardStats = () => {
             {
                 label: "Fréquentation par jour",
                 data: dayData,
-                fill: false,              
-                borderColor: '#4bc072',    
-                backgroundColor: '#4bc072', 
-                tension: 0.1,              
-                pointRadius: 5,            
+                fill: true,
+                borderColor: '#4bc072',
+                backgroundColor: (context) => {
+                    const canvas = context.chart.ctx;
+                    const gradient = canvas.createLinearGradient(0, 0, 0, 400);
+                    gradient.addColorStop(0, 'rgba(75, 192, 114, 0.5)');
+                    gradient.addColorStop(1, 'rgba(75, 192, 114, 0)');
+                    return gradient;
+                },
+                tension: 0.45,
+                pointRadius: 5,
                 pointHoverRadius: 8,
             }
         ]
@@ -113,15 +161,36 @@ export const DashboardStats = () => {
         ]
     };
 
+    const options = {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+            }
+        }
+    };
+
     return (
         <section className="stats-container">
+            <form>
+                <label htmlFor="periode">Choisissez une période :</label>
+                <select
+                    id="periode"
+                    value={periode}
+                    onChange={(e) => setPeriode(Number(e.target.value))}
+                >
+                    <option value={7}>Les 7 derniers jours</option>
+                    <option value={30}>Les 30 derniers jours</option>
+                    <option value={90}>Les 3 derniers mois</option>
+                </select>
+            </form>
             <div className="stats stats-hour" style={{ maxWidth: 700, margin: "2rem auto" }}>
-                <Bar data={hourChartData} />
+                <Bar data={hourChartData} options={options} />
                 <h2>Fréquentation par heure</h2>
             </div>
 
             <div className="stats stats-day" style={{ maxWidth: 700, margin: "2rem auto" }}>
-                <Line data={dayChartData} />
+                <Line data={dayChartData} options={options} />
                 <h2>Fréquentation par jour</h2>
             </div>
 

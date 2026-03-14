@@ -59,7 +59,6 @@ function verifyToken()
 //Vérifie si l'utilisateur est admin
 function requireAdmin()
 {
-
     $user = verifyToken();
 
     if ($user["role"] !== "admin") {
@@ -114,7 +113,7 @@ switch ($action) {
         break;
 
     case 'dashboard-stats':
-        //requireAdmin();
+        requireAdmin();
         $controller = new ReservationController($db);
         $debut = $_GET['debut'] ?? date('Y-m-d', strtotime('-7 days'));
         $fin = $_GET['fin'] ?? date('Y-m-d');
