@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Bar, Pie, Line } from "react-chartjs-2";
+import { Bar, Doughnut, Line } from "react-chartjs-2";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -151,12 +151,16 @@ export const DashboardStats = () => {
         labels: ticketLabels,
         datasets: [
             {
-                label: "Répartition par type de billet",
+                label: "Nombre",
                 data: ticketData,
                 backgroundColor: [
                     "rgba(255, 99, 132, 0.7)",
                     "rgba(255, 206, 86, 0.7)"
-                ]
+                ],
+                borderWidth: 0,
+                borderRadius: 20,
+                spacing: 10,
+                cutout: '80%',
             }
         ]
     };
@@ -167,6 +171,29 @@ export const DashboardStats = () => {
             y: {
                 beginAtZero: true,
             }
+        }
+    };
+
+    const centerTextPlugin = {
+        id: 'centerText',
+        afterDraw: (chart) => {
+            const { width, height, ctx } = chart;
+            ctx.save();
+
+            // Calcul du total
+            const total = ticketData.reduce((sum, val) => Number(sum) + Number(val), 0);
+
+            ctx.font = "bold 5rem sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = "#000";
+            ctx.fillText(total, width / 2, height / 2);
+
+            ctx.font = "1rem sans-serif";
+            ctx.fillStyle = "#000";
+            ctx.fillText("tickets réservés", width / 2, height / 2 + 50);
+
+            ctx.restore();
         }
     };
 
@@ -195,7 +222,7 @@ export const DashboardStats = () => {
             </div>
 
             <div className="stats stats-ticket" style={{ maxWidth: 400, margin: "2rem auto" }}>
-                <Pie data={ticketChartData} />
+                <Doughnut data={ticketChartData} plugins={[centerTextPlugin]} />
                 <h2>Répartition par type de ticket</h2>
             </div>
         </section>
