@@ -26,4 +26,3 @@ public function getDashboardStats($debut, $fin)
     echo json_encode($stats);
 }
 }
-?>
