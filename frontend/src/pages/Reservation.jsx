@@ -8,12 +8,43 @@ import { CounterPrice } from "../components/CounterPrice";
 
 export const Reservation = () => {
 
-    const [value, setValue] = useState(new Date());
-    
+    const [date, setDate] = useState(new Date());
+    const [hour, setHour] = useState("");
     const [numberAdult, setNumberAdult] = useState(0);
     const [numberStudent, setNumberStudent] = useState(0);
 
+        const handleSubmit = (e) => {
+        e.preventDefault();
 
+        const reservationData = {
+            hour: hour,
+            date: date,
+            numberAdult: numberAdult,
+            numberStudent: numberStudent
+        };
+    
+
+        //url provisoire
+        fetch('http://localhost/yonsekai/backend/api/apiController.php?action=register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(userData),
+        })
+            .then(response => {
+                if (!response.ok) throw new Error('Erreur serveur');
+                return response.json();
+            })
+            .then(data => {
+                console.log('Succès:', data);
+            })
+            .catch(err => {
+                console.error('Erreur de connexion:', err);
+            });
+
+    }
 
 return (
 
@@ -22,11 +53,11 @@ return (
 
     <main>
         
-    <form action="/reservation" method="POST">
+    <form onSubmit={handleSubmit} >
 
     <Calendar 
     onChange={setValue} 
-    value={value}
+    value={date}
     maxDetail='month'
     minDetail='year'
     minDate={new Date()}
@@ -57,6 +88,5 @@ return (
     </main>
     </>
 );
-
 
 }

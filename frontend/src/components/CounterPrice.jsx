@@ -1,15 +1,15 @@
 
-export const CounterPrice = ({ value, setValue }) => {
+export const CounterPrice = ({ date, setDate }) => {
 
   const increase = () => {
     if (value < 10) {
-      setValue(value + 1)
+      setDate(date + 1)
     }
   }
 
   const decrease = () => {
     if (value > 0) {
-      setValue(value - 1)
+      setDate(date - 1)
     }
   }
 
@@ -17,7 +17,7 @@ export const CounterPrice = ({ value, setValue }) => {
     <div>
       <button type="button" onClick={decrease}>-</button>
 
-      <input type="number" value={value} />
+      <input type="number" value={date} />
 
       <button type="button" onClick={increase}>+</button>
     </div>
