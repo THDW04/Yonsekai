@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 
-const DeleteAccount = () => {
+export const DeleteAccount = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleDelete = async () => {
-        const firstCheck = window.confirm("Voulez-vous vraiment supprimer votre compte ?");
-        if (!firstCheck) return;
-
-        const secondCheck = window.confirm("ATTENTION : Cette action est irréversible. Toutes vos réservations seront annulées. Confirmer ?");
-        if (!secondCheck) return;
+        const check = window.confirm("ATTENTION : Cette action est irréversible. Toutes vos réservations seront annulées. Confirmer ?");
+        if (!check) return;
 
         setIsLoading(true);
 
@@ -57,5 +54,3 @@ const DeleteAccount = () => {
         </div>
     );
 };
-
-export default DeleteAccount;

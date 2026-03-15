@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { jwtDecode } from "jwt-decode";
 
 export const LoginForm = () => {
 
@@ -38,8 +39,13 @@ export const LoginForm = () => {
                     return;
                 }
                 localStorage.setItem('userToken', data.token);
-                localStorage.setItem("user", JSON.stringify(data.user));
-                window.location.href = "/profil";
+                const decoded = jwtDecode(data.token);
+
+                if (decoded.role !== "admin") {
+                    window.location.href = "/profil";
+                } else {
+                    window.location.href = "/administration";
+                }
             })
             .catch(err => {
                 console.error('Erreur de connexion:', err);

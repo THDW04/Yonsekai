@@ -1,4 +1,5 @@
 import { DashboardStats } from "../components/DashboardStats";
+import { LogoutBtn } from "../components/LogoutBtn";
 import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 
@@ -24,6 +25,7 @@ export const Admin = () => {
 
     return (
         <section>
+            <LogoutBtn />
             <h1>Administration</h1>
             <p>Vous pouvez consulter ici les statistiques de fréquentation.</p>
             <DashboardStats />
