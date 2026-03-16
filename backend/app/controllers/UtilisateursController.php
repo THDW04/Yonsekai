@@ -84,15 +84,51 @@ class UtilisateursController
         }
     }
 
-    public function controlUser ()
+    
+    //Afficher tous les utilisateurs
+    public function controlUser()
     {
-        
+        $users = $this->userModel->getAllUser();
 
+        echo json_encode([
+            "success" => true,
+            "users" => $users
+        ]);
     }
 
-    public function getInformation ()
+    //Récupérer les informations d'un utilisateur
+    public function getInformation($id)
     {
+        $user = $this->userModel->getUserById($id);
 
-    
+        echo json_encode([
+            "success" => true,
+            "user" => $user
+        ]);
+    }
+
+    //Modifier un utilisateur
+    public function modifyUser($data)
+    {
+        $id = $data['id'] ?? null;
+        $name = $data['name'] ?? null;
+        $firstName = $data['firstName'] ?? null;
+        $mail = $data['mail'] ?? null;
+
+        $result = $this->userModel->updateUser($id, $name, $firstName, $mail);
+
+        echo json_encode([
+            "success" => $result
+        ]);
+    }
+
+    //Supprimer un utilisateur
+    public function deleteUser($id)
+    {
+        $result = $this->userModel->deleteUser($id);
+
+        echo json_encode([
+            "success" => $result
+        ]);
     }
 }

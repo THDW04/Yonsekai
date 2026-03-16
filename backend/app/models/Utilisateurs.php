@@ -36,17 +36,41 @@ class Utilisateurs
 
      //Afficher les utilisateurs
     public function getAllUser()
-    {
-        $query = $this->db->prepare("SELECT * FROM utilisateurs");
-        return $query->fetch(PDO::FETCH_ASSOC);
-    }
+{
+    $query = $this->db->prepare(
+        "SELECT id, nom, prenom, mail FROM utilisateurs");
+    $query->execute();
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+     //Récupérerle les informations d'un utilisateur par son id
+public function getUserById($id)
+{
+    $query = $this->db->prepare(
+        "SELECT id, nom, prenom, mail FROM utilisateurs WHERE id = :id");
+    $query->execute([":id" => $id]);
+    return $query->fetch(PDO::FETCH_ASSOC);
+}
+
+public function updateUser($id, $name, $firstName, $email)
+{
+    $query = $this->db->prepare("UPDATE utilisateurs SET nom = :nom, prenom = :prenom, mail = :mail WHERE id = :id");
+
+    return $query->execute([
+        ":id" => $id,
+        ":nom" => $name,
+        ":prenom" => $firstName,
+        ":mail" => $email
+    ]);
+}
 
     //Supprimer un utilisateur
-    public function deleteUser()
-    {
-        $query = $this->db->prepare("DELETE * FROM utilisateurs WHERE :id_user = $id_user");
-        $query->execute([':id_user' => $id_user]);
-    }
-
+   public function deleteUser($id)
+{
+    $query = $this->db->prepare("DELETE FROM utilisateurs WHERE id = :id");
+    return $query->execute([
+        ":id" => $id
+    ]);
+}
 }
 ?>
