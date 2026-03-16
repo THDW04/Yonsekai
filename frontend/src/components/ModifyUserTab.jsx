@@ -12,7 +12,7 @@ export const ModifyUserTab = () => {
 
         const userData = {
             name: name,
-            firstName: firstName,
+            firstName: firstName, 
             mail: mail,
             password: password
         };
