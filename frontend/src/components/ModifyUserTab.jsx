@@ -1,11 +1,12 @@
 import { useState} from 'react';
 
-export const ModifyUserTab = () => {
+export const ModifyUserTab = ({ user }) => {
 
-    const [name, setName] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [mail, setMail] = useState('');
-    const [password, setPassword] = useState('');
+const [name, setName] = useState(user.name);
+const [firstName, setFirstName] = useState(user.firstName);
+const [mail, setMail] = useState(user.mail);
+
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -14,7 +15,7 @@ export const ModifyUserTab = () => {
             name: name,
             firstName: firstName, 
             mail: mail,
-            password: password
+            
         };
 
         //url provisoire

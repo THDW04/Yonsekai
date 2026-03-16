@@ -1,4 +1,4 @@
-export const ControlUserRow = ({ name, firstName, mail }) => {
+export const ControlUserRow = ({ id, name, firstName, mail, onEdit, onDelete }) => {
 
    return (
       <tr>
@@ -7,8 +7,13 @@ export const ControlUserRow = ({ name, firstName, mail }) => {
          <td>{mail}</td>
 
          <td>
-            <button>Modifier</button>
-            <button>Supprimer</button>
+            <button onClick={() => onEdit({ id, name, firstName, mail })}>
+               Modifier
+            </button>
+
+            <button onClick={() => onDelete(id)}>
+               Supprimer
+            </button>
          </td>
       </tr>
    );
