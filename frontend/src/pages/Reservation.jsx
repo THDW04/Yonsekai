@@ -8,7 +8,7 @@ import { CounterPrice } from "../components/CounterPrice";
 
 export const Reservation = () => {
 
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState(null);
     const [hour, setHour] = useState("");
     const [numberAdult, setNumberAdult] = useState(0);
     const [numberStudent, setNumberStudent] = useState(0);
@@ -56,7 +56,7 @@ return (
     <form onSubmit={handleSubmit} >
 
     <Calendar 
-    onChange={setValue} 
+    onChange={setDate} 
     value={date}
     maxDetail='month'
     minDetail='year'
@@ -64,7 +64,13 @@ return (
     locale="fr-FR"
     /> 
     
-    <TimeSlot /> 
+    {date && (
+    <TimeSlot 
+        date={date}
+        hour={hour} 
+        setHour={setHour}
+    />
+    ) }
 
     
    <PriceFormAdult>
