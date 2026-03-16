@@ -83,4 +83,16 @@ class UtilisateursController
             ]);
         }
     }
+
+    public function controlUser ()
+    {
+        
+
+    }
+
+    public function getInformation ()
+    {
+
+    
+    }
 }
