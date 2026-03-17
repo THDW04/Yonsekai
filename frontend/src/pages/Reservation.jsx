@@ -75,6 +75,7 @@ return (
     
    <PriceFormAdult>
         <CounterPrice 
+            id="adult"
             value={numberAdult}
             setValue={setNumberAdult}
         />
@@ -82,6 +83,7 @@ return (
 
     <PriceFormStudent>
         <CounterPrice 
+            id="student"
             value={numberStudent}
             setValue={setNumberStudent}
     />
