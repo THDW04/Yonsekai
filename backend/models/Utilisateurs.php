@@ -32,5 +32,22 @@ class Utilisateurs
 
         return $query->fetch(PDO::FETCH_ASSOC);
     }
+
+    //Récuperer tous les utilisateurs
+    public function getAll()
+    {
+        $query = $this->db->prepare("SELECT * FROM utilisateurs");
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    //Récupère un utilisateur par son id
+    public function getOneUser($id)
+    {
+        $query = $this->db->prepare("SELECT id, nom, prenom, mail FROM utilisateurs WHERE id = :id");
+        $query->bindValue(':id', $id, PDO::PARAM_STR);
+        $query->execute();
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
 }
 ?>

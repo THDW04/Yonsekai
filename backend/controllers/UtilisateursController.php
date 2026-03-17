@@ -1,15 +1,49 @@
 <?php
 require_once __DIR__ . '/../models/Utilisateurs.php';
+require_once __DIR__ . '/../models/Reservation.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 
 class UtilisateursController
 {
     private $userModel;
+    private $reservationModel;
 
     public function __construct($db)
     {
         $this->userModel = new Utilisateurs($db);
+        $this->reservationModel = new Reservation($db);
+    }
+
+    //Liste des utilisateurs
+    public function getAll()
+    {
+        $users = $this->userModel->getAll();
+        echo json_encode($users);
+    }
+
+    //  Informations et réservation d'un client
+    public function getProfileWithReservations($id)
+    {
+        //récuperer un utilisateur
+        $user = $this->userModel->getOneUser($id);
+
+        //réservations de cet utilisateur
+        $reservations = $this->reservationModel->getReservationByUser($user['id']);
+
+        // fusionner dans un seul tableau
+        $result = [
+            "user" => [
+                "id" => $user["id"],
+                "nom" => $user["nom"],
+                "prenom" => $user["prenom"],
+                "mail" => $user["mail"]
+            ],
+            "reservations" => $reservations
+        ];
+
+        echo json_encode($result);
     }
 
     //Inscription
@@ -59,10 +93,11 @@ class UtilisateursController
 
         if ($user && password_verify($password, $user['mot_de_passe'])) {
 
-            $key = "SUPER_SECRET_KEY";
+            $key = "une_cle_tres_longue_et_securisee_pour_ma_sae_2026_yonsekai_equipe_dev";
 
             $payload = [
                 "user_id" => $user["id"],
+                "role" => $user["role"],
                 "exp" => time() + 3600
             ];
 

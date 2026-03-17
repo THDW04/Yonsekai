@@ -4,8 +4,8 @@
     # 1. Empêche l'accès direct aux dossiers sensibles
     RewriteRule ^(app|config) - [F,L]
 
-    # 2. Redirige tout vers le dossier public/index.php
+    # 2. Redirige tout vers le dossier api/index.php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ public/index.php [QSA,L]
+    RewriteRule ^(.*)$ api/index.php [QSA,L]
 </IfModule>
