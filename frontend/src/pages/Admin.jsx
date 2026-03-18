@@ -1,5 +1,5 @@
-import { DashboardStats } from "../components/DashboardStats";
-import { LogoutBtn } from "../components/LogoutBtn";
+import { DashboardStats } from "../components/profile_admin/DashboardStats";
+import { LogoutBtn } from "../components/auth/LogoutBtn";
 import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 
