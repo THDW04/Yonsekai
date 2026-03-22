@@ -1,24 +1,22 @@
-export const CounterPrice = ({ value, setValue }) => {
+export const CounterPrice = ({ value, setValue, total, max = 10 }) => {
 
   const increase = () => {
-    if (value < 10) {
-      setValue(value + 1)
+    if (value < max && total < max) {
+      setValue(value + 1);
     }
-  }
+  };
 
   const decrease = () => {
     if (value > 0) {
-      setValue(value - 1)
+      setValue(value - 1);
     }
-  }
+  };
 
   return (
     <div>
       <button type="button" onClick={decrease}>-</button>
-
-      <input type="number" value={value} id={id} />
-
-      <button type="button" onClick={increase}>+</button>
+      <span>{value}</span>
+      <button type="button" onClick={increase} disabled={value >= max || total >= max}>+</button>
     </div>
-  )
-}
+  );
+};

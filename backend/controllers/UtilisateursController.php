@@ -16,23 +16,18 @@ class UtilisateursController
         $this->reservationModel = new Reservation($db);
     }
 
-    //Liste des utilisateurs
     public function getAll()
     {
         $users = $this->userModel->getAll();
         echo json_encode($users);
     }
 
-    //  Informations et réservation d'un client
     public function getProfileWithReservations($id)
     {
-        //récuperer un utilisateur
         $user = $this->userModel->getOneUser($id);
 
-        //réservations de cet utilisateur
         $reservations = $this->reservationModel->getReservationByUser($user['id']);
 
-        // fusionner dans un seul tableau
         $result = [
             "user" => [
                 "id" => $user["id"],
@@ -46,7 +41,6 @@ class UtilisateursController
         echo json_encode($result);
     }
 
-    //Inscription
     public function register($data)
     {
         //récupérer les données
@@ -83,7 +77,6 @@ class UtilisateursController
         ]);
     }
 
-    //Connexion
     public function login($data)
     {
         $email = $data['mail'] ?? null;
@@ -119,7 +112,6 @@ class UtilisateursController
         }
     }
 
-    //Suppression du compte
     public function deleteUser($id)
     {
         try {

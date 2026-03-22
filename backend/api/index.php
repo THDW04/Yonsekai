@@ -88,7 +88,6 @@ switch ($action) {
             echo json_encode(["error" => "Method not allowed"]);
             exit;
         }
-
         $controller = new UtilisateursController($db);
         $controller->register($input);
         break;
@@ -105,11 +104,21 @@ switch ($action) {
         $user->getProfileWithReservations($idUser['id']);
         break;
 
+    case 'create-reservation':
+        if ($method !== 'POST') {
+            http_response_code(405);
+            echo json_encode(["error" => "Méthode POST requise"]);
+            exit;
+        }
+        $user = verifyToken();
+        $input['id_user'] = $user['id'];
+        $controller = new ReservationController($db);
+        $controller->reserveADate($input);
+        break;
+
     case 'reservations':
-        //code pour la réservation (Haya)
-        //verifyToken();
-        //$reservations = new UtilisateursController($db);
-        //$reservations->getAllReservation();
+        $controller = new ReservationController($db);
+        $controller->allReservation();
         break;
 
     case 'delete-account':
@@ -118,9 +127,7 @@ switch ($action) {
             echo json_encode(["error" => "Méthode non autorisée. Utilisez DELETE."]);
             exit;
         }
-
-        $idUser = verifyToken(); 
-
+        $idUser = verifyToken();
         $controller = new UtilisateursController($db);
         $controller->deleteUser($idUser['id']);
         break;

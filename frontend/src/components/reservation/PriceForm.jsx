@@ -1,17 +1,9 @@
-export const PriceFormAdult = ({ children }) => {
+import { CounterPrice } from "./CounterPrice";
+export const PriceForm = ({ label, value, setValue, total }) => {
   return (
     <div>
-      <label htmlFor="adult">Tarif Adultes</label>
-      {children}
+      <label>{label}</label>
+      <CounterPrice value={value} setValue={setValue} total={total}/>
     </div>
-  )
-}
-
-export const PriceFormStudent = ({ children }) => {
-  return (
-    <div>
-      <label htmlFor="student">Tarifs Moins de 25 ans</label>
-      {children}
-    </div>
-  )
-}
+  );
+};
