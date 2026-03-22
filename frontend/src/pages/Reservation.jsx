@@ -3,7 +3,7 @@ import 'react-calendar/dist/Calendar.css';
 import { useState } from 'react';
 import { TimeSlot } from "../components/reservation/TimeSlot";
 import { PriceFormAdult, PriceFormStudent } from "../components/reservation/PriceForm";
-import { CounterPrice } from "../components/reservation/CounterPrice";
+//import { CounterPrice } from "../components/reservation/CounterPrice";
 
 
 export const Reservation = () => {
@@ -74,19 +74,11 @@ return (
 
     
    <PriceFormAdult>
-        <CounterPrice 
-            id="adult"
-            value={numberAdult}
-            setValue={setNumberAdult}
-        />
+        
     </PriceFormAdult>
 
     <PriceFormStudent>
-        <CounterPrice 
-            id="student"
-            value={numberStudent}
-            setValue={setNumberStudent}
-    />
+
     </PriceFormStudent>
 
 

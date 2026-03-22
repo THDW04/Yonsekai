@@ -1,0 +1,149 @@
+.authPage {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.visual {
+    width: 100%;
+    height: 50vh;
+    min-height: 200px;
+    max-height: 350px;
+    overflow: hidden;
+    position: relative;
+}
+
+.visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+.formContainer {
+    flex: 1;
+    width: 100%;
+    padding: 2rem;
+    border-radius: 20px 20px 0 0;
+    background-color: var(--bg-color);
+    position: relative;
+    bottom: 20px;
+    font-size: 1.1rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.formContainer form {
+    max-width: 800px;
+    width: 100%;
+    margin: auto;
+}
+
+.formContainer form p {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.formContainer form div {
+    margin-top: 40px;
+    position: relative;
+}
+
+.error {
+    padding: 0.8rem;
+    border: dashed 2px rgb(139, 0, 0);
+    border-radius: 10px;
+}
+
+.formContainer input {
+    width: 90%;
+    padding: 0.8rem;
+    border: none;
+    border-bottom: 2px solid #fff;
+    font-size: 1rem;
+    transition: 0.3s;
+    background-color: transparent;
+    color: #fff;
+    font-family: var(--font-body);
+    margin-top: 15px;
+}
+
+.inputNames{
+    display: flex;
+}
+
+.formContainer button[type="submit"] {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: var(--primary-color);
+    margin: auto;
+    margin-top: 30px;
+    padding: 10px;
+    width: 50%;
+    border: none;
+    border-radius: 5px;
+    display: block;
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+}
+
+.formContainer button[type="submit"]:hover {
+    background-color: #e9b301;
+}
+
+.formContainer input:focus {
+    outline: 2px solid var(--primary-color);
+    background-color: #fff;
+    color: #000;
+}
+
+#togglePassword {
+    border: none;
+    background-color: transparent;
+    color: #fff;
+    position: absolute;
+    right: 10%;
+    bottom: 20%;
+    font-family: var(--font-body);
+    cursor: pointer;
+}
+
+input:focus+#togglePassword {
+    color: #000;
+}
+
+@media (min-width: 800px) {
+    .visual {
+        max-height: 500px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .authPage {
+        flex-direction: row;
+    }
+
+    .authPage .visual {
+        height: 100vh;
+        min-height: auto;
+        max-height: none;
+        flex: 1;
+    }
+
+    .formContainer {
+        flex: 1;
+        bottom: 0;
+        font-size: 1.1rem;
+        display: flex;
+        justify-content: center;
+    }
+
+    .formContainer form div{
+        margin: 40px auto 0;
+        width: 90%;
+    }
+}

@@ -1,19 +1,15 @@
 import { useState } from 'react';
 import { jwtDecode } from "jwt-decode";
+import styles from './auth.module.css'
 
 export const LoginForm = () => {
-
-    //Récupère les valeurs des champs
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
 
-    //Affiche le mdp en clair
     const [showPassword, setShowPassword] = useState(false);
 
-    //Erreur dans le formulaire
     const [error, setError] = useState(null);
 
-    //Fetch de connexion
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -53,34 +49,41 @@ export const LoginForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} method='POST'>
-            <p>{error}</p>
-            <div>
-                <label htmlFor="mail">Mail</label><br />
-                <input
-                    type="email"
-                    id="mail"
-                    value={mail}
-                    onChange={e => setMail(e.target.value)}
-                    required
-                />
+        <section className={styles.authPage}>
+            <div className={styles.visual}>
+                <img src="assets/img/login-img.jpg" alt="" />
             </div>
-
-            <div>
-                <label htmlFor="password">Mot de passe</label><br />
-                <input
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    required
-                />
-                <button type="button" onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? "Cacher" : "Afficher"}
-                </button>
+            <div className={styles.formContainer}>
+                <form onSubmit={handleSubmit} method='POST'>
+                    <h1>Connectez-vous !</h1>
+                    <p>Le vent se lève... Il est temps de rejoindre la Vallée.</p>
+                    {error && <p className={styles.error}>{error}</p>}
+                    <div>
+                        <label htmlFor="mail">Mail</label><br />
+                        <input
+                            type="email"
+                            id="mail"
+                            value={mail}
+                            onChange={e => setMail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="password">Mot de passe</label><br />
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            id="password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            required
+                        />
+                        <button type="button" id={styles.togglePassword} onClick={() => setShowPassword(!showPassword)}>
+                            {showPassword ? "Cacher" : "Afficher"}
+                        </button>
+                    </div>
+                    <button type="submit">Se connecter</button>
+                </form>
             </div>
-
-            <button type="submit">Se connecter</button>
-        </form>
+        </section>
     );
 }

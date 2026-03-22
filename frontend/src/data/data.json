@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "title": "Nausicaä de la Vallée du Vent",
+    "element": "air",
+    "kanji": "気",
+    "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum tenetur cupiditate distinctio eaque culpa error.",
+    "background": "/assets/img/air.jpg",
+    "charImg": "/assets/react.svg"
+  },
+  {
+    "id": 2,
+    "title": "Le Sommet des Dieux",
+    "element": "terre",
+    "kanji": "土",
+    "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum tenetur cupiditate distinctio eaque culpa error.",
+    "background": "/assets/img/terre.png",
+    "charImg": "/assets/yoko.png"
+  },
+  {
+    "id":3,
+    "title":"Les enfants de la mer",
+    "element":"eau",
+    "kanji":"水",
+    "text":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum tenetur cupiditate distinctio eaque culpa error.",
+    "background":"/assets/img/eau.png",
+    "charImg":"/assets/kaneda.png"
+  },{
+    "id":4,
+    "title":"Daigo, le soldat du feu",
+    "element":"feu",
+    "kanji":"火",
+    "text":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum tenetur cupiditate distinctio eaque culpa error.",
+    "background":"/assets/img/feu.png",
+    "charImg":"/assets/kaneda.png"
+  }
+]

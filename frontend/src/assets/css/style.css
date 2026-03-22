@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap');
+
+@font-face {
+    font-family: 'Chiga';
+    src: url('assets/fonts/Chiga.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --font-heading: 'Chiga', serif;
+    --font-subheading: 'Old Standard TT', serif;
+    --font-body: 'Montserrat', sans-serif;
+    --bg-color :#040412;
+    --primary-color: #c29502;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: var(--font-body);
+    background-color: var(--bg-color);
+    color: #fff;
+}
+
+h1, h2{
+    font-family: var(--font-heading);
+    font-weight: 400;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}

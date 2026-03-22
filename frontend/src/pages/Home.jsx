@@ -1,15 +1,13 @@
-import { Link } from 'react-router-dom';
+import { HeroSection } from "../components/home/HeroSection/HeroSection";
+import { MangaContainer } from "../components/home/MangaContainer";
+import { Teaser } from "../components/home/Teaser";
 
 export const Home = () =>{
     return(
-      <section className="home-page">
-      <div className="container">
-        <p>Vous êtes sur la page d'accueil</p>
-        <Link to="/inscription">S'inscrire</Link> <br />
-        <Link to="/connexion">Se connecter</Link> <br />
-        <Link to="/profil">Accéder à mon profil</Link> <br />
-        <Link to="/administration">Accéder à l'administration</Link>
-      </div>
-    </section>
+      <main>
+        <HeroSection />
+        <MangaContainer/>
+        <Teaser />
+      </main>
     )
 }

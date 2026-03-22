@@ -5,12 +5,12 @@ import { Login } from './pages/Login';
 import {Reservation} from './pages/Reservation';
 import { Profile } from './pages/Profile';
 import { Admin } from './pages/Admin';
+import './assets/css/style.css'
 
 function App() {
 
   return (
     <>
-      <main>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -21,7 +21,6 @@ function App() {
             <Route path="/administration" element={<Admin />} />
           </Routes>
         </BrowserRouter>
-      </main>
     </>
   )
 }

@@ -1,0 +1,69 @@
+.mangaCard {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+.presentationManga {
+    height: 95%;
+    width: 98%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: auto;
+    border-radius: 10px;
+
+    clip-path: url(#mangaClipMobile);
+    transition: clip-path 0.3s ease;
+}
+
+
+.panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 33.5%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+    padding: 0.5rem;
+}
+
+.panelContent {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: auto;
+    width: 35%;
+
+    background-color: rgba(165, 42, 42, 0.486);
+}
+
+.element {
+    border: solid 2px;
+    border-radius: 50px;
+    padding: 0 15px;
+    width: fit-content;
+}
+
+.panelBottom{
+    background-color: rgba(0, 4, 255, 0.486);
+    margin-bottom: auto;
+}
+
+.panelBottom h2{
+    font-family: var(--font-body);
+    font-size: 2.1rem; 
+    background-color: rgba(195, 0, 255, 0.486);
+}
+
+@media (min-width: 1280px) {
+    .presentationManga {
+        clip-path: url(#mangaClipDesktop);
+    }
+}

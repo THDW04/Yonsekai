@@ -1,16 +1,14 @@
 import { useState } from 'react';
+import styles from './auth.module.css'
 
 export const RegisterForm = () => {
-    //Récupère les valeurs des champs
     const [name, setName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
 
-    //Affiche le mdp en clair
     const [showPassword, setShowPassword] = useState(false);
 
-    //Feedback form
     const [message, setMessage] = useState(null);
 
     const handleSubmit = (e) => {
@@ -48,30 +46,41 @@ export const RegisterForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <p>{message}</p>
-            <div>
-                <label htmlFor="name">Nom</label> <br />
-                <input type="text" name="name" id="name" value={name} onChange={e => setName(e.target.value)} required />
+        <section className={styles.authPage}>
+            <div className={styles.visual}>
+                <img src="assets/img/register-img.jpg" alt="" />
             </div>
-            <div>
-                <label htmlFor="firstName">Prénom</label><br />
-                <input type="text" name="firstName" id="firstName" value={firstName} onChange={e => setFirstName(e.target.value)} required />
+            <div className={styles.formContainer}>
+                <form onSubmit={handleSubmit}>
+                    <h1>Rejoignez l'expérience</h1>
+                    <p>Inscrivez-vous pour réserver vos places pour l'exposition.</p>
+                    <p>{message}</p>
+                    <div className={styles.inputNames}>
+                        <div>
+                            <label htmlFor="name">Nom</label> <br />
+                            <input type="text" name="name" id="name" value={name} onChange={e => setName(e.target.value)} required />
+                        </div>
+                        <div>
+                            <label htmlFor="firstName">Prénom</label><br />
+                            <input type="text" name="firstName" id="firstName" value={firstName} onChange={e => setFirstName(e.target.value)} required />
+                        </div>
+                    </div>
+                    <div>
+                        <label htmlFor="mail">Votre Email</label><br />
+                        <input type="email" name="mail" id="mail" value={mail} onChange={e => setMail(e.target.value)} required />
+                    </div>
+                    <div>
+                        <label htmlFor="password">Choississez un mot de passe</label><br />
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name="password" id="password" value={password} onChange={e => setPassword(e.target.value)} required />
+                        <button type="button" id={styles.togglePassword} onClick={() => setShowPassword(!showPassword)}>
+                            {showPassword ? "Cacher" : "Afficher"}
+                        </button>
+                    </div>
+                    <button type="submit">S'inscrire</button>
+                </form>
             </div>
-            <div>
-                <label htmlFor="mail">Votre Email</label><br />
-                <input type="email" name="mail" id="mail" value={mail} onChange={e => setMail(e.target.value)} required />
-            </div>
-            <div>
-                <label htmlFor="password">Choississez un mot de passe</label><br />
-                <input
-                    type={showPassword ? "text" : "password"}
-                    name="password" id="password" value={password} onChange={e => setPassword(e.target.value)} required />
-                <button type="button" onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? "Cacher" : "Afficher"}
-                </button>
-            </div>
-            <input type="submit" value="S'inscrire" />
-        </form>
+        </section>
     )
 }
