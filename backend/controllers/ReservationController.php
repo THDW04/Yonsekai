@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../models/Reservation.php';
-use Firebase\JWT\JWT;
 
 class ReservationController
 {
@@ -10,36 +9,6 @@ class ReservationController
     {
         $this->reservationModel = new Reservation($db);
     }
-
-    /*public function reserveADate($data)
-    {
-        $date = $data['date'];
-        $hour = $data['hour'];
-        $numberAdult = $data['numberAdult'];
-        $numberStudent = $data['numberStudent'];
-        $fk_user = $data['id_user'];
-
-
-        $fk_reservation = $this->reservationModel->bookDate($date, $hour, $fk_user);
-
-        if ($numberAdult > 0) {
-            $nameTicket = "adult";
-            $quantity = $numberAdult;
-
-            $fk_type = $this->reservationModel->findTypeTicket($nameTicket);
-            $this->reservationModel->bookTickets($fk_reservation, $fk_type, $quantity);
-
-        }
-
-        if ($numberStudent > 0) {
-
-            $nameTicket = "jeune";
-            $quantity = $numberStudent;
-
-            $fk_type = $this->reservationModel->findTypeTicket($nameTicket);
-            $this->reservationModel->bookTickets($fk_reservation, $fk_type, $quantity);
-        }
-    }*/
 
     public function reserveADate($data)
     {
