@@ -17,7 +17,6 @@ export const Reservation = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("userToken");
-
         if (!token) {
             window.location.href = "/connexion";
             return;
@@ -25,8 +24,14 @@ export const Reservation = () => {
     }, [])
     
     const handleSubmit = async (e) => {
-
         e.preventDefault();
+
+        const token = localStorage.getItem("userToken");
+
+        if (!token) {
+            setError("Session expirée, veuillez vous reconnecter.");
+            return;
+        }
 
         if (!date || !hour || (numberAdult + numberStudent === 0)) {
             setError("Veuillez remplir tous les champs");
@@ -57,7 +62,6 @@ export const Reservation = () => {
                     body: JSON.stringify(reservationData),
                 }
             );
-
             const data = await response.json();
 
             if (!response.ok) throw new Error(data.error || "Une erreur est survenue");
@@ -68,8 +72,7 @@ export const Reservation = () => {
             setNumberStudent(0);
 
         } catch (err) {
-            console.error(err);
-            setError(err.message);
+           console.log(err.message);
         }
     };
 
@@ -125,7 +128,7 @@ export const Reservation = () => {
                     total={total}
                 />
 
-                <button disabled={!date || !hour}>Valider</button>
+                <button type="submit" disabled={!date || !hour}>Valider</button>
             </form>
         </main>
     );
