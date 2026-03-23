@@ -32,12 +32,3 @@ h1, h2{
     font-family: var(--font-heading);
     font-weight: 400;
 }
-
-img,
-picture,
-video,
-canvas,
-svg {
-    display: block;
-    max-width: 100%;
-}

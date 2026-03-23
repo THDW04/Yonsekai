@@ -1,0 +1,119 @@
+.reservationContainer {
+  max-width: 1024px;
+  width: 100%;
+  margin: auto;
+}
+
+.reservationContainer form {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  padding: 15px;
+}
+
+.bookDate {
+  max-width: 450px;
+  width: 100%;
+  margin: auto;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  width: fit-content;
+  margin: 15px auto;
+  padding: 10px;
+  font-size: 0.85rem;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.selected {
+  background-color: var(--primary-color);
+}
+
+.today {
+  background-color: #fff1c5;
+}
+
+.available {
+  background-color: #f0f0f0;
+}
+
+.unavailable {
+  background-color: #f0f0f0;
+  opacity: 0.5;
+}
+
+.ticketSelection {
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
+}
+
+.infoBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: #f0f7ff;
+  border-radius: 8px;
+  border: 1px solid #d0e3ff;
+  transition: all 0.3s ease;
+  margin: 20px 0;
+  width: fit-content;
+}
+
+.infoBox img {
+  width: 25px;
+}
+
+.infoBox p {
+  font-size: 0.9rem;
+  color: #004a99;
+}
+
+.limitReached {
+  background-color: #fff4e5;
+  border-color: #ffd5a1;
+}
+
+.limitReached p {
+  color: #663c00;
+  font-weight: 600;
+}
+
+@media screen and (min-width: 768px) {
+  .bookDate {
+    max-width: 1024px;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 50px;
+  }
+
+  .ticketSelection h2 {
+    font-size: 2.5rem;
+  }
+
+  .ticketSelection {
+    max-width: 800px;
+    width: 100%;
+    margin: auto;
+  }
+}

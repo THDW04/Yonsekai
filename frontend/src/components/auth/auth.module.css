@@ -75,7 +75,7 @@ h1 {
     display: flex;
 }
 
-.formContainer button[type="submit"] {
+button[type="submit"] {
     font-family: var(--font-body);
     font-size: 1.2rem;
     font-weight: 600;
@@ -91,7 +91,7 @@ h1 {
     transition: ease-in-out 0.3s;
 }
 
-.formContainer button[type="submit"]:hover {
+button[type="submit"]:hover {
     background-color: #e9b301;
 }
 

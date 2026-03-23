@@ -1,0 +1,50 @@
+.counterPrice {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0 30px;
+}
+
+.counterPrice button,
+.counterPrice input {
+    font-family: var(--font-body);
+    font-size: 1rem;
+}
+
+.counterPrice button {
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.counterPrice button:hover{
+    background-color: #e6b002;
+}
+
+.counterPrice button:disabled{
+    background-color: #5c4600;
+    color: black;
+}
+
+.counterPrice input {
+    width: 10%;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #fff;
+    color: #fff;
+}
+
+.counterPrice input::-webkit-outer-spin-button,
+.counterPrice input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.counterPrice input[type=number] {
+  -moz-appearance: textfield;
+}

@@ -1,0 +1,16 @@
+.priceForm {
+    background-color: #c295022d;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    box-shadow: rgba(149, 157, 165, 0.1) 0px 2px 12px;
+}
+
+.priceForm label{
+    font-weight: 600;
+}
+
+.priceForm p {
+    margin-top: 20px;
+    font-size: 0.9rem;
+}

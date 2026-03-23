@@ -1,0 +1,62 @@
+fieldset {
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  padding: 1.5rem;
+  max-width: 350px;
+  width: 100%;
+  margin: auto;
+}
+
+legend {
+  font-weight: bold;
+  padding: 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.instruction {
+  margin-bottom: 1rem;
+}
+
+.hoursGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+}
+
+.radioOption {
+  position: relative;
+}
+
+.realRadio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radioLabel {
+  display: block;
+  padding: 10px 15px;
+  background-color: #f9f9f9;
+  border: none;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-weight: 500;
+  color: #000;
+}
+
+.radioLabel:hover {
+  background-color:var(--primary-color);
+}
+
+.realRadio:checked + .radioLabel {
+  background-color: var(--primary-color);
+}
+
+.realRadio:focus-visible + .radioLabel {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1); 
+}
