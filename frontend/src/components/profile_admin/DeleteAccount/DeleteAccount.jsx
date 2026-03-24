@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './DeleteAccount.module.css'
 
 export const DeleteAccount = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -38,8 +39,8 @@ export const DeleteAccount = () => {
     };
 
     return (
-        <div className="delete-account-container">
-            <h3>Zone de danger</h3>
+        <div className={styles.deleteContainer}>
+            <h2>Zone de danger</h2>
             <p>
                 En supprimant votre compte, vous perdrez l'accès à l'historique de vos réservations Yonsekai. 
                 Conformément au RGPD, toutes vos données personnelles seront effacées de nos serveurs.

@@ -1,0 +1,29 @@
+.deleteContainer{
+    
+    width: 100%;
+    margin: auto;
+    font-size:1.1rem ;
+}
+
+.deleteContainer h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.deleteContainer button{
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    padding: 10px;
+    margin: 20px auto;
+    /*display: block;*/
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(182, 0, 0);
+    transition: background-color .25s ease;
+}
+
+.deleteContainer button:hover{
+    background-color: rgb(129, 0, 0);
+}

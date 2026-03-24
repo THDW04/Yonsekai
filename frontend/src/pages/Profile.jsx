@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { ProfileInformation } from "../components/profile_admin/ProfileInformation";
-import { ProfileReservations } from "../components/profile_admin/ProfileReservations";
-import { LogoutBtn } from "../components/auth/LogoutBtn";
-import { DeleteAccount } from "../components/profile_admin/DeleteAccount";
+import { useEffect, useState } from "react"
+import { ProfileInformation } from "../components/profile_admin/ProfileInformation/ProfileInformation"
+import { ProfileReservations } from "../components/profile_admin/ProfileReservation/ProfileReservations"
+import { LogoutBtn } from "../components/auth/LogoutBtn"
+import { DeleteAccount } from "../components/profile_admin/DeleteAccount/DeleteAccount"
+import '../assets/css/profile.css'
 
 export const Profile = () => {
 
@@ -55,20 +56,21 @@ export const Profile = () => {
   }
 
   return (
-    <section>
+    <main className="profil-container">
       <h1>Bienvenue sur votre espace !</h1>
       <p>Vous trouverez ici vos informations et vos réservations.</p>
 
-      <ProfileInformation
-        nom={user.nom}
-        prenom={user.prenom}
-        mail={user.mail}
-      />
+      <section className="client-infos">
+        <ProfileInformation
+          nom={user.nom}
+          prenom={user.prenom}
+          mail={user.mail}
+        />
+        
+        <ProfileReservations reservations={reservations} />
+      </section>
 
-      <ProfileReservations reservations={reservations} />
-
-      <LogoutBtn />
       <DeleteAccount />
-    </section>
+    </main>
   );
 };

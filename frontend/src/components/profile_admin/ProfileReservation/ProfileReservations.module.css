@@ -1,0 +1,192 @@
+.reservation h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    margin-left: 40px;
+}
+
+.reservation {
+    max-width: 400px;
+    width: 95%;
+    margin: auto;
+    font-size: 1.1rem;
+}
+
+.ticketContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 85%;
+    scroll-snap-align: center;
+    color: #fff;
+    max-width: 300px;
+    margin: 20px auto;
+    position: relative;
+    background:
+        radial-gradient(circle at 0 0, transparent 15px, #032bad 16px),
+        radial-gradient(circle at 100% 0, transparent 15px, #032bad 16px),
+        radial-gradient(circle at 0 100%, transparent 15px, #032bad 16px),
+        radial-gradient(circle at 100% 100%, transparent 15px, #032bad 16px);
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    background-position: top left, top right, bottom left, bottom right;
+}
+
+.ticketContainer::before,
+.ticketContainer::after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: #040412;
+    border-radius: 50%;
+    bottom: 12%;
+    transform: translateY(-50%);
+}
+
+.ticketContainer::before {
+    left: -15px;
+}
+
+.ticketContainer::after {
+    right: -15px;
+}
+
+.ticket {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-bottom: 2px dashed #fff;
+}
+
+.infosTicket p:not(.slogan) {
+    font-family: var(--font-subheading);
+    font-size: 1.5rem;
+}
+
+.slogan {
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+.infosTicket span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.infosTicket h3 {
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+
+.infosTicket img {
+    width: 12%;
+}
+
+.imgTicket {
+    flex: 1;
+    height: 150px;
+    position: relative;
+}
+
+.imgTicket img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*
+.imgTicket .title{
+    position: absolute;
+    bottom: -10px;
+    left: -5px;
+    font-family: var(--font-subheading);
+    font-size: 1.7rem;
+    text-transform: uppercase;
+    color:#02185f;
+}*/
+
+.barCode {
+    padding: 10px;
+}
+
+.slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding: 20px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.slider::-webkit-scrollbar {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .reservation {
+        max-width: 900px;
+        width: 100%;
+    }
+
+    .ticketContainer {
+        flex-direction: row;
+        flex: none;
+        align-items: center;
+        max-width: 800px;
+        height: 300px;
+    }
+
+    .ticketContainer::before,
+    .ticketContainer::after {
+        left: 79.5%;
+        transform: translateY(-50%);
+    }
+
+    .ticketContainer::before {
+        top: 0px;
+    }
+
+    .ticketContainer::after {
+        bottom: -30px;
+    }
+
+    .ticket {
+        flex: 3;
+        flex-direction: row;
+        border-bottom: none;
+        border-right: 2px dashed #fff;
+    }
+
+    .infosTicket {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;        
+    }
+
+    .infosTicket p:not(.slogan){
+        font-size: 2rem;
+    }
+
+    .imgTicket {
+        flex: none;
+        height: 250px;
+        width: 200px;
+    }
+
+    .barCode {
+        transform: rotate(-90deg);
+        width: 150px;
+        position: relative;
+        bottom: -27%;
+    }
+
+    .slider {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+        overflow-x: visible;
+        scroll-snap-type: none;
+        gap: 30px;
+    }
+}

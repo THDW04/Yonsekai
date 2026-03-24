@@ -28,7 +28,7 @@ body{
     color: #fff;
 }
 
-h1, h2{
+h1, h2, h3{
     font-family: var(--font-heading);
     font-weight: 400;
 }

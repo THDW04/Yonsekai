@@ -1,0 +1,28 @@
+.infosClient {
+    background-color: #003cff4f;
+    max-width: 400px;
+    width: 95%;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+}
+
+.infosClient h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.infosClient p {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+    .infosClient {
+        max-width: 500px ;
+    }
+}

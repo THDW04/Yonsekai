@@ -66,6 +66,8 @@ export const ReservationForm = () => {
             );
             const data = await response.json();
 
+            if (!response.ok) throw new Error(data.error || "Une erreur est survenue");
+
             setSuccess(true);
             setHour("");
             setNumberAdult(0);
@@ -73,6 +75,7 @@ export const ReservationForm = () => {
 
         } catch (err) {
             console.log(err.message);
+            setError(err.message);
         }
     };
 
@@ -90,7 +93,6 @@ export const ReservationForm = () => {
 
     return (
         <section className={styles.reservationContainer}>
-            <h1>Réservez vos places</h1>
             {error && (
                 <div style={{ color: 'white', background: '#e74c3c', padding: '10px', marginBottom: '20px', borderRadius: '5px' }}>
                     <strong>Erreur :</strong> {error}

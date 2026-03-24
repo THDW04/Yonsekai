@@ -1,0 +1,21 @@
+.profil-container{
+    max-width: 1600px;
+    width: 100%;
+    min-height: 100vh;
+    margin: auto;
+    padding: 30px;
+}
+
+.profil-container h1{
+    font-size: 3.5rem;
+}
+
+.client-infos{
+    min-height: 50vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 100px;
+}
