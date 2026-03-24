@@ -3,13 +3,11 @@ class Utilisateurs
 {
     private $db;
 
-    // On passe la connexion PDO au constructeur
     public function __construct($database)
     {
         $this->db = $database;
     }
 
-    //Créer un utilisateur
     public function createUser($name, $firstName, $mail, $password)
     {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
@@ -24,7 +22,6 @@ class Utilisateurs
         ]);
     }
 
-    //Trouve un utilisateur par son mail
     public function findByMail($mail)
     {
         $query = $this->db->prepare("SELECT * FROM utilisateurs WHERE mail = :mail");
@@ -33,7 +30,6 @@ class Utilisateurs
         return $query->fetch(PDO::FETCH_ASSOC);
     }
 
-    //Récuperer tous les utilisateurs
     public function getAll()
     {
         $query = $this->db->prepare("SELECT * FROM utilisateurs");
@@ -41,7 +37,6 @@ class Utilisateurs
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //Récupère un utilisateur par son id
     public function getOneUser($id)
     {
         $query = $this->db->prepare("SELECT id, nom, prenom, mail FROM utilisateurs WHERE id = :id");
@@ -50,7 +45,18 @@ class Utilisateurs
         return $query->fetch(PDO::FETCH_ASSOC);
     }
 
-    //Supprimer un utilisateur
+    public function updateUser($id, $name, $firstName, $email)
+    {
+        $query = $this->db->prepare("UPDATE utilisateurs SET nom = :nom, prenom = :prenom, mail = :mail WHERE id = :id");
+
+        return $query->execute([
+            ":id" => $id,
+            ":nom" => $name,
+            ":prenom" => $firstName,
+            ":mail" => $email
+        ]);
+    }
+
     public function deleteFullAccount($userId)
     {
         try {

@@ -1,20 +1,15 @@
-export const ControlUserRow = ({ id, name, firstName, mail, onEdit, onDelete }) => {
+export const ControlUserRow = ({ user, onEdit, onDelete }) => {
+  return (
+    <tr>
+      <td>{user.nom}</td>
+      <td>{user.prenom}</td>
+      <td>{user.mail}</td>
 
-   return (
-      <tr>
-         <td>{name}</td>
-         <td>{firstName}</td>
-         <td>{mail}</td>
+      <td>
+        <button onClick={() => onEdit(user)}>Modifier</button>
 
-         <td>
-            <button onClick={() => onEdit({ id, name, firstName, mail })}>
-               Modifier
-            </button>
-
-            <button onClick={() => onDelete(id)}>
-               Supprimer
-            </button>
-         </td>
-      </tr>
-   );
-}
+        <button onClick={() => onDelete(user.id)}>Supprimer</button>
+      </td>
+    </tr>
+  );
+};

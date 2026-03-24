@@ -13,7 +13,7 @@ export const DeleteAccount = () => {
         try {
             const token = localStorage.getItem("userToken");
             
-            const response = await fetch("http://localhost/yonsekai/backend/api/index.php?action=delete-account", {
+            const response = await fetch("http://localhost/yonsekai/backend/api/index.php?action=delete-user", {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${token}`,

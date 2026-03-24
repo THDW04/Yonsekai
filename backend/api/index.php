@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST,PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -75,7 +75,6 @@ switch ($action) {
             echo json_encode(["error" => "Method not allowed"]);
             exit;
         }
-
         $controller = new UtilisateursController($db);
         $controller->login($input);
         break;
@@ -91,7 +90,7 @@ switch ($action) {
         break;
 
     case 'users':
-        verifyToken();
+        requireAdmin();
         $users = new UtilisateursController($db);
         $users->getAll();
         break;
@@ -100,6 +99,12 @@ switch ($action) {
         $idUser = verifyToken();
         $user = new UtilisateursController($db);
         $user->getProfileWithReservations($idUser['id']);
+        break;
+
+    case 'reservations':
+        requireAdmin();
+        $controller = new ReservationController($db);
+        $controller->allReservation();
         break;
 
     case 'create-reservation':
@@ -114,20 +119,37 @@ switch ($action) {
         $controller->reserveADate($input);
         break;
 
-    case 'reservations':
-        $controller = new ReservationController($db);
-        $controller->allReservation();
-        break;
-
-    case 'delete-account':
-        if ($method !== 'DELETE') {
+    case 'update-user':
+        if ($method !== 'PUT') {
             http_response_code(405);
-            echo json_encode(["error" => "Méthode non autorisée. Utilisez DELETE."]);
+            echo json_encode(["error" => "Méthode PUT requise"]);
             exit;
         }
-        $idUser = verifyToken();
+
+        requireAdmin();
+        $user = new UtilisateursController($db);
+        $user->modifyUser($input);
+        break;
+
+    case 'delete-user':
+        $id = isset($_GET['id']) ? $_GET['id'] : null;
+
+        if ($method !== 'DELETE') {
+            http_response_code(405);
+            echo json_encode(["error" => "Méthode DELETE requise"]);
+            exit;
+        }
+
+        if (!$id) {
+            http_response_code(400);
+            echo json_encode(["error" => "ID manquant dans l'URL"]);
+            exit;
+        }
+
+        verifyToken();
+
         $controller = new UtilisateursController($db);
-        $controller->deleteUser($idUser['id']);
+        $controller->deleteUser($id);
         break;
 
     case 'dashboard-stats':

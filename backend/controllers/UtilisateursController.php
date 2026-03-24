@@ -109,7 +109,7 @@ class UtilisateursController
         }
     }
 
-    /*
+
     public function deleteUser($id)
     {
         try {
@@ -136,26 +136,6 @@ class UtilisateursController
         }
     }
 
-    public function controlUser()
-    {
-        $users = $this->userModel->getAllUser();
-
-        echo json_encode([
-            "success" => true,
-            "users" => $users
-        ]);
-    }
-
-    public function getInformation($id)
-    {
-        $user = $this->userModel->getUserById($id);
-
-        echo json_encode([
-            "success" => true,
-            "user" => $user
-        ]);
-    }
-
     public function modifyUser($data)
     {
         $id = $data['id'] ?? null;
@@ -169,5 +149,4 @@ class UtilisateursController
             "success" => $result
         ]);
     }
-        */
 }
