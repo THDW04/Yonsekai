@@ -1,6 +1,8 @@
+import { useState, useEffect } from "react";
+import { ControlUserTab } from "../components/ControlUserTab";
+import { ModifyUserTab } from "../components/ModifyUserTab";
 import { DashboardStats } from "../components/profile_admin/DashboardStats";
 import { LogoutBtn } from "../components/auth/LogoutBtn";
-import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 
 export const Admin = () => {
@@ -23,12 +25,43 @@ export const Admin = () => {
         }
     }, []);
 
+    const [users, setUsers] = useState([]);
+    const [selectedUser, setSelectedUser] = useState(null);
+
+    const handleEdit = (user) => {
+        setSelectedUser(user);
+    };
+
+    const handleDelete = (id) => {
+
+        fetch(`http://localhost/yonsekai/backend/api/apiController.php?action=deleteUser&id=${id}`, {
+            method: "DELETE"
+        })
+            .then(() => {
+                setUsers(users.filter(user => user.id !== id));
+            });
+
+    };
+
     return (
         <section>
             <LogoutBtn />
             <h1>Administration</h1>
             <p>Vous pouvez consulter ici les statistiques de fréquentation.</p>
             <DashboardStats />
+            <section>
+
+                <ControlUserTab
+                    users={users}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                />
+
+                {selectedUser && (
+                    <ModifyUserTab user={selectedUser} />
+                )}
+
+            </section>
         </section>
     )
 }

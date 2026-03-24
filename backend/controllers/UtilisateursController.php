@@ -16,23 +16,18 @@ class UtilisateursController
         $this->reservationModel = new Reservation($db);
     }
 
-    //Liste des utilisateurs
     public function getAll()
     {
         $users = $this->userModel->getAll();
         echo json_encode($users);
     }
 
-    //  Informations et réservation d'un client
     public function getProfileWithReservations($id)
     {
-        //récuperer un utilisateur
         $user = $this->userModel->getOneUser($id);
 
-        //réservations de cet utilisateur
         $reservations = $this->reservationModel->getReservationByUser($user['id']);
 
-        // fusionner dans un seul tableau
         $result = [
             "user" => [
                 "id" => $user["id"],
@@ -46,10 +41,8 @@ class UtilisateursController
         echo json_encode($result);
     }
 
-    //Inscription
     public function register($data)
     {
-        //récupérer les données
         $name = $data['name'];
         $firstName = $data['firstName'];
         $email = $data['mail'] ?? null;
@@ -65,7 +58,6 @@ class UtilisateursController
             return;
         }
 
-        //créer l'utilisateur
         $success = $this->userModel->createUser($name, $firstName, $email, $password);
 
         if (!$success) {
@@ -76,14 +68,12 @@ class UtilisateursController
             return;
         }
 
-        //réponse succès
         http_response_code(201);
         echo json_encode([
             "message" => "Compte créé avec succès"
         ]);
     }
 
-    //Connexion
     public function login($data)
     {
         $email = $data['mail'] ?? null;
@@ -119,7 +109,7 @@ class UtilisateursController
         }
     }
 
-    //Suppression du compte
+    /*
     public function deleteUser($id)
     {
         try {
@@ -145,4 +135,39 @@ class UtilisateursController
             ]);
         }
     }
+
+    public function controlUser()
+    {
+        $users = $this->userModel->getAllUser();
+
+        echo json_encode([
+            "success" => true,
+            "users" => $users
+        ]);
+    }
+
+    public function getInformation($id)
+    {
+        $user = $this->userModel->getUserById($id);
+
+        echo json_encode([
+            "success" => true,
+            "user" => $user
+        ]);
+    }
+
+    public function modifyUser($data)
+    {
+        $id = $data['id'] ?? null;
+        $name = $data['name'] ?? null;
+        $firstName = $data['firstName'] ?? null;
+        $mail = $data['mail'] ?? null;
+
+        $result = $this->userModel->updateUser($id, $name, $firstName, $mail);
+
+        echo json_encode([
+            "success" => $result
+        ]);
+    }
+        */
 }

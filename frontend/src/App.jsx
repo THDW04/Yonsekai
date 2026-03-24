@@ -7,6 +7,8 @@ import { Profile } from './pages/Profile';
 import { Admin } from './pages/Admin';
 import './assets/css/style.css'
 
+import { Admin } from './pages/Admin';
+
 function App() {
 
   return (
