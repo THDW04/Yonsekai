@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import { ProfileInformation } from "../components/profile_admin/ProfileInformation/ProfileInformation"
-import { ProfileReservations } from "../components/profile_admin/ProfileReservation/ProfileReservations"
+import { ProfileInformation } from "../components/profile/ProfileInformation/ProfileInformation"
+import { ProfileReservations } from "../components/profile/ProfileReservation/ProfileReservations"
 import { LogoutBtn } from "../components/auth/LogoutBtn"
-import { DeleteAccount } from "../components/profile_admin/DeleteAccount/DeleteAccount"
+import { DeleteAccount } from "../components/profile/DeleteAccount/DeleteAccount"
 import '../assets/css/profile.css'
 
 export const Profile = () => {

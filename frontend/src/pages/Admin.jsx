@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { ControlUserTab } from "../components/ControlUserTab";
-import { ModifyUserTab } from "../components/ModifyUserTab";
-import { DashboardStats } from "../components/profile_admin/DashboardStats";
+import { ControlUserTab } from "../components/admin/ControlUserTab";
+import { ModifyUserTab } from "../components/admin/ModifyUserTab";
+import { DashboardStats } from "../components/admin/DashboardStats";
 import { LogoutBtn } from "../components/auth/LogoutBtn";
 import { jwtDecode } from "jwt-decode";
 
@@ -92,7 +92,6 @@ export const Admin = () => {
                         onUserUpdated={handleUserUpdated}
                     />
                 )}
-
             </div>
         </section>
     )
