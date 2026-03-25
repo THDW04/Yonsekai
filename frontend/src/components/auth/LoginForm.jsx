@@ -10,42 +10,37 @@ export const LoginForm = () => {
 
     const [error, setError] = useState(null);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
 
-        const userDataLogin = {
-            mail: mail,
-            password: password
-        };
+        const userDataLogin = { mail, password };
 
-        fetch('http://localhost/yonsekai/backend/api/index.php?action=login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(userDataLogin),
-        })
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                if (!data.success) {
-                    setError(data.message);
-                    return;
-                }
-                localStorage.setItem('userToken', data.token);
-                const decoded = jwtDecode(data.token);
-
-                if (decoded.role !== "admin") {
-                    window.location.href = "/profil";
-                } else {
-                    window.location.href = "/administration";
-                }
-            })
-            .catch(err => {
-                console.error('Erreur de connexion:', err);
+        try {
+            const response = await fetch('http://localhost/yonsekai/backend/api/index.php?action=login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(userDataLogin),
             });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || `Erreur serveur : ${response.status}`);
+            }
+
+            localStorage.setItem('userToken', data.token);
+            const decoded = jwtDecode(data.token);
+
+            window.location.href = decoded.role === "admin" ? "/administration" : "/profil";
+
+        } catch (err) {
+            setError('Erreur de connexion');
+            console.error('Erreur de connexion:', err);
+        }
     };
 
     return (

@@ -113,6 +113,7 @@ switch ($action) {
             echo json_encode(["error" => "Méthode POST requise"]);
             exit;
         }
+        
         $user = verifyToken();
         $input['id_user'] = $user['id'];
         $controller = new ReservationController($db);
@@ -155,7 +156,7 @@ switch ($action) {
     case 'dashboard-stats':
         requireAdmin();
         $controller = new ReservationController($db);
-        $debut = $_GET['debut'] ?? date('Y-m-d', strtotime('-7 days'));
+        $debut = $_GET['debut'] ?? date('Y-m-d');
         $fin = $_GET['fin'] ?? date('Y-m-d');
         $controller->getDashboardStats($debut, $fin);
         break;

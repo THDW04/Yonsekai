@@ -4,9 +4,11 @@ require_once __DIR__ . '/../models/Reservation.php';
 class ReservationController
 {
     private $reservationModel;
+    private $db; // On ajoute cette propriété pour gérer les transactions
 
     public function __construct($db)
     {
+        $this->db = $db; // On stocke l'instance PDO ici
         $this->reservationModel = new Reservation($db);
     }
 
@@ -14,44 +16,44 @@ class ReservationController
     {
         header('Content-Type: application/json');
 
-        if (
-            empty($data['date']) ||
-            empty($data['hour']) ||
-            empty($data['id_user'])
-        ) {
+        if (empty($data['date']) || empty($data['hour']) || empty($data['id_user'])) {
             http_response_code(400);
-            echo json_encode(["error" => "Données invalides"]);
+            echo json_encode(["error" => "Données incomplètes"]);
             return;
         }
 
-        $date = $data['date'];
-        $hour = $data['hour'];
         $numberAdult = (int) ($data['numberAdult'] ?? 0);
         $numberStudent = (int) ($data['numberStudent'] ?? 0);
-        $fk_user = (int) $data['id_user'];
 
-        $total = $numberAdult + $numberStudent;
-
-        if ($total <= 0 || $total > 10) {
+        if (($numberAdult + $numberStudent) <= 0) {
             http_response_code(400);
-            echo json_encode(["error" => "Nombre de billets invalide"]);
+            echo json_encode(["error" => "Veuillez sélectionner au moins un billet"]);
             return;
         }
 
         try {
-            $fk_reservation = $this->reservationModel->bookDate($date, $hour, $fk_user);
+            $this->db->beginTransaction();
+
+            $fk_reservation = $this->reservationModel->bookDate($data['date'], $data['hour'], $data['id_user']);
 
             $types = [
-                "adult" => $numberAdult,
+                "adulte" => $numberAdult,
                 "jeune" => $numberStudent
             ];
 
             foreach ($types as $type => $quantity) {
                 if ($quantity > 0) {
                     $fk_type = $this->reservationModel->findTypeTicket($type);
+
+                    if (!$fk_type) {
+                        throw new Exception("Type de billet '$type' introuvable en base.");
+                    }
+
                     $this->reservationModel->bookTickets($fk_reservation, $fk_type, $quantity);
                 }
             }
+
+            $this->db->commit(); 
 
             http_response_code(201);
             echo json_encode([
@@ -60,12 +62,18 @@ class ReservationController
             ]);
 
         } catch (Exception $e) {
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+
             http_response_code(500);
             echo json_encode([
-                "error" => "Erreur serveur"
+                "error" => "Erreur lors de la réservation",
+                "details" => $e->getMessage() // à retirer en production
             ]);
         }
     }
+
     public function allReservation()
     {
         $allReservation = $this->reservationModel->getAllReservation();

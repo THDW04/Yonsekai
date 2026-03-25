@@ -13,6 +13,7 @@ import {
     ArcElement,
     Filler
 } from "chart.js";
+import styles from './DashboardStats.module.css';
 
 ChartJS.register(
     CategoryScale,
@@ -95,7 +96,6 @@ export const DashboardStats = () => {
     if (loading) return <p>Chargement des statistiques...</p>;
     if (error) return <p>Erreur : {error}</p>;
 
-    // Préparer les données pour Chart.js
     const hourLabels = statsHour.map(item => item.horaire);
     const hourData = statsHour.map(item => item.total);
 
@@ -154,8 +154,8 @@ export const DashboardStats = () => {
                 label: "Nombre",
                 data: ticketData,
                 backgroundColor: [
-                    "rgba(255, 99, 132, 0.7)",
-                    "rgba(255, 206, 86, 0.7)"
+                    "rgb(255, 99, 132)",
+                    "rgb(255, 206, 86)"
                 ],
                 borderWidth: 0,
                 borderRadius: 20,
@@ -180,7 +180,6 @@ export const DashboardStats = () => {
             const { width, height, ctx } = chart;
             ctx.save();
 
-            // Calcul du total
             const total = ticketData.reduce((sum, val) => Number(sum) + Number(val), 0);
 
             ctx.font = "bold 5rem sans-serif";
@@ -198,7 +197,7 @@ export const DashboardStats = () => {
     };
 
     return (
-        <section className="stats-container">
+        <section className={styles.statsContainer}>
             <form>
                 <label htmlFor="periode">Choisissez une période :</label>
                 <select
@@ -211,19 +210,18 @@ export const DashboardStats = () => {
                     <option value={90}>Les 3 derniers mois</option>
                 </select>
             </form>
-            <div className="stats stats-hour" style={{ maxWidth: 700, margin: "2rem auto" }}>
+            <div className={`${styles.stats} ${styles.statsTicket}`}>
+                <Doughnut data={ticketChartData} plugins={[centerTextPlugin]} />
+                <h2>Répartition par type de ticket</h2>
+            </div>
+            <div className={`${styles.stats} ${styles.statsHour}`}>
                 <Bar data={hourChartData} options={options} />
                 <h2>Fréquentation par heure</h2>
             </div>
 
-            <div className="stats stats-day" style={{ maxWidth: 700, margin: "2rem auto" }}>
+            <div className={`${styles.stats} ${styles.statsDay}`}>
                 <Line data={dayChartData} options={options} />
                 <h2>Fréquentation par jour</h2>
-            </div>
-
-            <div className="stats stats-ticket" style={{ maxWidth: 400, margin: "2rem auto" }}>
-                <Doughnut data={ticketChartData} plugins={[centerTextPlugin]} />
-                <h2>Répartition par type de ticket</h2>
             </div>
         </section>
     )

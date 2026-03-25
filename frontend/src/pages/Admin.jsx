@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { ControlUserTab } from "../components/admin/ControlUserTab";
 import { ModifyUserTab } from "../components/admin/ModifyUserTab";
-import { DashboardStats } from "../components/admin/DashboardStats";
+import { DashboardStats } from "../components/admin/DashboardStats/DashboardStats";
 import { LogoutBtn } from "../components/auth/LogoutBtn";
 import { jwtDecode } from "jwt-decode";
 
@@ -75,8 +75,9 @@ export const Admin = () => {
     return (
         <section>
             <LogoutBtn />
-            <h1>Administration</h1>
+            <h1>Bonjour, Admin</h1>
             <p>Vous pouvez consulter ici les statistiques de fréquentation.</p>
+            
             <DashboardStats />
 
             <div>
