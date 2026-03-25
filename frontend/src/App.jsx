@@ -5,6 +5,7 @@ import { Login } from './pages/Login';
 import {Reservation} from './pages/Reservation';
 import { Profile } from './pages/Profile';
 import { Admin } from './pages/Admin';
+import { Game } from './pages/Game';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
             <Route path="/reservation" element={<Reservation />} />
             <Route path="/profil" element={<Profile />} />
             <Route path="/administration" element={<Admin />} />
+            <Route path="/game" element={<Game />} />
           </Routes>
         </BrowserRouter>
       </main>
