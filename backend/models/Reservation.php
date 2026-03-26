@@ -21,11 +21,11 @@ class Reservation
 
     public function findTypeTicket($nameTicket)
     {
-        $query = $this->db->prepare("SELECT id FROM type_billet WHERE nom = :nameTicket");
+        $query = $this->db->prepare("SELECT id_type FROM type_billet WHERE nom = :nameTicket");
         $query->execute([":nameTicket" => $nameTicket]);
 
         $result = $query->fetch(PDO::FETCH_ASSOC);
-        return $result ? $result['id'] : null;
+        return $result ? $result['id_type'] : null;
     }
 
 
@@ -42,14 +42,13 @@ class Reservation
     public function getAllReservation()
     {
         $query = $this->db->prepare("SELECT * FROM reservation");
-        return $query->fetchall(PDO::FETCH_ASSOC);
         $query->execute();
+        return $query->fetchall(PDO::FETCH_ASSOC);
     }
-
 
     public function getReservationByUser($id)
     {
-        $query = "SELECT id, date, horaire FROM reservation WHERE fk_utilisateur = :id";
+        $query = "SELECT id_reservation, date, horaire FROM reservation WHERE fk_utilisateur = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -59,8 +58,9 @@ class Reservation
 
     public function getStatsByHour($debut, $fin)
     {
-        $query = "SELECT horaire, SUM(quantite) AS total FROM reservation
-                JOIN reservation_type ON reservation.id = reservation_type.fk_reservation
+        $query = "SELECT horaire, SUM(quantite) AS total 
+                FROM reservation
+                JOIN reservation_type ON reservation.id_reservation = reservation_type.fk_reservation
                 WHERE reservation.date BETWEEN :debut AND :fin
                 GROUP BY horaire
                 ORDER BY horaire ASC";
@@ -74,7 +74,7 @@ class Reservation
     {
         $query = "SELECT DAYNAME(reservation.date) AS jour, SUM(quantite) AS total
                 FROM reservation
-                JOIN reservation_type ON reservation.id = reservation_type.fk_reservation
+                JOIN reservation_type ON reservation.id_reservation = reservation_type.fk_reservation
                 WHERE reservation.date BETWEEN :debut AND :fin
                 GROUP BY date
                 ORDER BY date ASC";
@@ -88,8 +88,8 @@ class Reservation
     {
         $query = "SELECT type_billet.nom, SUM(reservation_type.quantite) AS total
               FROM reservation
-              JOIN reservation_type ON reservation.id = reservation_type.fk_reservation
-              JOIN type_billet ON type_billet.id = reservation_type.fk_type
+              JOIN reservation_type ON reservation.id_reservation = reservation_type.fk_reservation
+              JOIN type_billet ON type_billet.id_type = reservation_type.fk_type
               WHERE reservation.date BETWEEN :debut AND :fin
               GROUP BY type_billet.nom";
 

@@ -36,7 +36,7 @@ export const ModifyUserTab = ({ user, onUserUpdated }) => {
             .then(data => {
                 if (data.success) {
                     onUserUpdated({
-                        id: id,
+                        id_user: id,
                         nom: name,
                         prenom: firstName,
                         mail: mail

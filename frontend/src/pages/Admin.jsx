@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { ControlUserTab } from "../components/admin/ControlUserTab";
+import { ControlUserTab } from "../components/admin/ControllUserTab/ControllUserTab";
 import { ModifyUserTab } from "../components/admin/ModifyUserTab";
 import { DashboardStats } from "../components/admin/DashboardStats/DashboardStats";
 import { LogoutBtn } from "../components/auth/LogoutBtn";
 import { jwtDecode } from "jwt-decode";
+import '../assets/css/admin.css'
 
 export const Admin = () => {
     const [users, setUsers] = useState([]);
@@ -53,12 +54,12 @@ export const Admin = () => {
     const handleDelete = (id) => {
 
         fetch("http://localhost/yonsekai/backend/api/index.php?action=delete-user", {
-                method: "DELETE",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            })
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        })
             .then(() => {
                 setUsers(users.filter(user => user.id !== id));
             });
@@ -73,27 +74,27 @@ export const Admin = () => {
     };
 
     return (
-        <section>
+        <main className="admin-main">
             <LogoutBtn />
             <h1>Bonjour, Admin</h1>
             <p>Vous pouvez consulter ici les statistiques de fréquentation.</p>
-            
-            <DashboardStats />
 
-            <div>
-                <ControlUserTab
-                    users={users}
-                    onEdit={handleEdit}
-                    onDelete={handleDelete}
-                />
-
-                {selectedUser && (
-                    <ModifyUserTab
-                        user={selectedUser}
-                        onUserUpdated={handleUserUpdated}
+            <section className="admin-container">
+                <DashboardStats />
+                <div className="admin-user">
+                    <ControlUserTab
+                        users={users}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
                     />
-                )}
-            </div>
-        </section>
+                    {selectedUser && (
+                        <ModifyUserTab
+                            user={selectedUser}
+                            onUserUpdated={handleUserUpdated}
+                        />
+                    )}
+                </div>
+            </section>
+        </main>
     )
 }

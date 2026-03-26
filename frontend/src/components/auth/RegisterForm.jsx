@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './auth.module.css'
+import { Link } from 'react-router-dom';
 
 export const RegisterForm = () => {
     const [name, setName] = useState('');
@@ -79,6 +80,7 @@ export const RegisterForm = () => {
                         </button>
                     </div>
                     <button type="submit">S'inscrire</button>
+                    <p className={styles.links}>Déjà inscrit ? <Link to="/connexion">Connectez-vous ici</Link></p>
                 </form>
             </div>
         </section>

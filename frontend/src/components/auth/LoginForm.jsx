@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { jwtDecode } from "jwt-decode";
 import styles from './auth.module.css'
+import { Link } from 'react-router-dom';
 
 export const LoginForm = () => {
     const [mail, setMail] = useState('');
@@ -77,6 +78,7 @@ export const LoginForm = () => {
                         </button>
                     </div>
                     <button type="submit">Se connecter</button>
+                    <p className={styles.links}>Pas de compte ? <Link to="/inscription">Inscrivez-vous ici</Link></p>
                 </form>
             </div>
         </section>

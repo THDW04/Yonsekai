@@ -4,11 +4,11 @@ require_once __DIR__ . '/../models/Reservation.php';
 class ReservationController
 {
     private $reservationModel;
-    private $db; // On ajoute cette propriété pour gérer les transactions
+    private $db; 
 
     public function __construct($db)
     {
-        $this->db = $db; // On stocke l'instance PDO ici
+        $this->db = $db;
         $this->reservationModel = new Reservation($db);
     }
 
@@ -68,8 +68,7 @@ class ReservationController
 
             http_response_code(500);
             echo json_encode([
-                "error" => "Erreur lors de la réservation",
-                "details" => $e->getMessage() // à retirer en production
+                "error" => "Erreur lors de la réservation"
             ]);
         }
     }

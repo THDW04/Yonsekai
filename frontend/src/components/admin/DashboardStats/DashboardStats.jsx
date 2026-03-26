@@ -109,7 +109,7 @@ export const DashboardStats = () => {
         labels: hourLabels,
         datasets: [
             {
-                label: "Fréquentation par créneau horaire",
+                label: "Nombre de visite",
                 data: hourData,
                 borderColor: '#4b9fc0',
                 borderWidth: 2,
@@ -129,7 +129,7 @@ export const DashboardStats = () => {
         labels: dayLabels,
         datasets: [
             {
-                label: "Fréquentation par jour",
+                label: "Nombre de visite",
                 data: dayData,
                 fill: true,
                 borderColor: '#4bc072',
@@ -167,11 +167,38 @@ export const DashboardStats = () => {
 
     const options = {
         responsive: true,
+        maintainAspectRatio: false,
+        resizeDelay: 0,
         scales: {
+            x: {
+                boundaryGap: false,
+                grid: { display: false },
+                ticks: {
+                    color: '#000',
+                    font: { family: 'Montserrat' }
+                }
+            },
             y: {
                 beginAtZero: true,
+                ticks: {
+                    color: '#000',
+                    font: { family: 'Montserrat' }
+                }
             }
-        }
+        },
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                backgroundColor: '#1e293b',
+                titleColor: '#ffffff',
+                bodyColor: '#ffffff',
+                titleFont: { size: 16, family: 'Montserrat', weight: 500 },
+                bodySpacing: 6,
+                padding: 12,
+                cornerRadius: 8,
+                displayColors: false
+            }
+        },
     };
 
     const centerTextPlugin = {
@@ -182,7 +209,7 @@ export const DashboardStats = () => {
 
             const total = ticketData.reduce((sum, val) => Number(sum) + Number(val), 0);
 
-            ctx.font = "bold 5rem sans-serif";
+            ctx.font = "bold 3rem sans-serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillStyle = "#000";
@@ -197,7 +224,7 @@ export const DashboardStats = () => {
     };
 
     return (
-        <section className={styles.statsContainer}>
+        <div className={styles.statsContainer}>
             <form>
                 <label htmlFor="periode">Choisissez une période :</label>
                 <select
@@ -210,19 +237,19 @@ export const DashboardStats = () => {
                     <option value={90}>Les 3 derniers mois</option>
                 </select>
             </form>
-            <div className={`${styles.stats} ${styles.statsTicket}`}>
-                <Doughnut data={ticketChartData} plugins={[centerTextPlugin]} />
-                <h2>Répartition par type de ticket</h2>
-            </div>
-            <div className={`${styles.stats} ${styles.statsHour}`}>
-                <Bar data={hourChartData} options={options} />
-                <h2>Fréquentation par heure</h2>
-            </div>
-
             <div className={`${styles.stats} ${styles.statsDay}`}>
                 <Line data={dayChartData} options={options} />
                 <h2>Fréquentation par jour</h2>
             </div>
-        </section>
+            <div className={`${styles.stats} ${styles.statsTicket}`}>
+                <Doughnut data={ticketChartData} plugins={[centerTextPlugin]} />
+                <h2>Répartition par type de ticket</h2>
+            </div>
+
+            <div className={`${styles.stats} ${styles.statsHour}`}>
+                <Bar data={hourChartData} options={options} />
+                <h2>Fréquentation par heure</h2>
+            </div>
+        </div>
     )
 }

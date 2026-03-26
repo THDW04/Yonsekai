@@ -57,6 +57,7 @@ export const Profile = () => {
 
   return (
     <main className="profil-container">
+      <LogoutBtn /> 
       <h1>Bienvenue sur votre espace !</h1>
       <p>Vous trouverez ici vos informations et vos réservations.</p>
 

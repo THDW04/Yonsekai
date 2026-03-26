@@ -59,7 +59,7 @@
 }
 
 .formContainer input {
-    width: 90%;
+    width: 100%;
     padding: 0.8rem;
     border: none;
     border-bottom: 2px solid #fff;
@@ -73,6 +73,11 @@
 
 .inputNames{
     display: flex;
+    gap: 30px;
+}
+
+.inputNames div{
+    flex: 1;
 }
 
 button[type="submit"] {
@@ -106,7 +111,7 @@ button[type="submit"]:hover {
     background-color: transparent;
     color: #fff;
     position: absolute;
-    right: 10%;
+    right: 0%;
     bottom: 20%;
     font-family: var(--font-body);
     cursor: pointer;
@@ -114,6 +119,22 @@ button[type="submit"]:hover {
 
 input:focus+#togglePassword {
     color: #000;
+}
+
+.links{
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 30px;
+}
+
+.links a{
+    color: #e9b301;
+    text-decoration: none;
+    transition: text-decoration 0.2s ease;
+}
+
+.links a:hover{
+    text-decoration: underline;
 }
 
 @media (min-width: 800px) {

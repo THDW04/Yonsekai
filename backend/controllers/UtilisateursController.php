@@ -26,11 +26,11 @@ class UtilisateursController
     {
         $user = $this->userModel->getOneUser($id);
 
-        $reservations = $this->reservationModel->getReservationByUser($user['id']);
+        $reservations = $this->reservationModel->getReservationByUser($user['id_user']);
 
         $result = [
             "user" => [
-                "id" => $user["id"],
+                "id" => $user["id_user"],
                 "nom" => $user["nom"],
                 "prenom" => $user["prenom"],
                 "mail" => $user["mail"]
@@ -86,7 +86,7 @@ class UtilisateursController
             $key = "une_cle_tres_longue_et_securisee_pour_ma_sae_2026_yonsekai_equipe_dev";
 
             $payload = [
-                "user_id" => $user["id"],
+                "user_id" => $user["id_user"],
                 "role" => $user["role"],
                 "exp" => time() + 3600
             ];
@@ -108,7 +108,6 @@ class UtilisateursController
             ]);
         }
     }
-
 
     public function deleteUser($id)
     {
@@ -138,7 +137,7 @@ class UtilisateursController
 
     public function modifyUser($data)
     {
-        $id = $data['id'] ?? null;
+        $id = $data['id_user'] ?? null;
         $name = $data['name'] ?? null;
         $firstName = $data['firstName'] ?? null;
         $mail = $data['mail'] ?? null;
