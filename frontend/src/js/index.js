@@ -11,17 +11,23 @@ import l_New_Layer_4 from '../data/l_New_Layer_4.js'
 
 import './eventListeners.js'
 
-const canvas = document.querySelector('canvas')
-const c = canvas.getContext('2d')
+/* ======================================================
+   VARIABLES GLOBAL GAME
+====================================================== */
+
+let canvas
+let c
+
 const dpr = window.devicePixelRatio || 1
 
-canvas.width = 1024 * dpr
-canvas.height = 576 * dpr
+/* ======================================================
+   MAP DATA
+====================================================== */
 
 const layersData = {
-  l_New_Layer_1: l_New_Layer_1,
-  l_New_Layer_4: l_New_Layer_4,
-  l_New_Layer_3: l_New_Layer_3,
+  l_New_Layer_1,
+  l_New_Layer_4,
+  l_New_Layer_3,
 }
 
 const tilesets = {
@@ -30,13 +36,17 @@ const tilesets = {
   l_New_Layer_3: { imageUrl: './images/802ce508-7dfd-4e07-d205-b7b22ab0cd00.png', tileSize: 16 },
 }
 
-// Tile setup
+/* ======================================================
+   COLLISIONS
+====================================================== */
+
 const collisionBlocks = []
 const platforms = []
 const blockSize = 16
 
 collisions.forEach((row, y) => {
   row.forEach((symbol, x) => {
+
     if (symbol === 1) {
       collisionBlocks.push(
         new CollisionBlock({
@@ -45,7 +55,9 @@ collisions.forEach((row, y) => {
           size: blockSize,
         })
       )
-    } else if (symbol === 2) {
+    }
+
+    if (symbol === 2) {
       platforms.push(
         new Platform({
           x: x * blockSize,
@@ -55,53 +67,14 @@ collisions.forEach((row, y) => {
         })
       )
     }
+
   })
 })
 
-const renderLayer = (tilesData, tilesetImage, tileSize, context) => {
-  const tilesPerRow = Math.ceil(tilesetImage.width / tileSize)
+/* ======================================================
+   PLAYER
+====================================================== */
 
-  tilesData.forEach((row, y) => {
-    row.forEach((symbol, x) => {
-      if (symbol !== 0) {
-        const tileIndex = symbol - 1
-        const srcX = (tileIndex % tilesPerRow) * tileSize
-        const srcY = Math.floor(tileIndex / tilesPerRow) * tileSize
-
-        context.drawImage(
-          tilesetImage,
-          srcX, srcY,
-          tileSize, tileSize,
-          x * 16, y * 16,
-          16, 16
-        )
-      }
-    })
-  })
-}
-
-const renderStaticLayers = async () => {
-  const offscreenCanvas = document.createElement('canvas')
-  offscreenCanvas.width = canvas.width
-  offscreenCanvas.height = canvas.height
-  const offscreenContext = offscreenCanvas.getContext('2d')
-
-  for (const [layerName, tilesData] of Object.entries(layersData)) {
-    const tilesetInfo = tilesets[layerName]
-    if (tilesetInfo) {
-      try {
-        const tilesetImage = await loadImage(tilesetInfo.imageUrl)
-        renderLayer(tilesData, tilesetImage, tilesetInfo.tileSize, offscreenContext)
-      } catch (error) {
-        console.error(`Failed to load image for layer ${layerName}:`, error)
-      }
-    }
-  }
-
-  return offscreenCanvas
-}
-
-// Change xy coordinates to move player's default position
 export const player = new Player({
   x: 100,
   y: 100,
@@ -115,11 +88,17 @@ export const keys = {
   space: { pressed: false },
 }
 
+
+
 export let lastTime = performance.now()
 
 export function setLastTime(value) {
   lastTime = value
 }
+
+/* ======================================================
+   CAMERA
+====================================================== */
 
 const camera = { x: 0, y: 0 }
 
@@ -127,7 +106,70 @@ const SCROLL_POST_RIGHT = 500
 const SCROLL_POST_TOP = 100
 const SCROLL_POST_BOTTOM = 200
 
+/* ======================================================
+   RENDER MAP
+====================================================== */
+
+const renderLayer = (tilesData, tilesetImage, tileSize, context) => {
+
+  const tilesPerRow = Math.ceil(tilesetImage.width / tileSize)
+
+  tilesData.forEach((row, y) => {
+    row.forEach((symbol, x) => {
+
+      if (symbol === 0) return
+
+      const tileIndex = symbol - 1
+
+      const srcX = (tileIndex % tilesPerRow) * tileSize
+      const srcY = Math.floor(tileIndex / tilesPerRow) * tileSize
+
+      context.drawImage(
+        tilesetImage,
+        srcX,
+        srcY,
+        tileSize,
+        tileSize,
+        x * 16,
+        y * 16,
+        16,
+        16
+      )
+    })
+  })
+}
+
+const renderStaticLayers = async () => {
+
+  const offscreenCanvas = document.createElement('canvas')
+  offscreenCanvas.width = canvas.width
+  offscreenCanvas.height = canvas.height
+
+  const offscreenContext = offscreenCanvas.getContext('2d')
+
+  for (const [layerName, tilesData] of Object.entries(layersData)) {
+
+    const tilesetInfo = tilesets[layerName]
+
+    const tilesetImage = await loadImage(tilesetInfo.imageUrl)
+
+    renderLayer(
+      tilesData,
+      tilesetImage,
+      tilesetInfo.tileSize,
+      offscreenContext
+    )
+  }
+
+  return offscreenCanvas
+}
+
+/* ======================================================
+   GAME LOOP
+====================================================== */
+
 function animate(backgroundCanvas) {
+
   const currentTime = performance.now()
   const deltaTime = (currentTime - lastTime) / 1000
   lastTime = currentTime
@@ -135,6 +177,7 @@ function animate(backgroundCanvas) {
   player.handleInput(keys)
   player.update(deltaTime, collisionBlocks, platforms)
 
+  // CAMERA = monde bouge, PAS le canvas
   if (player.x > SCROLL_POST_RIGHT) {
     camera.x = player.x - SCROLL_POST_RIGHT
   }
@@ -148,27 +191,49 @@ function animate(backgroundCanvas) {
   }
 
   c.save()
+
+  c.clearRect(0, 0, canvas.width, canvas.height)
+
   c.scale(dpr, dpr)
   c.translate(-camera.x, camera.y)
-  c.clearRect(0, 0, canvas.width, canvas.height)
+
   c.drawImage(backgroundCanvas, 0, 0)
   player.draw(c)
+
   c.restore()
 
   requestAnimationFrame(() => animate(backgroundCanvas))
 }
 
-const startRendering = async () => {
-  try {
-    const backgroundCanvas = await renderStaticLayers()
-    if (!backgroundCanvas) {
-      console.error('Failed to create the background canvas')
-      return
-    }
-    animate(backgroundCanvas)
-  } catch (error) {
-    console.error('Error during rendering:', error)
+/* ======================================================
+   START GAME 
+====================================================== */
+
+async function startGame() {
+
+  canvas = document.querySelector('canvas')
+
+  if (!canvas) {
+    console.error('Canvas introuvable')
+    return
   }
+
+  c = canvas.getContext('2d')
+
+  canvas.width = 1024 * dpr
+  canvas.height = 576 * dpr
+
+  const backgroundCanvas = await renderStaticLayers()
+
+  animate(backgroundCanvas)
 }
 
-startRendering()
+/* ======================================================
+   DOM SAFE START
+====================================================== */
+
+if (document.readyState === 'loading') {
+  window.addEventListener('DOMContentLoaded', startGame)
+} else {
+  startGame()
+}
