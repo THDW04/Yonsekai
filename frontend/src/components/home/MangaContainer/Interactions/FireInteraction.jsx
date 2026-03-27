@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import lottie from 'lottie-web';
-import fireAnimation from '../../../../js/Fire.json'; // Ton fichier JSON
+import fireAnimation from '../../../../js/Fire.json';
 import styles from './Interactions.module.css';
 
 export const FireInteraction = () => {
-    // 1. Déclaration des Refs pour cibler les éléments sans document.querySelector
     const spotlightRef = useRef(null);
     const lottieContainerRef = useRef(null);
     const lottieRef = useRef(null);
@@ -81,11 +80,9 @@ export const FireInteraction = () => {
         window.addEventListener("mousemove", onMouseMove);
         window.addEventListener("resize", init);
 
-        // Lancement
         init();
         animate();
 
-        // --- NETTOYAGE (Important en React) ---
         return () => {
             window.removeEventListener("mousemove", onMouseMove);
             window.removeEventListener("resize", init);

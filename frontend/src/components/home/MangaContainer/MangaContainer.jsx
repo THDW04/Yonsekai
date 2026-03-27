@@ -65,7 +65,6 @@ export const MangaContainer = () => {
           </Suspense>
         </Canvas>
 
-        {/* LES INTERACTIONS JS (Premier plan) */}
         <div className={styles.interactionLayer}>
           {data.map((section, i) => (
             <div key={`inter-${i}`} className={styles.fullScreenSection}>
