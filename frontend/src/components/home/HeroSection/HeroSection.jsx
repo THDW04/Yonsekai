@@ -20,13 +20,13 @@ function MovingClouds({ position }) {
         ref.current.position.x += delta * 0.7
 
 
-        if (ref.current.position.x > 15) {
-            ref.current.position.x = 5
+        if (ref.current.position.x > 25) {
+            ref.current.position.x = 0
         }
     })
 
     return (
-        <Cloud ref={ref} position={position} volume={5} fade={100} color="red" speed={0.5} />
+        <Cloud ref={ref} position={position} volume={3} fade={150} color="lightgrey" speed={0.7} />
     )
 }
 
@@ -95,8 +95,9 @@ export const HeroSection = () => {
                     <Model scale={0.3} rotation={[0.001, -4.6, 0]} />
 
                     <Clouds material={THREE.MeshBasicMaterial}>
-                        <MovingClouds position={[5, 2, 19]} />
-                        <MovingClouds position={[3, 2, 10]} />
+                        <MovingClouds position={[3, 2, 19]} />
+                        <MovingClouds position={[-5, 2, 19]} />
+                        <MovingClouds position={[-10, 2, 19]} />
                     </Clouds>
 
                     <EffectComposer>
