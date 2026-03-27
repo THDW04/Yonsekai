@@ -12,6 +12,10 @@ export default class Player {
     this.velocity = velocity
     this.isOnGround = false
 
+    // ===== DOUBLE JUMP =====
+    this.jumpCount = 0
+    this.maxJumps = 2
+
     // ===== IMAGE =====
     this.image = new Image()
     this.isImageLoaded = false
@@ -23,11 +27,11 @@ export default class Player {
     this.currentFrame = 0
 
     this.animations = {
-      idle: { x: 0,  y: 0,  w: 33, h: 32, frames: 1, fps: 0  },
-      run:  { x: 0,  y: 32, w: 33, h: 32, frames: 2, fps: 8  },
-      jump: { x: 64, y: 64, w: 33, h: 32, frames: 1, fps: 0  },
-      fall: { x: 0,  y: 96, w: 33, h: 32, frames: 1, fps: 0  },
-      roll: { x: 0,  y: 96, w: 33, h: 32, frames: 4, fps: 12 },
+      idle: { x: 0, y: 0, w: 33, h: 32, frames: 1, fps: 0 },
+      run: { x: 0, y: 32, w: 33, h: 32, frames: 2, fps: 8 },
+      jump: { x: 64, y: 64, w: 33, h: 32, frames: 1, fps: 0 },
+      fall: { x: 0, y: 96, w: 33, h: 32, frames: 1, fps: 0 },
+      roll: { x: 0, y: 96, w: 33, h: 32, frames: 4, fps: 12 },
     }
 
     this.state = 'idle'
@@ -159,10 +163,13 @@ export default class Player {
     if (keys.arrowLeft.pressed) this.velocity.x = -X_VELOCITY
   }
 
+  // ===== DOUBLE JUMP =====
   jump() {
-    if (!this.isOnGround) return
+    if (this.jumpCount >= this.maxJumps) return
+
     this.velocity.y = -JUMP_POWER
     this.isOnGround = false
+    this.jumpCount++
   }
 
   roll() {
@@ -229,14 +236,18 @@ export default class Player {
         this.hitbox.y < block.y + block.height &&
         this.hitbox.y + this.hitbox.height > block.y
       ) {
+        // Touch ground
         if (this.velocity.y > 0) {
           this.velocity.y = 0
           this.isOnGround = true
+          this.jumpCount = 0
+
           this.hitbox.y = block.y - this.hitbox.height - buffer
           this.y = this.hitbox.y - 9
           this.isInAirAfterRolling = false
         }
 
+        // Hit ceiling
         if (this.velocity.y < 0) {
           this.velocity.y = 0
           this.hitbox.y = block.y + block.height + buffer
@@ -248,14 +259,17 @@ export default class Player {
 
   checkPlatformCollisions(platforms, deltaTime) {
     const buffer = 0.0001
+
     for (const platform of platforms) {
       if (platform.checkCollision(this, deltaTime)) {
         this.velocity.y = 0
         this.isOnGround = true
+        this.jumpCount = 0
         this.y = platform.y - this.height - buffer
         return
       }
     }
+
     this.isOnGround = false
   }
 }
