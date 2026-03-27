@@ -1,25 +1,27 @@
+import { player, keys, setLastTime } from './index.js'
+
 window.addEventListener('keydown', (event) => {
   switch (event.key) {
-    case 'w':
+    case ' ':
       player.jump()
-      keys.w.pressed = true
+      keys.space.pressed = true
       break
-    case 'a':
-      keys.a.pressed = true
+    case 'ArrowLeft':
+      keys.arrowLeft.pressed = true
       break
-    case 'd':
-      keys.d.pressed = true
+    case 'ArrowRight':
+      keys.arrowRight.pressed = true
       break
   }
 })
 
 window.addEventListener('keyup', (event) => {
   switch (event.key) {
-    case 'a':
-      keys.a.pressed = false
+    case 'ArrowLeft':
+      keys.arrowLeft.pressed = false
       break
-    case 'd':
-      keys.d.pressed = false
+    case 'ArrowRight':
+      keys.arrowRight.pressed = false
       break
   }
 })
@@ -27,6 +29,6 @@ window.addEventListener('keyup', (event) => {
 // On return to game's tab, ensure delta time is reset
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden) {
-    lastTime = performance.now()
+    setLastTime(performance.now())
   }
 })

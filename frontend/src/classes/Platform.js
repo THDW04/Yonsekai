@@ -1,4 +1,4 @@
-class Platform {
+export default class Platform {
   constructor({ x, y, width = 16, height = 4 }) {
     this.x = x
     this.y = y
@@ -12,7 +12,6 @@ class Platform {
   }
 
   checkCollision(player, deltaTime) {
-    // Check only top-side collision
     return (
       player.y + player.height <= this.y &&
       player.y + player.height + player.velocity.y * deltaTime >= this.y &&

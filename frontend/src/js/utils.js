@@ -1,4 +1,4 @@
-const loadImage = (src) => {
+export const loadImage = (src) => {
   return new Promise((resolve, reject) => {
     const img = new Image()
     img.onload = () => resolve(img)
