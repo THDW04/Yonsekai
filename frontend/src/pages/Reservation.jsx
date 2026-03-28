@@ -1,6 +1,6 @@
 import { ReservationForm } from "../components/reservation/ReservationForm/ReservationForm";
 
-export const Reservation = () => {
+const Reservation = () => {
     
     return (
         <main>
@@ -10,3 +10,5 @@ export const Reservation = () => {
     );
 
 }
+
+export default Reservation;

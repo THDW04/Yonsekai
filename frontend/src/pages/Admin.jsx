@@ -6,7 +6,7 @@ import { LogoutBtn } from "../components/auth/LogoutBtn";
 import { jwtDecode } from "jwt-decode";
 import '../assets/css/admin.css'
 
-export const Admin = () => {
+const Admin = () => {
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
 
@@ -98,3 +98,5 @@ export const Admin = () => {
         </main>
     )
 }
+
+export default Admin;

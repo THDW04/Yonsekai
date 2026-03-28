@@ -5,7 +5,7 @@ import { LogoutBtn } from "../components/auth/LogoutBtn"
 import { DeleteAccount } from "../components/profile/DeleteAccount/DeleteAccount"
 import '../assets/css/profile.css'
 
-export const Profile = () => {
+const Profile = () => {
 
   const [user, setUser] = useState(null);
   const [reservations, setReservations] = useState([]);
@@ -75,3 +75,5 @@ export const Profile = () => {
     </main>
   );
 };
+
+export default Profile;

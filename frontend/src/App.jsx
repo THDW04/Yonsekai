@@ -1,15 +1,16 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect, lazy } from 'react';
 import { Header } from './components/Header/header';
-import { Home } from './pages/Home';
-import { Register } from './pages/Register';
-import { Login } from './pages/Login';
-import { Reservation } from './pages/Reservation';
-import { Profile } from './pages/Profile';
-import { Admin } from './pages/Admin';
 import { AudioExperience } from './components/AudioExperience';
 import { AudioModal } from './components/AudioModal';
 import './assets/css/style.css'
+
+const Home = lazy(() => import('./pages/Home'));
+const Register = lazy(() => import('./pages/Register'));
+const Login = lazy(() => import('./pages/Login'));
+const Reservation = lazy(() => import('./pages/Reservation'));
+const Profile = lazy(() => import('./pages/Profile'));
+const Admin = lazy(() => import('./pages/Admin'));
 
 function App() {
   const [isStarted, setIsStarted] = useState(false);
@@ -20,6 +21,10 @@ function App() {
     setIsStarted(true);
   };
 
+  useEffect(() => {
+    import('./pages/Home');
+  }, []);
+
   return (
     <>
       <BrowserRouter>
@@ -29,7 +34,10 @@ function App() {
 
         {isStarted && (
           <>
-            <Header hasAudio={hasAudio} setHasAudio={setHasAudio} />
+            <Header
+              hasAudio={hasAudio}
+              setHasAudio={setHasAudio}
+            />
             <AudioExperience />
             <Routes>
               <Route path="/" element={<Home />} />

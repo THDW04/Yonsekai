@@ -1,9 +1,11 @@
 import { RegisterForm } from "../components/auth/RegisterForm";
 
-export const Register = () =>{
+const Register = () =>{
     return(
       <main>
           <RegisterForm />
       </main>
     )
 }
+
+export default Register;
