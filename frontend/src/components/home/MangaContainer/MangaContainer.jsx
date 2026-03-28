@@ -15,6 +15,10 @@ export const MangaContainer = () => {
   const containerRef = useRef();
   const textRefs = useRef([]);
 
+  const switchSound = (elementName) => {
+    window.dispatchEvent(new CustomEvent('changeSection', { detail: elementName }));
+  };
+
   useEffect(() => {
     const lenis = new Lenis();
     function raf(time) {
@@ -35,12 +39,19 @@ export const MangaContainer = () => {
       }
     });
 
-    data.forEach((_, i) => {
+    data.forEach((item, i) => {
       tl.to(textRefs.current[i], {
         opacity: 1,
         autoAlpha: 1,
-        duration: 0.1
-      }, i / data.length);
+        duration: 0.1,
+        onStart: () => {
+          const currentElement = data[i].element;
+          if (currentElement) {
+            console.log("Changement de section vers :", currentElement);
+            window.dispatchEvent(new CustomEvent('changeSection', { detail: currentElement }));
+          }
+        }
+        }, i / data.length);
 
       if (i < data.length - 1) {
         tl.to(textRefs.current[i], {

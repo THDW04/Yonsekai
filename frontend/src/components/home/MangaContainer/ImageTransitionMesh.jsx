@@ -54,6 +54,9 @@ export const ImageTransitionMesh = ({ images, scrollContainer }) => {
 
   const handleTransition = (index) => {
     state.current.isTransitioning = true;
+    
+    window.dispatchEvent(new CustomEvent('transitionSound'));
+
     const mat = meshRef.current.material;
     mat.uniforms.u_texture1.value = textures[index];
     mat.uniforms.u_texRes1.value.set(textures[index].image.width, textures[index].image.height);

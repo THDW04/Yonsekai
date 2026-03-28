@@ -3,7 +3,7 @@ import styles from './MangaCard.module.css';
 export const MangaCard = ({ title, element, kanji }) => {
 
     return (
-        <div className={styles.card}>
+        <div id={element} className={styles.card}>
             <div className={styles.contentOverlay}>
                 <div className={styles.container}>
                     <div className={styles.darkBox}></div>
