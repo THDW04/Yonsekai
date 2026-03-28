@@ -4,6 +4,7 @@ import CollisionBlock from '../classes/CollisionBlock.js'
 import Platform from '../classes/Platform.js'
 
 import { loadImage } from './utils.js'
+import { setCurrentGame } from './currentGame.js'
 
 import collisions from '../data/Fire/collisions.js'
 import l_New_Layer_1 from '../data/Fire/l_New_Layer_1.js'
@@ -21,6 +22,9 @@ let c
 
 const dpr = window.devicePixelRatio || 1
 
+const GAME_WIDTH = 800
+const GAME_HEIGHT = 450
+
 /* ======================================================
    MAP DATA
 ====================================================== */
@@ -32,9 +36,18 @@ const layersData = {
 }
 
 const tilesets = {
-  l_New_Layer_1: { imageUrl: './images/3c471563-e376-40e2-8796-a9300ce6a600.png', tileSize: 16 },
-  l_New_Layer_4: { imageUrl: './images/802ce508-7dfd-4e07-d205-b7b22ab0cd00.png', tileSize: 16 },
-  l_New_Layer_3: { imageUrl: './images/802ce508-7dfd-4e07-d205-b7b22ab0cd00.png', tileSize: 16 },
+  l_New_Layer_1: {
+    imageUrl: './images/3c471563-e376-40e2-8796-a9300ce6a600.png',
+    tileSize: 16,
+  },
+  l_New_Layer_4: {
+    imageUrl: './images/802ce508-7dfd-4e07-d205-b7b22ab0cd00.png',
+    tileSize: 16,
+  },
+  l_New_Layer_3: {
+    imageUrl: './images/802ce508-7dfd-4e07-d205-b7b22ab0cd00.png',
+    tileSize: 16,
+  },
 }
 
 /* ======================================================
@@ -68,7 +81,6 @@ collisions.forEach((row, y) => {
         })
       )
     }
-
   })
 })
 
@@ -83,6 +95,10 @@ export const player = new Player({
   velocity: { x: 0, y: 0 },
 })
 
+/* ======================================================
+   FLAMES (ENNEMIS)
+====================================================== */
+
 const flamesData = [
   { x: 150, y: 0 },
   { x: 430, y: 0 },
@@ -91,27 +107,26 @@ const flamesData = [
   { x: 940, y: 0 },
   { x: 1140, y: 0 },
   { x: 1440, y: 0 },
-];
+]
 
-export const flames = flamesData.map(data => {
-  return new Flame({
+export const flames = flamesData.map(data =>
+  new Flame({
     x: data.x,
     y: data.y,
     size: 62,
     velocity: { x: 0, y: 0 },
-  });
-});
+  })
+)
 
-
-
+/* ======================================================
+   INPUTS
+====================================================== */
 
 export const keys = {
   arrowLeft: { pressed: false },
   arrowRight: { pressed: false },
   space: { pressed: false },
 }
-
-
 
 export let lastTime = performance.now()
 
@@ -173,7 +188,6 @@ const renderStaticLayers = async () => {
   for (const [layerName, tilesData] of Object.entries(layersData)) {
 
     const tilesetInfo = tilesets[layerName]
-
     const tilesetImage = await loadImage(tilesetInfo.imageUrl)
 
     renderLayer(
@@ -200,39 +214,31 @@ function animate(backgroundCanvas) {
   player.handleInput(keys)
   player.update(deltaTime, collisionBlocks, platforms)
 
-  // UPDATE FLAMES
-  flames.forEach(flame => {
+  flames.forEach(flame =>
     flame.update(deltaTime, collisionBlocks, platforms)
-  })
+  )
 
   // CAMERA
-  if (player.x > SCROLL_POST_RIGHT) {
+  if (player.x > SCROLL_POST_RIGHT)
     camera.x = player.x - SCROLL_POST_RIGHT
-  }
 
-  if (player.y < SCROLL_POST_TOP && camera.y > 0) {
+  if (player.y < SCROLL_POST_TOP && camera.y > 0)
     camera.y = SCROLL_POST_TOP - player.y
-  }
 
-  if (player.y < SCROLL_POST_BOTTOM) {
+  if (player.y < SCROLL_POST_BOTTOM)
     camera.y = -(player.y - SCROLL_POST_BOTTOM)
-  }
 
   c.save()
 
-  c.clearRect(0, 0, canvas.width, canvas.height)
+  c.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT)
 
-  c.scale(dpr, dpr)
   c.translate(-camera.x, camera.y)
 
   c.drawImage(backgroundCanvas, 0, 0)
 
   player.draw(c)
 
-  // DRAW FLAMES
-  flames.forEach(flame => {
-    flame.draw(c)
-  })
+  flames.forEach(flame => flame.draw(c))
 
   c.restore()
 
@@ -240,7 +246,7 @@ function animate(backgroundCanvas) {
 }
 
 /* ======================================================
-   START GAME 
+   START GAME
 ====================================================== */
 
 async function startGame() {
@@ -254,8 +260,15 @@ async function startGame() {
 
   c = canvas.getContext('2d')
 
-  canvas.width = 1024 * dpr
-  canvas.height = 576 * dpr
+  canvas.width = GAME_WIDTH * dpr
+  canvas.height = GAME_HEIGHT * dpr
+
+  canvas.style.width = GAME_WIDTH + 'px'
+  canvas.style.height = GAME_HEIGHT + 'px'
+
+  c.scale(dpr, dpr)
+
+  setCurrentGame({ player, keys, setLastTime })
 
   const backgroundCanvas = await renderStaticLayers()
 
@@ -263,7 +276,7 @@ async function startGame() {
 }
 
 /* ======================================================
-   DOM SAFE START
+   SAFE START
 ====================================================== */
 
 if (document.readyState === 'loading') {

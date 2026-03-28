@@ -1,7 +1,11 @@
-import { player, keys, setLastTime } from './gameFire.js'
+import { getPlayer, getKeys, resetTime } from './currentGame.js'
 
-window.addEventListener('keydown', (event) => {
-  switch (event.key) {
+window.addEventListener('keydown', (e) => {
+  const player = getPlayer()
+  const keys   = getKeys()
+  if (!player || !keys) return
+
+  switch (e.key) {
     case ' ':
       player.jump()
       keys.space.pressed = true
@@ -15,8 +19,11 @@ window.addEventListener('keydown', (event) => {
   }
 })
 
-window.addEventListener('keyup', (event) => {
-  switch (event.key) {
+window.addEventListener('keyup', (e) => {
+  const keys = getKeys()
+  if (!keys) return
+
+  switch (e.key) {
     case 'ArrowLeft':
       keys.arrowLeft.pressed = false
       break
@@ -26,9 +33,7 @@ window.addEventListener('keyup', (event) => {
   }
 })
 
-// On return to game's tab, ensure delta time is reset
+// Reset deltaTime quand on revient sur l'onglet
 document.addEventListener('visibilitychange', () => {
-  if (!document.hidden) {
-    setLastTime(performance.now())
-  }
+  if (!document.hidden) resetTime()
 })
