@@ -1,4 +1,5 @@
 import Player from '../classes/Player.js'
+import Flame from '../classes/Flame.js'
 import CollisionBlock from '../classes/CollisionBlock.js'
 import Platform from '../classes/Platform.js'
 
@@ -81,6 +82,28 @@ export const player = new Player({
   size: 42,
   velocity: { x: 0, y: 0 },
 })
+
+const flamesData = [
+  { x: 150, y: 0 },
+  { x: 430, y: 0 },
+  { x: 570, y: 0 },
+  { x: 740, y: 0 },
+  { x: 940, y: 0 },
+  { x: 1140, y: 0 },
+  { x: 1440, y: 0 },
+];
+
+export const flames = flamesData.map(data => {
+  return new Flame({
+    x: data.x,
+    y: data.y,
+    size: 62,
+    velocity: { x: 0, y: 0 },
+  });
+});
+
+
+
 
 export const keys = {
   arrowLeft: { pressed: false },
@@ -177,7 +200,12 @@ function animate(backgroundCanvas) {
   player.handleInput(keys)
   player.update(deltaTime, collisionBlocks, platforms)
 
-  // CAMERA = monde bouge, PAS le canvas
+  // UPDATE FLAMES
+  flames.forEach(flame => {
+    flame.update(deltaTime, collisionBlocks, platforms)
+  })
+
+  // CAMERA
   if (player.x > SCROLL_POST_RIGHT) {
     camera.x = player.x - SCROLL_POST_RIGHT
   }
@@ -198,7 +226,13 @@ function animate(backgroundCanvas) {
   c.translate(-camera.x, camera.y)
 
   c.drawImage(backgroundCanvas, 0, 0)
+
   player.draw(c)
+
+  // DRAW FLAMES
+  flames.forEach(flame => {
+    flame.draw(c)
+  })
 
   c.restore()
 

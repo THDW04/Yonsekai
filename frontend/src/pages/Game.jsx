@@ -7,7 +7,7 @@ export const Game = () => {
   return (      
     <div>
       
-      <GameEarth />  
+      <GameFire />  
     </div>
   );
 };
