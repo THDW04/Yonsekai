@@ -8,7 +8,7 @@ export const Game = () => {
   return (      
     <div>
       <Hearts />
-      <GameFire />  
+      <GameEarth />  
     </div>
   );
 };

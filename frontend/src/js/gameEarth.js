@@ -1,8 +1,11 @@
 import Player from '../classes/Player.js'
+import Flame from '../classes/Flame.js'
 import CollisionBlock from '../classes/CollisionBlock.js'
 import Platform from '../classes/Platform.js'
 
+import { damagePlayer } from './gameState.js'
 import { loadImage } from './utils.js'
+import { setCurrentGame } from './currentGame.js'
 
 import collisions from '../data/Earth/collisions.js'
 import l_BackgroundEarth from '../data/Earth/l_BackgroundEarth.js'
@@ -12,7 +15,7 @@ import l_PlatformEarth from '../data/Earth/l_PlatformEarth.js'
 import './eventListeners.js'
 
 /* ======================================================
-   VARIABLES GLOBAL GAME
+   GLOBAL
 ====================================================== */
 
 let canvas
@@ -20,21 +23,33 @@ let c
 
 const dpr = window.devicePixelRatio || 1
 
+const GAME_WIDTH = 800
+const GAME_HEIGHT = 450
+const TILE_SIZE = 16
+
 /* ======================================================
    MAP DATA
 ====================================================== */
 
 const layersData = {
-     l_BackgroundEarth,
-     l_PlatformEarth,
-     l_CollitionEarth,
-  
+  l_BackgroundEarth,
+  l_PlatformEarth,
+  l_CollitionEarth,
 }
 
 const tilesets = {
-  l_BackgroundEarth: { imageUrl: './images/69bd359d-8555-49c3-d6f5-3bc3b5342b00.png', tileSize: 16 },
-  l_PlatformEarth: { imageUrl: './images/terrain.png', tileSize: 16 },
-  l_CollitionEarth: { imageUrl: './images/terrain.png', tileSize: 16 },
+  l_BackgroundEarth: {
+    imageUrl: './images/69bd359d-8555-49c3-d6f5-3bc3b5342b00.png',
+    tileSize: 16,
+  },
+  l_PlatformEarth: {
+    imageUrl: './images/terrain.png',
+    tileSize: 16,
+  },
+  l_CollitionEarth: {
+    imageUrl: './images/terrain.png',
+    tileSize: 16,
+  },
 }
 
 /* ======================================================
@@ -68,7 +83,6 @@ collisions.forEach((row, y) => {
         })
       )
     }
-
   })
 })
 
@@ -83,13 +97,38 @@ export const player = new Player({
   velocity: { x: 0, y: 0 },
 })
 
+/* ======================================================
+   FLAMES (ENNEMIS)
+====================================================== */
+
+const flamesData = [
+  { x: 150, y: 0 },
+  { x: 430, y: 0 },
+  { x: 570, y: 0 },
+  { x: 740, y: 0 },
+  { x: 940, y: 0 },
+  { x: 1140, y: 0 },
+  { x: 1440, y: 0 },
+]
+
+export const flames = flamesData.map(data =>
+  new Flame({
+    x: data.x,
+    y: data.y,
+    size: 62,
+    velocity: { x: 0, y: 0 },
+  })
+)
+
+/* ======================================================
+   INPUTS
+====================================================== */
+
 export const keys = {
   arrowLeft: { pressed: false },
   arrowRight: { pressed: false },
   space: { pressed: false },
 }
-
-
 
 export let lastTime = performance.now()
 
@@ -151,7 +190,6 @@ const renderStaticLayers = async () => {
   for (const [layerName, tilesData] of Object.entries(layersData)) {
 
     const tilesetInfo = tilesets[layerName]
-
     const tilesetImage = await loadImage(tilesetInfo.imageUrl)
 
     renderLayer(
@@ -170,7 +208,6 @@ const renderStaticLayers = async () => {
 ====================================================== */
 
 function animate(backgroundCanvas) {
-
   const currentTime = performance.now()
   const deltaTime = (currentTime - lastTime) / 1000
   lastTime = currentTime
@@ -178,28 +215,43 @@ function animate(backgroundCanvas) {
   player.handleInput(keys)
   player.update(deltaTime, collisionBlocks, platforms)
 
-  // CAMERA = monde bouge, PAS le canvas
-  if (player.x > SCROLL_POST_RIGHT) {
+  // On boucle sur chaque flamme pour l'update ET vérifier la collision
+  flames.forEach(flame => {
+    flame.update(deltaTime, collisionBlocks, platforms)
+
+    // Détection de collision intégrée dans la boucle
+    if (
+      player.x < flame.x + flame.size &&
+      player.x + player.size > flame.x &&
+      player.y < flame.y + flame.size &&
+      player.y + player.size > flame.y
+    ) {
+      damagePlayer() // Appelle la fonction de gameState.js
+    }
+  })
+
+
+  // CAMERA
+  if (player.x > SCROLL_POST_RIGHT)
     camera.x = player.x - SCROLL_POST_RIGHT
-  }
 
-  if (player.y < SCROLL_POST_TOP && camera.y > 0) {
+  if (player.y < SCROLL_POST_TOP && camera.y > 0)
     camera.y = SCROLL_POST_TOP - player.y
-  }
 
-  if (player.y < SCROLL_POST_BOTTOM) {
+  if (player.y < SCROLL_POST_BOTTOM)
     camera.y = -(player.y - SCROLL_POST_BOTTOM)
-  }
 
   c.save()
 
-  c.clearRect(0, 0, canvas.width, canvas.height)
+  c.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT)
 
-  c.scale(dpr, dpr)
   c.translate(-camera.x, camera.y)
 
   c.drawImage(backgroundCanvas, 0, 0)
+
   player.draw(c)
+
+  flames.forEach(flame => flame.draw(c))
 
   c.restore()
 
@@ -207,7 +259,7 @@ function animate(backgroundCanvas) {
 }
 
 /* ======================================================
-   START GAME 
+   START GAME
 ====================================================== */
 
 async function startGame() {
@@ -221,8 +273,15 @@ async function startGame() {
 
   c = canvas.getContext('2d')
 
-  canvas.width = 1024 * dpr
-  canvas.height = 576 * dpr
+  canvas.width = GAME_WIDTH * dpr
+  canvas.height = GAME_HEIGHT * dpr
+
+  canvas.style.width = GAME_WIDTH + 'px'
+  canvas.style.height = GAME_HEIGHT + 'px'
+
+  c.scale(dpr, dpr)
+
+  setCurrentGame({ player, keys, setLastTime })
 
   const backgroundCanvas = await renderStaticLayers()
 
@@ -230,7 +289,7 @@ async function startGame() {
 }
 
 /* ======================================================
-   DOM SAFE START
+   SAFE START
 ====================================================== */
 
 if (document.readyState === 'loading') {
