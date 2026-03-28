@@ -4,10 +4,10 @@ import Platform from '../classes/Platform.js'
 
 import { loadImage } from './utils.js'
 
-import collisions from '../data/collisions.js'
-import l_New_Layer_1 from '../data/l_New_Layer_1.js'
-import l_New_Layer_3 from '../data/l_New_Layer_3.js'
-import l_New_Layer_4 from '../data/l_New_Layer_4.js'
+import collisions from '../data/Earth/collisions.js'
+import l_BackgroundEarth from '../data/Earth/l_BackgroundEarth.js'
+import l_CollitionEarth from '../data/Earth/l_CollitionEarth.js'
+import l_PlatformEarth from '../data/Earth/l_PlatformEarth.js'
 
 import './eventListeners.js'
 
@@ -25,15 +25,16 @@ const dpr = window.devicePixelRatio || 1
 ====================================================== */
 
 const layersData = {
-  l_New_Layer_1,
-  l_New_Layer_4,
-  l_New_Layer_3,
+     l_BackgroundEarth,
+     l_PlatformEarth,
+     l_CollitionEarth,
+  
 }
 
 const tilesets = {
-  l_New_Layer_1: { imageUrl: './images/3c471563-e376-40e2-8796-a9300ce6a600.png', tileSize: 16 },
-  l_New_Layer_4: { imageUrl: './images/802ce508-7dfd-4e07-d205-b7b22ab0cd00.png', tileSize: 16 },
-  l_New_Layer_3: { imageUrl: './images/802ce508-7dfd-4e07-d205-b7b22ab0cd00.png', tileSize: 16 },
+  l_BackgroundEarth: { imageUrl: './images/69bd359d-8555-49c3-d6f5-3bc3b5342b00.png', tileSize: 16 },
+  l_PlatformEarth: { imageUrl: './images/terrain.png', tileSize: 16 },
+  l_CollitionEarth: { imageUrl: './images/terrain.png', tileSize: 16 },
 }
 
 /* ======================================================

@@ -1,21 +1,14 @@
-import { useEffect, useRef } from "react"
+import { useEffect } from "react";
 
-export const GameEarth = ({ onVictory }) => {
-  const canvasRef = useRef(null)
+export const GameEarth = () => {
 
-  useEffect(() => {
-    import("../../js/gameEarth.js").then((module) => {
-      if (module.startGame) {
-        module.startGame({ canvas: canvasRef.current, onVictory })
-      }
-    })
+ useEffect(() => {
+  import("../../js/gameEarth.js");
+}, []);
 
-    return () => {
-      import("../../js/gameEarth.js").then((module) => {
-        if (module.stopGame) module.stopGame()
-      })
-    }
-  }, [])
-
-  return <canvas ref={canvasRef} id="gameCanvas" />
-}
+  return (
+    <>
+      <canvas id="gameCanvas"></canvas>
+    </>
+  );
+};
