@@ -3,6 +3,7 @@ import Flame from '../classes/Flame.js'
 import CollisionBlock from '../classes/CollisionBlock.js'
 import Platform from '../classes/Platform.js'
 
+import { damagePlayer } from './gameState.js'
 import { loadImage } from './utils.js'
 import { setCurrentGame } from './currentGame.js'
 
@@ -206,7 +207,6 @@ const renderStaticLayers = async () => {
 ====================================================== */
 
 function animate(backgroundCanvas) {
-
   const currentTime = performance.now()
   const deltaTime = (currentTime - lastTime) / 1000
   lastTime = currentTime
@@ -214,9 +214,21 @@ function animate(backgroundCanvas) {
   player.handleInput(keys)
   player.update(deltaTime, collisionBlocks, platforms)
 
-  flames.forEach(flame =>
+  // On boucle sur chaque flamme pour l'update ET vérifier la collision
+  flames.forEach(flame => {
     flame.update(deltaTime, collisionBlocks, platforms)
-  )
+
+    // Détection de collision intégrée dans la boucle
+    if (
+      player.x < flame.x + flame.size &&
+      player.x + player.size > flame.x &&
+      player.y < flame.y + flame.size &&
+      player.y + player.size > flame.y
+    ) {
+      damagePlayer() // Appelle la fonction de gameState.js
+    }
+  })
+
 
   // CAMERA
   if (player.x > SCROLL_POST_RIGHT)
