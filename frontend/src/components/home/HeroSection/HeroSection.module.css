@@ -7,18 +7,17 @@
 
 .heroHeader {
     position: absolute;
+    height: 100vh;
     width: 100%;
-    height: 100svh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
     text-align: center;
+    font-size: 1.1rem;
 }
 
 .heroHeader h1 {
-    font-size: 4.5rem;
+    font-size: clamp(5rem, 2.8095rem + 10.1587vw, 15rem);
     text-transform: uppercase;
 }
 
@@ -38,16 +37,38 @@
 
 .heroContent {
     position: absolute;
-    bottom: 0;
+    bottom: 0px;
     width: 100%;
     height: 125svh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
     font-family: var(--font-subheading);
-    text-transform: uppercase;
+    font-size: 1.2rem;
+}
+
+.heroContent p {
+    max-width: 1024px;
+    width: 100%;
     text-align: center;
-    font-size: 1.3rem;
+    text-transform: uppercase;
+    padding: 20px;
+}
+
+@media (min-width: 768px) {
+    .heroHeader {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 1280px) {
+    .heroHeader p {
+        position: relative;
+        bottom: 5%;
+    }
+
+    .heroContent p {
+        font-size: 1.5rem;
+    }
 }

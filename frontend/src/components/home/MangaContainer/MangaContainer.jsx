@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ImageTransitionMesh } from './ImageTransitionMesh';
 import { AirInteraction } from './Interactions/AirInteraction';
+import { MangaCard } from './MangaCard/MangaCard';
 import data from '../../../js/data.json';
 import styles from './MangaContainer.module.css';
 
@@ -22,6 +23,9 @@ export const MangaContainer = () => {
     }
     requestAnimationFrame(raf);
 
+    gsap.set(textRefs.current[0], { opacity: 1, autoAlpha: 1 });
+    gsap.set(textRefs.current.slice(1), { opacity: 0, autoAlpha: 0 });
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
@@ -38,8 +42,7 @@ export const MangaContainer = () => {
         duration: 0.1
       }, i / data.length);
 
-
-      if (i < data.length - 0.5) {
+      if (i < data.length - 1) {
         tl.to(textRefs.current[i], {
           opacity: 0,
           autoAlpha: 0,
@@ -75,12 +78,12 @@ export const MangaContainer = () => {
 
         <div className={styles.gl}>
           {data.map((section, i) => (
-            <div
-              key={i}
-              className={styles.inner}
-              ref={el => textRefs.current[i] = el}
-            >
-              <h2>{section.title}</h2>
+            <div key={i} className={styles.inner} ref={el => textRefs.current[i] = el}>
+              <MangaCard
+                title={section.title}
+                element={section.element}
+                kanji={section.kanji}
+              />
             </div>
           ))}
         </div>

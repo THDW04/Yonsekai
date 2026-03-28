@@ -1,111 +1,84 @@
-import { useMemo, useRef, useEffect} from 'react'
-import { Canvas, useFrame,useThree  } from '@react-three/fiber'
-import { useGLTF, Clouds, Cloud } from "@react-three/drei"
-import { EffectComposer, Bloom, Noise } from '@react-three/postprocessing'
-import { BlendFunction } from 'postprocessing'
-import * as THREE from 'three'
-import { vertexShader, fragmentShader } from '../../../js/shaders'
-import Lenis from 'lenis'
-import styles from './HeroSection.module.css'
+import { useRef, useEffect } from "react"
+import { Canvas, useThree, useFrame } from "@react-three/fiber"
+import { useGLTF, Clouds } from "@react-three/drei"
+import { EffectComposer, Bloom, Noise } from "@react-three/postprocessing"
+import { BlendFunction } from "postprocessing"
+import * as THREE from "three"
+import gsap from 'gsap';
+import SplitType from 'split-type';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
-function Model(props) {
-    const { scene } = useGLTF("/assets/mountain_and_river_scroll.glb");
-    return <primitive object={scene} {...props} />;
+import { MovingClouds } from "./MovingClouds"
+import { TransitionPlane } from "./TransitionPlane"
+import { useScrollProgress } from "../../../js/UseScrollProgress"
+
+import styles from "./HeroSection.module.css"
+
+const Model = (props) => {
+    const { scene } = useGLTF("/assets/mountain_and_river_scroll.glb")
+    return <primitive object={scene} {...props} />
 }
 
-function MovingClouds({ position }) {
-    const ref = useRef()
-
-    useFrame((state, delta) => {
-        ref.current.position.x += delta * 0.7
-
-
-        if (ref.current.position.x > 25) {
-            ref.current.position.x = 0
-        }
-    })
-
-    return (
-        <Cloud ref={ref} position={position} volume={3} fade={150} color="lightgrey" speed={0.7} />
-    )
-}
-
-const config = {
-    spread: 0.5,
-    speed :2
-}
-
-const TransitionPlane = ({ scrollProgress }) => {
-  const { viewport } = useThree()
-  const meshRef = useRef()
-
-  const uniforms = useMemo(() => ({
-    uProgress: { value: 0 },
-    uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-    uColor: { value: new THREE.Color('#040412') },
-    uSpread: { value: config.spread}
-  }), [])
-
-  useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.material.uniforms.uProgress.value = scrollProgress.current
-    }
-  })
-
-  return (
-    <mesh ref={meshRef}>
-      <planeGeometry args={[viewport.width, viewport.height]} />
-      <shaderMaterial
-        vertexShader={vertexShader}
-        fragmentShader={fragmentShader}
-        uniforms={uniforms}
-        transparent
-      />
-    </mesh>
-  )
-}
+useGLTF.preload("/assets/mountain_and_river_scroll.glb")
 
 export const HeroSection = () => {
-    const scrollProgress = useRef(0)
+    const scrollProgress = useScrollProgress(2)
+    const textRef = useRef();
+
     useEffect(() => {
-        const lenis = new Lenis()
+        const textElements = textRef.current.querySelectorAll('p');
 
-        lenis.on('scroll', ({ scroll }) => {
-            const heroHeight = document.querySelector(`.${styles.hero}`).offsetHeight
-            const windowHeight = window.innerHeight
-            const maxScroll = heroHeight - windowHeight
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: textRef.current,
+                start: "top 30%",
+                end: "bottom bottom",
+                scrub: true,
+            }
+        });
 
-            scrollProgress.current = Math.min((scroll / maxScroll) * config.speed, 1.1)
-        })
+        textElements.forEach(element => {
+            const split = new SplitType(element, { types: 'words' });
 
-        function raf(time) {
-            lenis.raf(time)
-            requestAnimationFrame(raf)
-        }
-        requestAnimationFrame(raf)
+            tl.from(split.words, {
+                filter: "blur(5px)",
+                opacity: 0,
+                duration: 1,
+                stagger: 0.1,
+                ease: "power3.out"
+            }, "-=0.5")
+        });
 
-        return () => lenis.destroy()
-    }, [])
+        return () => {
+            ScrollTrigger.getAll().forEach(t => t.kill());
+        };
+
+    }, []);
 
     return (
-        <section className={styles.hero}>
+        <section data-hero className={styles.hero}>
             <div className={styles.mountainsContainer}>
-                <Canvas flat camera={{ position: [10, 3, 20], rotation: [0, 0, 0] }} >
+                <Canvas flat camera={{ position: [10, 3, 20], rotation: [0, 0, 0] }}>
+
+                    <ambientLight intensity={0.5} />
+                    <directionalLight position={[5, 10, 5]} intensity={1} />
 
                     <Model scale={0.3} rotation={[0.001, -4.6, 0]} />
 
-                    <Clouds material={THREE.MeshBasicMaterial}>
+                    <Clouds material={THREE.MeshStandardMaterial}>
                         <MovingClouds position={[3, 2, 19]} />
                         <MovingClouds position={[-5, 2, 19]} />
                         <MovingClouds position={[-10, 2, 19]} />
                     </Clouds>
 
                     <EffectComposer>
-                        <Bloom luminanceThreshold={0.2} intensity={0.2} mipmapBlur />
+                        <Bloom luminanceThreshold={0.2} intensity={0.4} mipmapBlur />
                         <Noise opacity={0.3} premultiply blendFunction={BlendFunction.OVERLAY} />
                     </EffectComposer>
+
                 </Canvas>
             </div>
+
             <div className={styles.heroHeader}>
                 <h1>Yonsekai</h1>
                 <p>Le musée des quatre éléments.</p>
@@ -117,8 +90,10 @@ export const HeroSection = () => {
                 </Canvas>
             </div>
 
-            <div className={styles.heroContent}>
-                <p>Traverser Yonsekai, c’est accepter de perdre ses repères. Ici, la ligne d’horizon s’efface pour laisser place à l’expérience brute des éléments.</p>
+            <div ref={textRef} className={styles.heroContent}>
+                <p>À travers cette exposition, vous découvrirez la puissance brute des éléments, du sommet des cimes aux profondeurs de l’océan. Ici, le manga ne se lit pas : il se ressent.</p>
+                <p>Une question demeure, lancinante : face à une nature incontrôlable, l’homme est-il encore maître de son destin ?</p>
+                <p>Entre contemplation et vertige, laissez-vous ébranler par le regard des plus grands auteurs japonais. Parviendrez-vous à trouver votre propre réponse ? <br /> L'expérience commence ici.</p>
             </div>
         </section>
     )
