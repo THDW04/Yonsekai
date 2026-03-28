@@ -1,4 +1,4 @@
-import { player, keys, setLastTime } from './index.js'
+import { player, keys, setLastTime } from './gameFire.js'
 
 window.addEventListener('keydown', (event) => {
   switch (event.key) {

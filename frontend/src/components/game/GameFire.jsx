@@ -3,7 +3,7 @@ import { useEffect } from "react";
 export const GameFire = () => {
 
  useEffect(() => {
-  import("../../js/index.js");
+  import("../../js/gameFire.js");
 }, []);
 
   return (
