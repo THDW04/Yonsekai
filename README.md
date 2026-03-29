@@ -6,10 +6,10 @@
 
 ### Fonctionnalités clés
 
-- 🌀 **Navigation Narrative** — Transition d'images par distorsion (Shaders) synchronisée au scroll.
-- 👤 **Gestion Utilisateur** — Inscription, connexion et profil personnel.
-- 🎟️ **Billetterie** — Système de réservation avec confirmation automatique par email.
-- 🛡️ **Interface Admin** — Tableau de bord complet pour la gestion des clients et visualisation des réservations.
+- **Navigation Narrative** — Transition d'images par distorsion (Shaders) synchronisée au scroll.
+- **Gestion Utilisateur** — Inscription, connexion et profil personnel.
+- **Billetterie** — Système de réservation avec confirmation automatique par email.
+- **Interface Admin** — Tableau de bord complet pour la gestion des clients et visualisation des réservations.
 
 ---
 
