@@ -44,6 +44,7 @@ export const MangaContainer = () => {
                 text={t(`sections.${section.id}.text`)}
                 kanji={section.kanji}
                 background={section.background}
+                img={section.charImg}
               />
             </div>
           ))}

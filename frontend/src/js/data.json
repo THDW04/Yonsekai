@@ -1,6 +1,6 @@
 [
-  { "id": 1, "element": "air",   "kanji": "気", "background": "/assets/img/air.jpg",   "charImg": "/assets/react.svg" },
-  { "id": 2, "element": "earth", "kanji": "土", "background": "/assets/img/earth.jpg", "charImg": "/assets/yoko.png" },
+  { "id": 1, "element": "air",   "kanji": "気", "background": "/assets/img/air.jpg",   "charImg": "/assets/nausicaa.png" },
+  { "id": 2, "element": "earth", "kanji": "土", "background": "/assets/img/earth.jpg", "charImg": "/assets/sommet.png" },
   { "id": 3, "element": "water", "kanji": "水", "background": "/assets/img/eau.png",   "charImg": "/assets/kaneda.png" },
-  { "id": 4, "element": "fire",  "kanji": "火", "background": "/assets/img/feu.png",   "charImg": "/assets/kaneda.png" }
+  { "id": 4, "element": "fire",  "kanji": "火", "background": "/assets/img/feu.png",   "charImg": "/assets/daigo.png" }
 ]
