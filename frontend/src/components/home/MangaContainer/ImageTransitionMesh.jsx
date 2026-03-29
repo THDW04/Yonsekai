@@ -4,7 +4,7 @@ import { useTexture } from "@react-three/drei";
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { vertexShader2, fragmentShader2 } from '../../../js/shaders';
+import { vertexShader2, fragmentShader2 } from '../hooks/shaders';
 
 gsap.registerPlugin(ScrollTrigger);
 

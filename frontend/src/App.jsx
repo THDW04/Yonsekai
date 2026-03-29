@@ -23,13 +23,20 @@ const Error404 = lazy(() => import("./pages/Error404"));
 const Game = lazy(() => import("./pages/Game"));
 
 function App() {
-  const [isStarted, setIsStarted] = useState(false);
-  const [hasAudio, setHasAudio] = useState(false);
+  const [isStarted, setIsStarted] = useState(
+    () => localStorage.getItem('audioStarted') === 'true'
+  );
+  const [hasAudio, setHasAudio] = useState(
+    () => localStorage.getItem('hasAudio') === 'true'
+  );
 
   const handleStart = (useAudio) => {
     setHasAudio(useAudio);
     setIsStarted(true);
+    localStorage.setItem('audioStarted', 'true');
+    localStorage.setItem('hasAudio', String(useAudio));
   };
+
 
   return (
     <HelmetProvider>
@@ -58,9 +65,9 @@ function App() {
               <Route path="/gameover" element={<GameEnd />} />
 <Route path="/victory"  element={<Victory />} />
             </Routes>
-            
 
-            <Footer/>
+
+            <Footer />
           </>
         )}
 

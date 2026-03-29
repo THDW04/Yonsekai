@@ -23,7 +23,7 @@ export const RegisterForm = () => {
         };
 
         //url provisoire
-        fetch('https://yonsekai.vilasse.projetsmmichamps.fr/yonsekai/api/index.php??action=register', {
+        fetch('http://localhost/yonsekai/backend/api/index.php?action=register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

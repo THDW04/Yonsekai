@@ -10,7 +10,7 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
 import { MovingClouds } from "./MovingClouds"
 import { TransitionPlane } from "./TransitionPlane"
-import { useScrollProgress } from "../../../js/UseScrollProgress"
+import { useScrollProgress } from "../hooks/UseScrollProgress"
 
 import styles from "./HeroSection.module.css"
 

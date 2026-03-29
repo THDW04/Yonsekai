@@ -21,7 +21,7 @@ const Profile = () => {
       return;
     }
 
-    fetch("https://yonsekai.vilasse.projetsmmichamps.fr/yonsekai/api/index.php??action=user", {
+    fetch("http://localhost/yonsekai/backend/api/index.php?action=user", {
       method: "GET",
       headers: {
         "Authorization": "Bearer " + token,

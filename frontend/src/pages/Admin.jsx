@@ -32,7 +32,7 @@ const Admin = () => {
 
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost/yonsekai/backend/api/apiController.php?action=users', {
+                const response = await fetch('http://localhost/yonsekai/backend/api/index.php?action=users', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const Admin = () => {
 
     const handleDelete = (id) => {
 
-        fetch("https://yonsekai.vilasse.projetsmmichamps.fr/yonsekai/api/index.php??action=delete-user", {
+        fetch("http://localhost/yonsekai/backend/api/index.php?action=delete-user", {
             method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${token}`,

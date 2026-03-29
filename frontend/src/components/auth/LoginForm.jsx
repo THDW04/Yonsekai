@@ -18,7 +18,7 @@ export const LoginForm = () => {
         const userDataLogin = { mail, password };
 
         try {
-            const response = await fetch('https://yonsekai.vilasse.projetsmmichamps.fr/yonsekai/api/index.php??action=login', {
+            const response = await fetch('http://localhost/yonsekai/backend/api/index.php?action=login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
