@@ -1,7 +1,7 @@
 {
   "titleIntro": "Le Musée des Quatre Éléments",
 
-  "resumeIntro": "À travers cette exposition, vous découvrirez la puissance brute des éléments, du sommet des cimes aux profondeurs de l’océan. Ici, le manga ne se lit pas : il se ressent.  Une question demeure, lancinante : face à une nature incontrôlable, l’homme est-il encore maître de son destin ? Entre contemplation et vertige, laissez-vous ébranler par le regard des plus grands auteurs japonais. Parviendrez-vous à trouver votre propre réponse ? L'expérience commence ici.",
+  "resumeIntro": ["À travers cette exposition, vous découvrirez la puissance brute des éléments, du sommet des cimes aux profondeurs de l’océan. Ici, le manga ne se lit pas : il se ressent."," Une question demeure, lancinante : face à une nature incontrôlable, l’homme est-il encore maître de son destin ?","Entre contemplation et vertige, laissez-vous ébranler par le regard des plus grands auteurs japonais. Parviendrez-vous à trouver votre propre réponse ? L'expérience commence ici."],
 
   "titleAir": "Nausicaä de la vallée du vent",
   "resumeAir": "Au cœur d’un monde où l’acier des hommes a déchiré le ciel, Nausicaa avance dans une humanité égarée. Prisonnière non pas de chaînes, mais de la folie des hommes, elle contemple une guerre qu’elle ne comprend pas. Pourquoi détruire, quand il suffirait d’écouter ? Pourquoi haïr, quand aimer pourrait suffire ? Guidée par une volonté fragile mais tenace, Nausicaä refuse la fatalité.",
@@ -40,7 +40,7 @@
   "error403text" : "Cette voie n’est pas destinée à tout le monde",
 
 
-    "error404Title" :"Erreur 404",
+  "error404Title" :"Erreur 404",
   "error404text" : "OH NON ! Cette page à été contaminée et à disparut ...",
 
 

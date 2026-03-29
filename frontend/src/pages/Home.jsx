@@ -21,7 +21,6 @@ const Home = () =>{
         <Teaser/>
         <Informations/>
       </main>
-        <Footer />
       </>
     )
 }

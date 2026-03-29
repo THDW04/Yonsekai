@@ -97,7 +97,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #e9b301;
+    background-color: var(--hover-color);
 }
 
 .formContainer input:focus {
@@ -128,7 +128,7 @@ input:focus+#togglePassword {
 }
 
 .links a{
-    color: #e9b301;
+    color: var(--hover-color);
     text-decoration: none;
     transition: text-decoration 0.2s ease;
 }
