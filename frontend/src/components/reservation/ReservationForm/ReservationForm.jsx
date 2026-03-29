@@ -84,7 +84,10 @@ export const ReservationForm = () => {
             <main>
                 <div className="success-card">
                     <h1>🎉 Réservation confirmée !</h1>
-                    <p>Merci pour votre commande. Vous pouvez retrouver vos billets dans votre espace personnel.</p>
+                    <p>Merci pour votre commande. Vous recevrez un mail avec vos billets sous peu.</p>
+                    <p>Vous pouvez également retrouver vos billets dans votre
+                        <a href="/profil" class="btn-link">espace personnel</a>.
+                    </p>
                     <button onClick={() => setSuccess(false)}>Faire une autre réservation</button>
                 </div>
             </main>

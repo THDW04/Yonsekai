@@ -1,15 +1,19 @@
 <?php
 require_once __DIR__ . '/../models/Reservation.php';
+require_once __DIR__ . '/../models/Utilisateurs.php';
+require_once __DIR__ . '/../services/MailService.php';
 
 class ReservationController
 {
     private $reservationModel;
-    private $db; 
+    private $userModel;
+    private $db;
 
     public function __construct($db)
     {
         $this->db = $db;
         $this->reservationModel = new Reservation($db);
+        $this->userModel = new Utilisateurs($db);
     }
 
     public function reserveADate($data)
@@ -53,7 +57,25 @@ class ReservationController
                 }
             }
 
-            $this->db->commit(); 
+            $this->db->commit();
+
+            $user = $this->userModel->getOneUser($data['id_user']);
+
+            if ($user) {
+                try {
+                    MailService::sendTicket([
+                        'id'            => $fk_reservation,
+                        'email'         => $user['mail'],
+                        'nom'           => $user['nom'] . ' ' . $user['prenom'],
+                        'date'          => $data['date'],
+                        'hour'          => $data['hour'],
+                        'numberAdult'   => $data['numberAdult'] ?? 0,
+                        'numberStudent' => $data['numberStudent'] ?? 0,
+                    ]);
+                } catch (Exception $e) {
+                    error_log("Erreur envoi email : " . $e->getMessage());
+                }
+            }
 
             http_response_code(201);
             echo json_encode([
