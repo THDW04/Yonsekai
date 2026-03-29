@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, lazy } from "react";
 import { HelmetProvider } from "react-helmet-async";
-
+import { Game } from './pages/Game';
 import { Header } from "./components/Header/header";
 import { AudioExperience } from "./components/AudioExperience";
 import { AudioModal } from "./components/AudioModal";
@@ -51,6 +51,7 @@ function App() {
               <Route path="/error403" element={<Error403 />} />
               <Route path="*" element={<Error404 />} />
             </Routes>
+            <Route path="/game" element={<Game />} />
 
           </>
         )}
