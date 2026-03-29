@@ -1,7 +1,5 @@
 # ⛩️ YONSEKAI — Le Musée des quatre éléments
 
----
-
 ## 📝 Présentation du Projet
 
 **Yonsekai** est une expérience web immersive conçue pour transporter l'utilisateur dans un univers inspiré du manga et de la nature. Le site combine une narration visuelle forte avec une gestion de billetterie et un espace utilisateur complet.
@@ -82,13 +80,9 @@
    $mail->Password = 'votre_password';
    $mail->Port     = 587;`
    ```
+---
 
-   # Serveur
-   PORT=5000
-   JWT_SECRET=your_jwt_secret
-   
-
-### Lancement
+## Lancement
 
 ```bash
 # Mode développement
