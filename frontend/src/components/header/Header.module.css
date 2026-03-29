@@ -1,10 +1,10 @@
 .header {
-    position: sticky; 
+    position: sticky;
     top: 0;
     left: 0;
     width: 100%;
     height: 80px;
-    z-index: 100; 
+    z-index: 100;
     display: flex;
     align-items: center;
     padding: 0 5%;
@@ -13,15 +13,16 @@
 .nav {
     width: 100%;
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     text-transform: uppercase;
+    font-size: 1.5rem;
 }
 
-.nav a{
+.nav a {
     color: #fff;
     text-decoration: none;
-    transform: all 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .logo {
@@ -32,9 +33,10 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    z-index: 1100;
 }
 
-.logo img{
+.logo img {
     width: 30px;
     margin-top: 15px;
 }
@@ -47,14 +49,12 @@
 
 .navLinks {
     display: flex;
-    gap: 2rem;
     list-style: none;
 }
 
 .actions {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
 }
 
 .langSwitch select {
@@ -67,20 +67,28 @@
     border-radius: 4px;
 }
 
+.burger {
+    display: none;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+.burger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: white;
+    margin: 5px;
+    transition: 0.3s;
+}
+
+.burger span:nth-child(1).open { transform: rotate(45deg) translate(5px, 6px); }
+.burger span:nth-child(2).open { opacity: 0; }
+.burger span:nth-child(3).open { transform: rotate(-45deg) translate(5px, -6px); }
+
 @media (max-width: 768px) {
     .burger {
         display: block;
-        cursor: pointer;
-        z-index: 1100;
-    }
-
-    .burger span {
-        display: block;
-        width: 25px;
-        height: 3px;
-        background: white;
-        margin: 5px;
-        transition: 0.3s;
     }
 
     .navContent {
@@ -103,5 +111,10 @@
         flex-direction: column;
         align-items: center;
         font-size: 1.5rem;
+    }
+
+    .actions {
+        flex-direction: column;
+        align-items: center;
     }
 }
