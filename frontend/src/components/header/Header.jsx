@@ -6,7 +6,8 @@ export const Header = () => {
 
     const { t, i18n } = useTranslation();
 
-    const changeLanguage = (lang) => {
+    const changeLanguage = (e) => {
+        const lang = e.target.value;
         i18n.changeLanguage(lang);
         localStorage.setItem("lang", lang);
     };
@@ -16,7 +17,9 @@ export const Header = () => {
             <nav className={styles.nav}>
 
                 <Link to="/" className={styles.logo}>
-                    <span><img src="/assets/img/logo.svg" alt="" /></span>
+                    <span>
+                        <img src="/assets/img/logo.svg" alt="Yonsekai logo" />
+                    </span>
                     <span>Yonsekai</span>
                 </Link>
 
@@ -27,10 +30,16 @@ export const Header = () => {
 
                 <div className={styles.actions}>
 
-                    {/* SWITCH LANGUE */}
+                    
                     <div className={styles.langSwitch}>
-                        <button onClick={() => changeLanguage("fr")}>FR</button>
-                        <button onClick={() => changeLanguage("en")}>EN</button>
+                        <select
+                            name="language"
+                            value={i18n.language}
+                            onChange={changeLanguage}
+                        >
+                            <option value="fr">FR</option>
+                            <option value="en">EN</option>
+                        </select>
                     </div>
 
                     <Link to="/connexion" className={styles.reserveBtn}>
