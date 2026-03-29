@@ -30,11 +30,17 @@ export const Teaser = () => {
     }, []);
 
     return (
+        <>
         <div ref={sectionRef} className={styles.wrapper}>
             <video ref={videoRef} controls>
                 <source src="/assets/accueil.webm" type="video/webm" />
                 Votre navigateur ne supporte pas la vidéo.
             </video>
+            <div className={styles.links}>
+                <a href="/reservation">Reserver</a>
+                <a href="/game">Jouer au jeu</a>
+            </div>
         </div>
+        </>
     )
 }

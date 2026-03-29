@@ -103,6 +103,8 @@
     background-color: var(--card-bg);
     padding: 20px;
     border-radius: 10px;
+    line-height: 1.5;
+    font-size: 1rem;
 }
 
 .text img {
@@ -123,6 +125,10 @@
 
     .badges {
         bottom: var(--badge-bottom);
+    }
+
+    .text {
+        width: 60%;
     }
 }
 

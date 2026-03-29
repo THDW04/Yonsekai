@@ -5,12 +5,37 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 50px;
   overflow: hidden;
+}
+
+.links a {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  border: solid 2px var(--primary-color);
+  border-radius: 10px;
+  padding: 10px 30px;
+  margin-right: 20px;
+  transition: all 0.3s ease;
+}
+
+.links a:last-of-type {
+  color: #fff;
+  border: solid 2px #fff;
+}
+
+.links a:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
 }
 
 .wrapper video {
   width: 80%;
-  height: auto; 
+  height: auto;
   object-fit: cover;
   will-change: transform;
 
