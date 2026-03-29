@@ -1,0 +1,31 @@
+.container {
+    max-width: 1024px;
+    width: 100%;
+    margin: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.container h1 {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.infos {
+    background-color: var(--secondary-color);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+}
+
+.infos h2{
+    text-transform:uppercase ;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.infos img {
+    display: none;
+}
