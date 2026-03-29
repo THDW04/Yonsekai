@@ -94,17 +94,6 @@
     object-fit: cover;
 }
 
-/*
-.imgTicket .title{
-    position: absolute;
-    bottom: -10px;
-    left: -5px;
-    font-family: var(--font-subheading);
-    font-size: 1.7rem;
-    text-transform: uppercase;
-    color:#02185f;
-}*/
-
 .barCode {
     padding: 10px;
 }
@@ -127,6 +116,7 @@
     .reservation {
         max-width: 900px;
         width: 100%;
+        margin: 0;
     }
 
     .ticketContainer {

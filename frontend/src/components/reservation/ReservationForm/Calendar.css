@@ -13,8 +13,8 @@
   color: #fff;
 }
 
-.react-calendar__navigation button:hover{
-  background-color: rgb(48, 41, 41);
+.react-calendar__navigation button:hover, .react-calendar__navigation button:focus{
+  background-color: rgb(48, 41, 41) !important;
 }
 
 .react-calendar__tile {
@@ -27,13 +27,13 @@
   font-weight: 600;
 }
 
-.react-calendar__tile:disabled {
-  background-color: rgb(41, 33, 33);
-  color: #ababab;
+.react-calendar__tile:disabled, .react-calendar__navigation button:disabled {
+  background-color: rgb(56, 51, 51);
+  color: #e0e0e0;
 }
 
 .react-calendar__tile--now {
-  background: #fff1c5;
+  background: #b4d5f5;
   color: black;
   font-weight: bold;
 }

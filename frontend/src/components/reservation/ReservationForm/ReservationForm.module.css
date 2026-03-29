@@ -1,16 +1,9 @@
-.reservationContainer {
-  max-width: 1024px;
-  width: 100%;
-  margin: auto;
-}
-
 .reservationContainer form {
   display: flex;
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
-  gap: 20px;
-  padding: 15px;
+  gap: 40px;
 }
 
 .bookDate {
@@ -47,7 +40,7 @@
 }
 
 .today {
-  background-color: #fff1c5;
+  background-color: #b4d5f5;
 }
 
 .available {
@@ -63,6 +56,10 @@
   max-width: 600px;
   width: 100%;
   margin: auto;
+}
+
+.reservationContainer form h2 {
+  font-size: 2rem;
 }
 
 .infoBox {
@@ -97,17 +94,69 @@
   font-weight: 600;
 }
 
-@media screen and (min-width: 768px) {
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+}
+
+.successCard {
+  background: var(--secondary-color);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3rem;
+  border-radius: 20px;
+  max-width: 500px;
+  color: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.successCard h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.successCard p {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.btnLink {
+  color: var(--primary-color);
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.successCard button {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: white;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 10px 20px ;
+}
+
+.successCard button:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+@media (min-width: 768px) {
   .bookDate {
-    max-width: 1024px;
-    width: 100%;
+    max-width: 100%;
     display: flex;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: space-between;
     gap: 50px;
   }
 
-  .ticketSelection h2 {
+  .reservationContainer form h2 {
     font-size: 2.5rem;
   }
 

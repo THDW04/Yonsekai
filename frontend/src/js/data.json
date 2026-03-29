@@ -10,7 +10,7 @@
   },
   {
     "id": 2,
-    "title": "Le Sommet\ndes Dieux",
+    "title": "Le Sommet des Dieux",
     "element": "earth",
     "kanji": "土",
     "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum tenetur cupiditate distinctio eaque culpa error.",
@@ -19,7 +19,7 @@
   },
   {
     "id":3,
-    "title":"Les enfants\nde la mer",
+    "title":"Les Enfants de la Mer",
     "element":"water",
     "kanji":"水",
     "text":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum tenetur cupiditate distinctio eaque culpa error.",
@@ -27,7 +27,7 @@
     "charImg":"/assets/kaneda.png"
   },{
     "id":4,
-    "title":"Daigo,\nle soldat du feu",
+    "title":"Daigo,\nle Soldat du Feu",
     "element":"fire",
     "kanji":"火",
     "text":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum tenetur cupiditate distinctio eaque culpa error.",

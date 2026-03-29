@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 
 import { ControlUserTab } from "../components/admin/ControllUserTab/ControllUserTab";
-import { ModifyUserTab } from "../components/admin/ModifyUserTab";
+import { ModifyUserTab } from "../components/admin/ModifyUserTab/ModifyUserTab";
 import { DashboardStats } from "../components/admin/DashboardStats/DashboardStats";
 import { LogoutBtn } from "../components/auth/LogoutBtn";
 import { jwtDecode } from "jwt-decode";

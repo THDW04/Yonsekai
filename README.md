@@ -62,10 +62,10 @@
 
    Dupliquer le fichier d'exemple et le remplir :
  
-   # Base de données
+   ## Base de données
    Dans config/database.php, renseignez vos identifiants MySQL.
 
-   # Service email
+   ## Service email
    Dans services/MailService.php, remplacez les credentials SMTP :
    ```
    // Développement (Mailtrap)

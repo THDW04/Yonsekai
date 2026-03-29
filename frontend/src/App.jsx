@@ -26,23 +26,12 @@ function App() {
     setIsStarted(true);
   };
 
-  useEffect(() => {
-    import('./pages/Home');
-  }, []);
-
   return (
     <>
       <HelmetProvider>
         <BrowserRouter>
-          {!isStarted && <AudioModal onStart={handleStart} />}
-          {isStarted && hasAudio && <AudioExperience isStarted={isStarted} />}
-          {isStarted && (
             <>
-              <Header
-                hasAudio={hasAudio}
-                setHasAudio={setHasAudio}
-              />
-              <AudioExperience />
+              <Header/>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/inscription" element={<Register />} />
@@ -54,7 +43,6 @@ function App() {
                 <Route path="/error404" element={<Error404 />} />
               </Routes>
             </>
-          )}
         </BrowserRouter>
       </HelmetProvider>
     </>

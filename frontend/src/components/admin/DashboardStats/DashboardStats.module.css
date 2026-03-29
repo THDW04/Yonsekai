@@ -12,6 +12,21 @@
     font-size: 1rem;
 }
 
+.statsContainer select{
+    padding: 5px 10px; 
+    margin-left: 10px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid var(--bg-color);
+    border-radius: 5px;
+    background-color: #4b9fc05d;
+}
+
+.statsContainer option{
+    font-weight: 400;
+}
+
 .stats {
     padding: 20px;
     border: 2px solid var(--bg-color);

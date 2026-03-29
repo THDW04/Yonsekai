@@ -81,12 +81,11 @@ export const ReservationForm = () => {
 
     if (success) {
         return (
-            <main>
-                <div className="success-card">
-                    <h1>🎉 Réservation confirmée !</h1>
+            <main className={styles.mainSuccess}>
+                <div className={styles.successCard}>
+                    <h1>Réservation confirmée !</h1>
                     <p>Merci pour votre commande. Vous recevrez un mail avec vos billets sous peu.</p>
-                    <p>Vous pouvez également retrouver vos billets dans votre
-                        <a href="/profil" class="btn-link">espace personnel</a>.
+                    <p>Vous pouvez également retrouver vos billets dans votre <a href="/profil" class={styles.btnLink}>espace personnel</a>.
                     </p>
                     <button onClick={() => setSuccess(false)}>Faire une autre réservation</button>
                 </div>
@@ -97,11 +96,12 @@ export const ReservationForm = () => {
     return (
         <section className={styles.reservationContainer}>
             {error && (
-                <div style={{ color: 'white', background: '#e74c3c', padding: '10px', marginBottom: '20px', borderRadius: '5px' }}>
+                <div className={styles.error}>
                     <strong>Erreur :</strong> {error}
                 </div>
             )}
             <form onSubmit={handleSubmit} >
+                <h2>Sélectionnez une date</h2>
                 <div className={styles.bookDate}>
                     <div className={styles.calendarContainer}>
                         <Calendar

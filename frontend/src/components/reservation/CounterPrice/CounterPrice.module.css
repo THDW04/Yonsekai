@@ -22,11 +22,11 @@
 }
 
 .counterPrice button:hover{
-    background-color: #e6b002;
+    background-color: var(--hover-color);
 }
 
 .counterPrice button:disabled{
-    background-color: #5c4600;
+    background-color: #696969;
     color: black;
 }
 

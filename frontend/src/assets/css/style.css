@@ -13,7 +13,9 @@
     --font-subheading: 'Old Standard TT', serif;
     --font-body: 'Montserrat', sans-serif;
     --bg-color :#040412;
-    --primary-color: #c29502;
+    --primary-color: #4D647A;
+    --secondary-color:#141111;
+    --hover-color:#6483a0;
 }
 
 * {

@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
-import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
 import { ImageTransitionMesh } from './ImageTransitionMesh';
 import { AirInteraction } from './Interactions/AirInteraction';
 import { MangaCard } from './MangaCard/MangaCard';
+
 import data from '../../../js/data.json';
 import styles from './MangaContainer.module.css';
+import { useMangaTimeline } from './hooks/useMangaTimeline';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,54 +21,7 @@ export const MangaContainer = () => {
     window.dispatchEvent(new CustomEvent('changeSection', { detail: elementName }));
   };
 
-  useEffect(() => {
-    const lenis = new Lenis();
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    gsap.set(textRefs.current[0], { opacity: 1, autoAlpha: 1 });
-    gsap.set(textRefs.current.slice(1), { opacity: 0, autoAlpha: 0 });
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: true,
-      }
-    });
-
-    data.forEach((item, i) => {
-      tl.to(textRefs.current[i], {
-        opacity: 1,
-        autoAlpha: 1,
-        duration: 0.1,
-        onStart: () => {
-          const currentElement = data[i].element;
-          if (currentElement) {
-            console.log("Changement de section vers :", currentElement);
-            window.dispatchEvent(new CustomEvent('changeSection', { detail: currentElement }));
-          }
-        }
-        }, i / data.length);
-
-      if (i < data.length - 1) {
-        tl.to(textRefs.current[i], {
-          opacity: 0,
-          autoAlpha: 0,
-          duration: 0.1
-        }, (i + 0.9) / data.length);
-      }
-    });
-
-    return () => {
-      lenis.destroy();
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    };
-  }, []);
+  useMangaTimeline(containerRef, textRefs);
 
   const imagePaths = data.map(s => s.background);
 
@@ -82,7 +37,7 @@ export const MangaContainer = () => {
         <div className={styles.interactionLayer}>
           {data.map((section, i) => (
             <div key={`inter-${i}`} className={styles.fullScreenSection}>
-              {i === 0 && <AirInteraction />}
+              {section.element == 'air' && i === 0 && <AirInteraction />}
             </div>
           ))}
         </div>
@@ -94,6 +49,7 @@ export const MangaContainer = () => {
                 title={section.title}
                 element={section.element}
                 kanji={section.kanji}
+                text={section.text}
               />
             </div>
           ))}

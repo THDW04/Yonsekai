@@ -4,6 +4,12 @@
     -webkit-overflow-scrolling: touch;
 }
 
+.tableContainer h2{
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 2rem;
+}
+
 .dataTable {
     min-width: 600px;
     width: 100%;
@@ -46,4 +52,20 @@
 
 .dataTable tr:hover {
     background-color: rgba(0, 0, 255, 0.5);
+}
+
+.dataTable button{
+    padding: 5px 10px; 
+    margin-left: 10px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid var(--bg-color);
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.dataTable button:nth-child(2){
+    background-color: rgb(255, 125, 125) ;
 }
