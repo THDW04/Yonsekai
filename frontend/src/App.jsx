@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, lazy } from "react";
 import { HelmetProvider } from "react-helmet-async";
-import { Game } from './pages/Game';
+
 import { Header } from "./components/Header/header";
 import { Footer } from "./components/footer/Footer";
 import { AudioExperience } from "./components/AudioExperience";
@@ -18,6 +18,7 @@ const Profile = lazy(() => import("./pages/Profile"));
 const Admin = lazy(() => import("./pages/Admin"));
 const Error403 = lazy(() => import("./pages/Error403"));
 const Error404 = lazy(() => import("./pages/Error404"));
+const Game = lazy(() => import("./pages/Game"));
 
 function App() {
   const [isStarted, setIsStarted] = useState(false);
@@ -52,7 +53,7 @@ function App() {
               <Route path="/403" element={<Error403 />} />
               <Route path="/404" element={<Error404 />} />
             </Routes>
-            <Route path="/game" element={<Game />} />
+            
 
             <Footer/>
           </>
