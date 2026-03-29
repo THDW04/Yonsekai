@@ -33,5 +33,18 @@
   "navExperience": "L'expérience",
   "navInfo": "Informations",
   "reserve": "Réserver",
-  "titleInfos": "Avant le grand départ"
+  "titleInfos": "Avant le grand départ",
+
+
+  "error403Title" :"Erreur 403",
+  "error403text" : "Cette voie n’est pas destinée à tout le monde",
+
+
+    "error404Title" :"Erreur 404",
+  "error404text" : "OH NON ! Cette page à été contaminée et à disparut ...",
+
+
+  "acceuil": "Retourner à l'acceuil"
+
+
 }

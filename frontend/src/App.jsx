@@ -14,6 +14,8 @@ const Login = lazy(() => import('./pages/Login'));
 const Reservation = lazy(() => import('./pages/Reservation'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Admin = lazy(() => import('./pages/Admin'));
+const Error403 = lazy(() => import('./pages/Error403'));
+const Error404 = lazy(() => import('./pages/Error404'));
 
 function App() {
   const [isStarted, setIsStarted] = useState(false);
@@ -48,6 +50,8 @@ function App() {
                 <Route path="/reservation" element={<Reservation />} />
                 <Route path="/profil" element={<Profile />} />
                 <Route path="/administration" element={<Admin />} />
+                <Route path="/error403" element={<Error403 />} />
+                <Route path="/error404" element={<Error404 />} />
               </Routes>
             </>
           )}

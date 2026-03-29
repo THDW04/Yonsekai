@@ -34,5 +34,20 @@
   "navInfo": "Information",
   "reserve": "Book now",
 
-  "titleInfos": "Before the grand departure"
+  "titleInfos": "Before the grand departure",
+
+
+
+
+  "error403Title" :"Erreur 403",
+  "error403text" : "This way is not for everyone",
+
+
+    "error404Title" :"Erreur 404",
+  "error404text" : "Oh no! This page has been contaminated and disappeared…",
+
+
+  "acceuil": "Back to Home"
+
+
 }
