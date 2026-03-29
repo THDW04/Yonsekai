@@ -5,14 +5,29 @@
     "Only one question remains, lingering: in the face of uncontrollable nature, is mankind still master of its own destiny?",
     "Between contemplation and vertigo, be shaken by the vision of Japan's greatest authors. Will you find your own answer? The experience begins here."
   ],
-  "titleAir": "Nausicaä of the Valley of the Wind",
-  "resumeAir": "In the heart of a world where human steel has torn the sky apart, Nausicaa moves through a lost humanity. Prisoner not of chains but of mankind’s madness, she witnesses a war she does not understand. Why destroy when listening would be enough? Why hate when love could suffice? Guided by a fragile yet resilient will, Nausicaa refuses fatality.",
-  "titleFire": "Daigo, Fire Soldier",
-  "resumeFire": "Flames destroyed his life. A survivor of a fire when he was still a child, he swore to become a firefighter to help others as he once was helped. But Daigo quickly faces reality when he understands that a single second of doubt can cost a life. The greater the danger, the more he is ready to risk his own. But beware of flying too close to the sun — before fire, man is nothing.",
-  "titleWater": "Children of the Sea",
-  "resumeWater": "At the heart of a suspended summer, an unexpected encounter changes the course of days. Ruka meets two boys with ocean eyes, Umi and Sora. By their side, she slowly learns to listen to the sea, to breathe with it, to merge with it. The waves whisper a secret from the depths: we are made of the same matter as stars and oceans.",
-  "titleEarth": "The Summit of the Gods",
-  "resumeEarth": "They each pursued a different goal, and from this adventure they will emerge transformed — if they emerge alive. One seeks the truth behind the mountain’s mystery and the missing climbers. The other has lived only to reach the summit. Through this ascent, each must confront nature, their limits, and the obsession that drives some men ever higher… even if it means never coming down.",
+  "sections": {
+    "1": {
+      "title": "Nausicaä of\nthe Valley of the Wind",
+      "element": "air",
+      "text": "In the heart of a world where human steel has torn the sky apart, Nausicaa moves through a lost humanity. Prisoner not of chains but of mankind’s madness, she witnesses a war she does not understand. Why destroy when listening would be enough? Why hate when love could suffice? Guided by a fragile yet resilient will, Nausicaa refuses fatality."
+    },
+    "2": {
+      "title": "The Summit of the Gods",
+      "element": "earth",
+      "text": "They each pursued a different goal, and from this adventure they will emerge transformed — if they emerge alive. One seeks the truth behind the mountain’s mystery and the missing climbers. The other has lived only to reach the summit. Through this ascent, each must confront nature, their limits, and the obsession that drives some men ever higher… even if it means never coming down."
+    },
+    "3": {
+      "title": "Children of the Sea",
+      "element": "water",
+      "text": "At the heart of a suspended summer, an unexpected encounter changes the course of days. Ruka meets two boys with ocean eyes, Umi and Sora. By their side, she slowly learns to listen to the sea, to breathe with it, to merge with it. The waves whisper a secret from the depths: we are made of the same matter as stars and oceans."
+    },
+    "4": {
+      "title": "Firefighter Daigo:\nRescuer in Orange",
+      "element": "fire",
+      "text": "Flames destroyed his life. A survivor of a fire when he was still a child, he swore to become a firefighter to help others as he once was helped. But Daigo quickly faces reality when he understands that a single second of doubt can cost a life. The greater the danger, the more he is ready to risk his own. But beware of flying too close to the sun — before fire, man is nothing."
+    }
+  },
+
   "titleInformation": "Opening Hours",
   "infoEnd": "Last admission to the museum at 5:00 pm, last admission to the exhibitions at 5:15 pm, galleries begin closing from 5:30 pm.",
   "infoThursday": "<strong>Late opening on Thursdays until 9:45 pm.</strong> Last admission to the museum and exhibitions at 9:00 pm, galleries begin closing from 9:15 pm.",
@@ -28,17 +43,10 @@
   "navInfo": "Information",
   "reserve": "Book now",
   "titleInfos": "Before the grand departure",
-
-  "error403Title" :"Erreur 403",
-  "error403text" : "This way is not for everyone",
-
-
-    "error404Title" :"Erreur 404",
-  "error404text" : "Oh no! This page has been contaminated and disappeared…",
-
-
+  "error403Title": "Erreur 403",
+  "error403text": "This way is not for everyone",
+  "error404Title": "Erreur 404",
+  "error404text": "Oh no! This page has been contaminated and disappeared…",
   "acceuil": "Back to Home",
-   "legal": "Legal Notices"
-
-
+  "legal": "Legal Notices"
 }

@@ -3,7 +3,7 @@ import styles from './MangaCard.module.css';
 export const MangaCard = ({ title, element, kanji, text }) => {
     const profiles = {
         compact: { '--darkBox-height': '14vh', '--container-width': '55vw', '--container-bottom': '0', '--badge-bottom': '25%', '--badge-width': '30%' },
-        wide: { '--darkBox-height': '15vh', '--container-width': '75vw', '--container-bottom': '-50px', '--badge-bottom': '18%', '--badge-width': '40%' },
+        wide: { '--darkBox-height': '15vh', '--container-width': '65vw', '--container-bottom': '-50px', '--badge-bottom': '18%', '--badge-width': '40%' },
     };
 
     const elementStyles = {
@@ -26,7 +26,6 @@ export const MangaCard = ({ title, element, kanji, text }) => {
 
                 <div className={styles.text}>
                     <p>{text}</p>
-                    <img src={`assets/img/logo-${element}.svg`} alt="" />
                 </div>
 
                 <div className={styles.badges}>

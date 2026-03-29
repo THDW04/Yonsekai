@@ -1,37 +1,6 @@
 [
-  {
-    "id": 1,
-    "title": "Nausicaä de\nla Vallée du Vent",
-    "element": "air",
-    "kanji": "気",
-    "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum tenetur cupiditate distinctio eaque culpa error.",
-    "background": "/assets/img/air.jpg",
-    "charImg": "/assets/react.svg"
-  },
-  {
-    "id": 2,
-    "title": "Le Sommet des Dieux",
-    "element": "earth",
-    "kanji": "土",
-    "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum tenetur cupiditate distinctio eaque culpa error.",
-    "background": "/assets/img/earth.jpg",
-    "charImg": "/assets/yoko.png"
-  },
-  {
-    "id":3,
-    "title":"Les Enfants de la Mer",
-    "element":"water",
-    "kanji":"水",
-    "text":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum tenetur cupiditate distinctio eaque culpa error.",
-    "background":"/assets/img/eau.png",
-    "charImg":"/assets/kaneda.png"
-  },{
-    "id":4,
-    "title":"Daigo,\nle Soldat du Feu",
-    "element":"fire",
-    "kanji":"火",
-    "text":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum tenetur cupiditate distinctio eaque culpa error.",
-    "background":"/assets/img/feu.png",
-    "charImg":"/assets/kaneda.png"
-  }
+  { "id": 1, "element": "air",   "kanji": "気", "background": "/assets/img/air.jpg",   "charImg": "/assets/react.svg" },
+  { "id": 2, "element": "earth", "kanji": "土", "background": "/assets/img/earth.jpg", "charImg": "/assets/yoko.png" },
+  { "id": 3, "element": "water", "kanji": "水", "background": "/assets/img/eau.png",   "charImg": "/assets/kaneda.png" },
+  { "id": 4, "element": "fire",  "kanji": "火", "background": "/assets/img/feu.png",   "charImg": "/assets/kaneda.png" }
 ]

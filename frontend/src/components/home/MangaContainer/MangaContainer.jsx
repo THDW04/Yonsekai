@@ -2,6 +2,7 @@ import React, { useEffect, useRef, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslation } from 'react-i18next';
 
 import { ImageTransitionMesh } from './ImageTransitionMesh';
 import { MangaCard } from './MangaCard/MangaCard';
@@ -15,6 +16,7 @@ gsap.registerPlugin(ScrollTrigger);
 export const MangaContainer = () => {
   const containerRef = useRef();
   const textRefs = useRef([]);
+  const { t } = useTranslation();
 
   const switchSound = (elementName) => {
     window.dispatchEvent(new CustomEvent('changeSection', { detail: elementName }));
@@ -25,7 +27,7 @@ export const MangaContainer = () => {
   const imagePaths = data.map(s => s.background);
 
   return (
-    <section  id='mangas' ref={containerRef} className={styles.container} style={{ height: `${data.length * 100}vh` }}>
+    <section id='mangas' ref={containerRef} className={styles.container} style={{ height: `${data.length * 100}vh` }}>
       <div className={styles.scroller}>
         <Canvas orthographic camera={{ zoom: 1, position: [0, 0, 1] }}>
           <Suspense fallback={null}>
@@ -37,10 +39,11 @@ export const MangaContainer = () => {
           {data.map((section, i) => (
             <div key={i} className={styles.inner} ref={el => textRefs.current[i] = el}>
               <MangaCard
-                title={section.title}
-                element={section.element}
+                title={t(`sections.${section.id}.title`)}
+                element={t(`sections.${section.id}.element`)}
+                text={t(`sections.${section.id}.text`)}
                 kanji={section.kanji}
-                text={section.text}
+                background={section.background}
               />
             </div>
           ))}
