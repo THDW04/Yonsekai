@@ -1,16 +1,13 @@
-# ⛩️ YONSEKAI — Expérience Immersive
-
-> Une plateforme narrative et sensorielle mêlant webdesign moderne, Sound Design et technologies 3D.
+# ⛩️ YONSEKAI — Le Musée des quatre éléments
 
 ---
 
 ## 📝 Présentation du Projet
 
-**Yonsekai** est une expérience web immersive conçue pour transporter l'utilisateur dans un univers inspiré du manga et de la nature. Le site combine une narration visuelle forte (via des Shaders Three.js et GSAP) avec une gestion de billetterie et un espace utilisateur complet.
+**Yonsekai** est une expérience web immersive conçue pour transporter l'utilisateur dans un univers inspiré du manga et de la nature. Le site combine une narration visuelle forte avec une gestion de billetterie et un espace utilisateur complet.
 
 ### Fonctionnalités clés
 
-- 🎧 **Expérience Sensorielle** — Introduction dynamique avec masquage progressif et spatialisation sonore.
 - 🌀 **Navigation Narrative** — Transition d'images par distorsion (Shaders) synchronisée au scroll.
 - 👤 **Gestion Utilisateur** — Inscription, connexion et profil personnel.
 - 🎟️ **Billetterie** — Système de réservation avec confirmation automatique par email.
@@ -72,6 +69,7 @@
 
    # Service email
    Dans services/MailService.php, remplacez les credentials SMTP :
+   ```
    // Développement (Mailtrap)
    $mail->Host     = 'sandbox.smtp.mailtrap.io';
    $mail->Username = 'votre_username';
@@ -82,7 +80,8 @@
    $mail->Host     = 'smtp.mailgun.org';
    $mail->Username = 'postmaster@votre-domaine.com';
    $mail->Password = 'votre_password';
-   $mail->Port     = 587;
+   $mail->Port     = 587;`
+   ```
 
    # Serveur
    PORT=5000
@@ -128,7 +127,7 @@ Authorization: Bearer <votre_token>
 ### Utilisateurs
 |Méthode |Endpoint | Description | Accès|
 |:---:|:---|:---|:---:|
-|`GET`  ?action=user| Profil + réservations| 🔒 Authentifié|
+|`GET`| ?action=user| Profil + réservations| 🔒 Authentifié|
 |`GET`|?action=users | Liste tous les utilisateurs|👑 Admin |
 |`PUT`|?action=update-user|Modifier un utilisateur| 👑 Admin|
 |`DELETE`|?action=delete-user&id=X| Supprimer un compte| 🔒 Authentifié|
