@@ -8,6 +8,8 @@
     display: flex;
     align-items: center;
     padding: 0 5%;
+    background-color:var(--bg-color);
+    color: #fff;
 }
 
 .nav {
@@ -16,7 +18,7 @@
     justify-content: space-between;
     align-items: center;
     text-transform: uppercase;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
 }
 
 .nav a {
@@ -50,11 +52,13 @@
 .navLinks {
     display: flex;
     list-style: none;
+    gap:20px;
 }
 
 .actions {
     display: flex;
     align-items: center;
+    gap: 20px;
 }
 
 .langSwitch select {
@@ -91,6 +95,10 @@
         display: block;
     }
 
+    .nav {
+    font-size: 1.3rem;
+}
+
     .navContent {
         position: fixed;
         top: 0;
@@ -110,7 +118,6 @@
     .navLinks {
         flex-direction: column;
         align-items: center;
-        font-size: 1.5rem;
     }
 
     .actions {
