@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { ReservationForm } from "../components/reservation/ReservationForm/ReservationForm";
 import styles from '../assets/css/reservation.module.css'
+import {Footer} from '../components/footer/Footer'
 
 const Reservation = () => {
     
@@ -21,6 +22,10 @@ const Reservation = () => {
             </div>
             <ReservationForm/>
         </main>
+
+        <Footer />
+
+
         </>
     );
 

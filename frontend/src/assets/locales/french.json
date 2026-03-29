@@ -44,7 +44,10 @@
   "error404text" : "OH NON ! Cette page à été contaminée et à disparut ...",
 
 
-  "acceuil": "Retourner à l'acceuil"
+  "acceuil": "Retourner à l'acceuil",
 
+  "legal": "Mentions Légales"
+
+    
 
 }
