@@ -1,5 +1,5 @@
 import Player from '../classes/Player.js'
-import Flame from '../classes/Flame.js'
+import Shark from '../classes/Shark.js'
 import CollisionBlock from '../classes/CollisionBlock.js'
 import Platform from '../classes/Platform.js'
 
@@ -9,25 +9,24 @@ import { setCurrentGame } from './currentGame.js'
 
 import collisions from '../data/Water/collisions.js'
 import l_BackgroundWater from '../data/Water/l_BackgroundWater.js'
-import  l_CollitionWater from '../data/Water/l_CollitionWater.js'
-import  l_PlatformWater from '../data/Water/l_PlatformWater.js'
+import l_CollitionWater from '../data/Water/l_CollitionWater.js'
+import l_PlatformWater from '../data/Water/l_PlatformWater.js'
 
 import './eventListeners.js'
 
 /* ======================================================
-   VARIABLES GLOBAL GAME
+   GLOBAL
 ====================================================== */
 
 let canvas
 let c
 
 const dpr = window.devicePixelRatio || 1
-
 const GAME_WIDTH = 800
 const GAME_HEIGHT = 450
 
 /* ======================================================
-   MAP DATA
+   MAP
 ====================================================== */
 
 const layersData = {
@@ -37,9 +36,18 @@ const layersData = {
 }
 
 const tilesets = {
-   l_BackgroundWater: { imageUrl: './images/70903868-2000-44ab-2c1a-42b09a61c500.png', tileSize: 16 },
- l_CollitionWater: { imageUrl: './images/70903868-2000-44ab-2c1a-42b09a61c500.png', tileSize: 16 },
- l_PlatformWater: { imageUrl: './images/34c414f9-c9b9-48cd-6d3d-56f5d5b94f00.png', tileSize: 16 },
+  l_BackgroundWater: {
+    imageUrl: './images/70903868-2000-44ab-2c1a-42b09a61c500.png',
+    tileSize: 16,
+  },
+  l_CollitionWater: {
+    imageUrl: './images/70903868-2000-44ab-2c1a-42b09a61c500.png',
+    tileSize: 16,
+  },
+  l_PlatformWater: {
+    imageUrl: './images/34c414f9-c9b9-48cd-6d3d-56f5d5b94f00.png',
+    tileSize: 16,
+  },
 }
 
 /* ======================================================
@@ -73,6 +81,7 @@ collisions.forEach((row, y) => {
         })
       )
     }
+
   })
 })
 
@@ -82,33 +91,30 @@ collisions.forEach((row, y) => {
 
 export const player = new Player({
   x: 100,
-  y: 100,
+  y: 200,
   size: 42,
   velocity: { x: 0, y: 0 },
 })
 
 /* ======================================================
-   FLAMES (ENNEMIS)
+   SHARKS
 ====================================================== */
 
-const flamesData = [
-  { x: 150, y: 0 },
-  { x: 430, y: 0 },
-  { x: 570, y: 0 },
-  { x: 740, y: 0 },
-  { x: 940, y: 0 },
-  { x: 1140, y: 0 },
-  { x: 1440, y: 0 },
-]
+export const sharks = [
+  new Shark({
+    x: 380,
+    y:350,
+    patrolDistance: 130,
+    speed: 170,
+  }),
 
-export const flames = flamesData.map(data =>
-  new Flame({
-    x: data.x,
-    y: data.y,
-    size: 62,
-    velocity: { x: 0, y: 0 },
-  })
-)
+  new Shark({
+    x: 950,
+    y: 350,
+    patrolDistance: 150,
+    speed: 180,
+  }),
+]
 
 /* ======================================================
    INPUTS
@@ -169,7 +175,7 @@ const renderLayer = (tilesData, tilesetImage, tileSize, context) => {
   })
 }
 
-const renderStaticLayers = async () => {
+async function renderStaticLayers() {
 
   const offscreenCanvas = document.createElement('canvas')
   offscreenCanvas.width = canvas.width
@@ -194,10 +200,37 @@ const renderStaticLayers = async () => {
 }
 
 /* ======================================================
+   DAMAGE COOLDOWN
+====================================================== */
+
+let lastHitTime = 0
+const HIT_COOLDOWN = 1000
+
+function checkSharkCollisions() {
+
+  const now = performance.now()
+
+  sharks.forEach(shark => {
+
+    const hit =
+      player.x < shark.x + shark.width &&
+      player.x + player.size > shark.x &&
+      player.y < shark.y + shark.height &&
+      player.y + player.size > shark.y
+
+    if (hit && now - lastHitTime > HIT_COOLDOWN) {
+      damagePlayer(1)
+      lastHitTime = now
+    }
+  })
+}
+
+/* ======================================================
    GAME LOOP
 ====================================================== */
 
 function animate(backgroundCanvas) {
+
   const currentTime = performance.now()
   const deltaTime = (currentTime - lastTime) / 1000
   lastTime = currentTime
@@ -205,23 +238,14 @@ function animate(backgroundCanvas) {
   player.handleInput(keys)
   player.update(deltaTime, collisionBlocks, platforms)
 
-  // On boucle sur chaque flamme pour l'update ET vérifier la collision
-  flames.forEach(flame => {
-    flame.update(deltaTime, collisionBlocks, platforms)
-
-    // Détection de collision intégrée dans la boucle
-    if (
-      player.x < flame.x + flame.size &&
-      player.x + player.size > flame.x &&
-      player.y < flame.y + flame.size &&
-      player.y + player.size > flame.y
-    ) {
-      damagePlayer() // Appelle la fonction de gameState.js
-    }
+  sharks.forEach(shark => {
+    shark.update(deltaTime)
   })
 
+  checkSharkCollisions()
 
-  // CAMERA
+  /* CAMERA */
+
   if (player.x > SCROLL_POST_RIGHT)
     camera.x = player.x - SCROLL_POST_RIGHT
 
@@ -240,8 +264,7 @@ function animate(backgroundCanvas) {
   c.drawImage(backgroundCanvas, 0, 0)
 
   player.draw(c)
-
-  flames.forEach(flame => flame.draw(c))
+  sharks.forEach(shark => shark.draw(c))
 
   c.restore()
 
@@ -255,11 +278,7 @@ function animate(backgroundCanvas) {
 async function startGame() {
 
   canvas = document.querySelector('canvas')
-
-  if (!canvas) {
-    console.error('Canvas introuvable')
-    return
-  }
+  if (!canvas) return
 
   c = canvas.getContext('2d')
 

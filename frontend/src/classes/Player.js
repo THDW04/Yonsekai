@@ -14,7 +14,7 @@ export default class Player {
 
     // ===== DOUBLE JUMP =====
     this.jumpCount = 0
-    this.maxJumps = 2
+    this.maxJumps = 3 
 
     // ===== IMAGE =====
     this.image = new Image()
