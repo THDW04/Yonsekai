@@ -6,6 +6,7 @@ import { Header } from './components/Header/header';
 import { AudioExperience } from './components/AudioExperience';
 import { AudioModal } from './components/AudioModal';
 import './assets/css/style.css'
+import "./i18n";
 
 const Home = lazy(() => import('./pages/Home'));
 const Register = lazy(() => import('./pages/Register'));

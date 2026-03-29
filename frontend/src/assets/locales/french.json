@@ -1,0 +1,37 @@
+{
+  "titleIntro": "Le Musée des Quatre Éléments",
+
+  "resumeIntro": "À travers cette exposition, vous découvrirez la puissance brute des éléments, du sommet des cimes aux profondeurs de l’océan. Ici, le manga ne se lit pas : il se ressent.  Une question demeure, lancinante : face à une nature incontrôlable, l’homme est-il encore maître de son destin ? Entre contemplation et vertige, laissez-vous ébranler par le regard des plus grands auteurs japonais. Parviendrez-vous à trouver votre propre réponse ? L'expérience commence ici.",
+
+  "titleAir": "Nausicaä de la vallée du vent",
+  "resumeAir": "Au cœur d’un monde où l’acier des hommes a déchiré le ciel, Nausicaa avance dans une humanité égarée. Prisonnière non pas de chaînes, mais de la folie des hommes, elle contemple une guerre qu’elle ne comprend pas. Pourquoi détruire, quand il suffirait d’écouter ? Pourquoi haïr, quand aimer pourrait suffire ? Guidée par une volonté fragile mais tenace, Nausicaä refuse la fatalité.",
+
+  "titleFire": "Daigo, soldat du feu",
+  "resumeFire": "Les flammes ont ravagé sa vie. Survivant d’un incendie alors qu’il n’était encore qu’un enfant, il s’est juré de devenir pompier afin de pouvoir aider tel que lui l’a été. Mais Daigo va vite déchanter lorsqu’il se rend compte qu’une seule seconde de doute peut coûter une vie. Plus le danger est grand, plus Daigo est prêt à risquer la sienne. Mais attention à ne pas se brûler les ailes car face aux flammes, l’homme n’est rien.",
+
+  "titleWater": "Les enfants de la mer",
+  "resumeWater": "Au cœur d’un été suspendu, une rencontre inattendue vient bouleverser le cours des jours. Ruka croise le chemin de deux garçons aux yeux d’océan, Umi et Sora. À leurs côtés, elle apprend peu à peu à écouter la mer, à respirer avec elle, à s’y fondre. Les vagues murmurent alors un secret des profondeurs : nous sommes faits de la même étoffe que les étoiles et les océans.",
+
+  "titleEarth": "Le sommet des dieux",
+  "resumeEarth": "Ils avaient tous les deux un but bien différent et de cette aventure ils en ressortiront grandis. S'ils en ressortent… vivants. L’un cherche à percer le mystère qui entoure la montagne et ceux qui s’y sont perdus. L’autre n’a vécu que pour atteindre son sommet. À travers cette ascension, chacun devra affronter la nature, ses limites et l’obsession qui pousse certains hommes toujours plus haut… quitte à ne jamais redescendre.",
+
+  "titleInformation": "Horaires",
+  "infoEnd": "Dernier accès au musée à 17h, dernier accès aux expositions à 17h15, fermeture des salles à partir de 17h30.",
+  "infoThursday": "<strong>Nocturne le jeudi jusqu'à 21h45.</strong> Dernier accès au musée et aux expositions à 21h, fermeture des salles à partir de 21h15.",
+  "infoClosed": "Fermé tous les lundis, les 1er mai et 25 décembre.",
+
+  "titleTransport": "Venir à l'exposition :",
+  "stationLabel": "Station de métro la plus proche",
+  "walking": "Marcher Rue du Colonel 8min",
+
+  "titleLogIn": "Connectez-vous !",
+  "subtitleLogIn": "Le vent se lève... Il est temps de rejoindre la Vallée.",
+
+  "titleSignup": "Rejoignez l'expérience",
+  "subtitleSignUp": "Inscrivez-vous pour réserver vos places pour l'exposition.",
+
+  "navExperience": "L'expérience",
+  "navInfo": "Informations",
+  "reserve": "Réserver",
+  "titleInfos": "Avant le grand départ"
+}

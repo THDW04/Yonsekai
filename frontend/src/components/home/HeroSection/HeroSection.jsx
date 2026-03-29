@@ -20,9 +20,11 @@ const Model = (props) => {
 }
 
 useGLTF.preload("/assets/mountain_and_river_scroll.glb")
+import { useTranslation } from "react-i18next";
 
 export const HeroSection = () => {
-    const scrollProgress = useScrollProgress(2)
+    const { t } = useTranslation();
+    const scrollProgress = useScrollProgress(2);
     const textRef = useRef();
 
     useEffect(() => {
@@ -52,14 +54,12 @@ export const HeroSection = () => {
         return () => {
             ScrollTrigger.getAll().forEach(t => t.kill());
         };
-
     }, []);
 
     return (
         <section data-hero className={styles.hero}>
             <div className={styles.mountainsContainer}>
                 <Canvas flat camera={{ position: [10, 3, 20], rotation: [0, 0, 0] }}>
-
                     <ambientLight intensity={0.5} />
                     <directionalLight position={[5, 10, 5]} intensity={1} />
 
@@ -75,13 +75,12 @@ export const HeroSection = () => {
                         <Bloom luminanceThreshold={0.2} intensity={0.4} mipmapBlur />
                         <Noise opacity={0.3} premultiply blendFunction={BlendFunction.OVERLAY} />
                     </EffectComposer>
-
                 </Canvas>
             </div>
 
             <div className={styles.heroHeader}>
                 <h1>Yonsekai</h1>
-                <p>Le musée des quatre éléments.</p>
+                <p>{t("titleIntro")}</p>
             </div>
 
             <div className={styles.canvaTransition}>
@@ -91,10 +90,9 @@ export const HeroSection = () => {
             </div>
 
             <div ref={textRef} className={styles.heroContent}>
-                <p>À travers cette exposition, vous découvrirez la puissance brute des éléments, du sommet des cimes aux profondeurs de l’océan. Ici, le manga ne se lit pas : il se ressent.</p>
-                <p>Une question demeure, lancinante : face à une nature incontrôlable, l’homme est-il encore maître de son destin ?</p>
-                <p>Entre contemplation et vertige, laissez-vous ébranler par le regard des plus grands auteurs japonais. Parviendrez-vous à trouver votre propre réponse ? <br /> L'expérience commence ici.</p>
+                <p>{t("resumeIntro")}</p>
+                
             </div>
         </section>
-    )
-}
+    );
+};
