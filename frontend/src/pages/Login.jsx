@@ -1,11 +1,17 @@
+import { Helmet } from 'react-helmet-async';
 import { LoginForm } from '../components/auth/LoginForm';
-import { Link } from 'react-router-dom';
 
-const Login = () =>{
-    return(
-      <main>
-          <LoginForm />
-      </main>
+const Login = () => {
+    return (
+        <>
+            <Helmet>
+                <title>Connexion | Yonsekai</title>
+                <meta name="description" content="Rejoignez l'aventure Yonsekai. Créez votre compte en quelques secondes pour réserver vos places et profiter d'une expérience immersive." />
+            </Helmet>
+            <main>
+                <LoginForm />
+            </main>
+        </>
     )
 }
 

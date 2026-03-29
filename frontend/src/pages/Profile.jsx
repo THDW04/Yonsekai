@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react"
+import { Helmet } from 'react-helmet-async';
+
 import { ProfileInformation } from "../components/profile/ProfileInformation/ProfileInformation"
 import { ProfileReservations } from "../components/profile/ProfileReservation/ProfileReservations"
 import { LogoutBtn } from "../components/auth/LogoutBtn"
@@ -56,6 +58,12 @@ const Profile = () => {
   }
 
   return (
+    <>
+    <Helmet>
+      <title>Compte | Yonsekai</title>
+        <meta name="description" content="Accédez à votre espace membre Yonsekai. Retrouvez vos réservations, gérez vos billets et suivez votre progression dans l'expérience narrative." />
+    </Helmet>
+
     <main className="profil-container">
       <LogoutBtn /> 
       <h1>Bienvenue sur votre espace !</h1>
@@ -73,6 +81,7 @@ const Profile = () => {
 
       <DeleteAccount />
     </main>
+    </>
   );
 };
 

@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect, lazy } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
+
 import { Header } from './components/Header/header';
 import { AudioExperience } from './components/AudioExperience';
 import { AudioModal } from './components/AudioModal';
@@ -27,29 +29,29 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
-        {!isStarted && <AudioModal onStart={handleStart} />}
-
-        {isStarted && hasAudio && <AudioExperience isStarted={isStarted} />}
-
-        {isStarted && (
-          <>
-            <Header
-              hasAudio={hasAudio}
-              setHasAudio={setHasAudio}
-            />
-            <AudioExperience />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/inscription" element={<Register />} />
-              <Route path="/connexion" element={<Login />} />
-              <Route path="/reservation" element={<Reservation />} />
-              <Route path="/profil" element={<Profile />} />
-              <Route path="/administration" element={<Admin />} />
-            </Routes>
-          </>
-        )}
-      </BrowserRouter>
+      <HelmetProvider>
+        <BrowserRouter>
+          {!isStarted && <AudioModal onStart={handleStart} />}
+          {isStarted && hasAudio && <AudioExperience isStarted={isStarted} />}
+          {isStarted && (
+            <>
+              <Header
+                hasAudio={hasAudio}
+                setHasAudio={setHasAudio}
+              />
+              <AudioExperience />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/inscription" element={<Register />} />
+                <Route path="/connexion" element={<Login />} />
+                <Route path="/reservation" element={<Reservation />} />
+                <Route path="/profil" element={<Profile />} />
+                <Route path="/administration" element={<Admin />} />
+              </Routes>
+            </>
+          )}
+        </BrowserRouter>
+      </HelmetProvider>
     </>
   )
 }

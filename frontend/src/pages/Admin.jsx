@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
+
 import { ControlUserTab } from "../components/admin/ControllUserTab/ControllUserTab";
 import { ModifyUserTab } from "../components/admin/ModifyUserTab";
 import { DashboardStats } from "../components/admin/DashboardStats/DashboardStats";
@@ -74,6 +76,11 @@ const Admin = () => {
     };
 
     return (
+        <>
+        <Helmet>
+            <title>Admin | Yonsekai</title>
+            <meta name="description" content="Tableau de bord administrateur Yonsekai. Gestion sécurisée des contenus, des utilisateurs et du suivi des réservations pour l'équipe technique." />
+        </Helmet>
         <main className="admin-main">
             <LogoutBtn />
             <h1>Bonjour, Admin</h1>
@@ -96,6 +103,7 @@ const Admin = () => {
                 </div>
             </section>
         </main>
+        </>
     )
 }
 
