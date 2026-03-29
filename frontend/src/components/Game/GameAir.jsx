@@ -1,267 +1,206 @@
 import { useEffect, useRef } from "react";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
+import { damagePlayer } from '../../js/gameState.js';
 
 export const GameAir = () => {
 
-    const mountRef = useRef(null);
+  const mountRef = useRef(null);
 
-    useEffect(() => {
+  useEffect(() => {
 
-        let animationId;
+    let animationId;
+    let lastHitTime = 0;
+    const HIT_COOLDOWN = 1000;
 
-        const config = {
-          nbVessels: 10,
-          vesselSpeed: 1,
-          vesselRadius: 0.2
-        };
+    const config = {
+      nbVessels: 10,
+      vesselSpeed: 1,
+      vesselRadius: 0.2
+    };
 
-        const bgLength = 14;
-        const nbBg = 3;
-        const totalLength = bgLength * nbBg;
-        const hideDistance = 10;
+    const bgLength = 14;
+    const nbBg = 3;
+    const totalLength = bgLength * nbBg;
+    const hideDistance = 10;
 
-        // Scene
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x9CBFF1);
+    scene.fog = new THREE.Fog(0x9CBFF1, 0, 25);
 
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x9CBFF1);
-        scene.fog = new THREE.Fog(0x9CBFF1, 0, 25);
+    const aspect = window.innerWidth / window.innerHeight;
+    const camera = new THREE.PerspectiveCamera(50, aspect, 0.1, 50);
+    camera.position.set(0, 2, 15);
+    camera.rotation.x = -0.2;
 
-        // Camera
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    mountRef.current.appendChild(renderer.domElement);
 
-        const aspect = window.innerWidth / window.innerHeight;
-        const camera = new THREE.PerspectiveCamera(50, aspect, 0.1, 50);
-        camera.position.set(0, 2, 15);
-        camera.rotation.x = -0.2;
+    const textureLoader = new THREE.TextureLoader();
+    const cloudTexture = textureLoader.load('/assets/cloudsBackground.webp');
 
-        // Renderer
+    const createBackground = (x, z) => {
+      const mesh = new THREE.Mesh(
+        new THREE.PlaneGeometry(bgLength, 10),
+        new THREE.MeshBasicMaterial({
+          map: cloudTexture,
+          transparent: true,
+          side: THREE.DoubleSide
+        })
+      );
+      mesh.position.set(x, 2, z);
+      mesh.rotation.y = x < 0 ? Math.PI / 2 : -Math.PI / 2;
+      scene.add(mesh);
+      return mesh;
+    };
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        mountRef.current.appendChild(renderer.domElement);
+    const backgrounds = [
+      createBackground(-3.5, bgLength),
+      createBackground(-3.5, 0),
+      createBackground(-3.5, -bgLength),
+      createBackground(3.5, bgLength),
+      createBackground(3.5, 0),
+      createBackground(3.5, -bgLength)
+    ];
 
-        // ===== TEXTURE BACKGROUND
+    const road = new THREE.Mesh(
+      new THREE.PlaneGeometry(5, 25),
+      new THREE.MeshBasicMaterial({ color: 0x94B6E7 })
+    );
+    road.rotation.x = -Math.PI * 0.5;
+    scene.add(road);
 
-        const textureLoader = new THREE.TextureLoader();
-        const cloudTexture = textureLoader.load('/assets/cloudsBackground.webp');
+    const loader = new GLTFLoader();
+    let starship;
 
-        const createBackground = (x, z) => {
-          const mesh = new THREE.Mesh(
-            new THREE.PlaneGeometry(bgLength, 10),
-            new THREE.MeshBasicMaterial({
-              map: cloudTexture,
-              transparent: true,
-              side: THREE.DoubleSide
-            })
-          );
+    loader.load('/assets/airplane.glb', (gltf) => {
+      starship = gltf.scene;
+      starship.rotation.x = -Math.PI * 0.5;
+      starship.scale.set(0.1, 0.1, 0.1);
+      starship.position.set(0, 1, 11.5);
+      scene.add(starship);
+    });
 
-          mesh.position.set(x, 2, z);
-          mesh.rotation.y = x < 0 ? Math.PI / 2 : -Math.PI / 2;
+    const vessels = [];
 
-          scene.add(mesh);
-          return mesh;
-        };
+    loader.load('/assets/devil_hawk.glb', (gltf) => {
+      for (let j = 0; j < config.nbVessels; j++) {
+        const vessel = gltf.scene.clone();
+        vessel.scale.set(0.1, 0.1, 0.1);
+        vessel.rotation.x = -Math.PI * 0.5;
+        respawn(vessel);
+        scene.add(vessel);
+        vessels.push(vessel);
+      }
+    });
 
-        const backgrounds = [
-          createBackground(-3.5, bgLength),
-          createBackground(-3.5, 0),
-          createBackground(-3.5, -bgLength),
+    let action = false;
+    let acceleration = 0;
+    let speed = 0;
 
-          createBackground(3.5, bgLength),
-          createBackground(3.5, 0),
-          createBackground(3.5, -bgLength)
-        ];
+    const handleKeyDown = (event) => {
+      if (event.key === 'ArrowLeft') { acceleration = -1; action = true; }
+      if (event.key === 'ArrowRight') { acceleration = 1; action = true; }
+    };
 
-        // ===== road
+    const handleKeyUp = () => { action = false; };
 
-        const road = new THREE.Mesh(
-          new THREE.PlaneGeometry(5, 25),
-          new THREE.MeshBasicMaterial({ color: 0x94B6E7 })
-        );
-        road.rotation.x = -Math.PI * 0.5;
-        scene.add(road);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
 
-        // ===== STARSHIP 
+    const tick = () => {
+      animationId = requestAnimationFrame(tick);
+      config.vesselSpeed += 0.0001;
 
-        const loader = new GLTFLoader();
-        let starship;
+      if (!starship) {
+        renderer.render(scene, camera);
+        return;
+      }
 
-        loader.load('/assets/airplane.glb', (gltf) => {
-          starship = gltf.scene;
-          starship.rotation.x = -Math.PI * 0.5;
-          starship.scale.set(0.1, 0.1, 0.1);
-          starship.position.set(0, 1, 11.5);
-          scene.add(starship);
+      starship.position.x += speed * 0.01;
+      starship.rotation.y = speed * 0.01;
+
+      if (action) speed += acceleration;
+      speed *= 0.95;
+
+      if (starship.position.x < -2) { starship.position.x = -2; speed *= -0.8; }
+      if (starship.position.x > 2)  { starship.position.x = 2;  speed *= -0.8; }
+
+      vessels.forEach(v => {
+        v.position.z += config.vesselSpeed * 0.1;
+        detectCollision(v);
+        if (v.position.z > camera.position.z) respawn(v);
+      });
+
+      backgrounds.forEach(bg => {
+        bg.position.z += config.vesselSpeed * 0.1;
+        if (bg.position.z > camera.position.z + hideDistance) {
+          bg.position.z -= totalLength;
+        }
+      });
+
+      renderer.render(scene, camera);
+    };
+
+    tick();
+
+    function respawn(vessel) {
+      vessel.position.set(
+        Math.floor(Math.random() * 4) - 2,
+        1.25,
+        -20 - Math.random() * 40
+      );
+      vessel.scale.set(0.02, 0.02, 0.02);
+      vessel.traverse(child => {
+        if (child.isMesh) child.material.opacity = 1;
+      });
+    }
+
+    function isPointInCircle(px, py, cx, cy, r) {
+      const dx = px - cx;
+      const dy = py - cy;
+      return (dx * dx + dy * dy) <= (r * r);
+    }
+
+    function detectCollision(vessel) {
+      if (!starship) return;
+
+      const collide = isPointInCircle(
+        starship.position.x, starship.position.z,
+        vessel.position.x, vessel.position.z,
+        config.vesselRadius
+      );
+
+      if (collide) {
+        const now = performance.now();
+        if (now - lastHitTime > HIT_COOLDOWN) {
+          lastHitTime = now;
+          damagePlayer(1);
+        }
+
+        vessel.traverse(child => {
+          if (child.isMesh) child.material.color.set(0xff0000);
         });
+        vessel.scale.set(0.3, 0.3, 0.3);
 
-        // ===== VESSELS 
+        setTimeout(() => {
+          vessel.scale.set(0.1, 0.1, 0.1);
+          respawn(vessel);
+        }, 200);
+      }
+    }
 
-        const vessels = [];
+    return () => {
+      cancelAnimationFrame(animationId);
+      if (mountRef.current && renderer.domElement) {
+        mountRef.current.removeChild(renderer.domElement);
+      }
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keyup', handleKeyUp);
+    };
 
-        loader.load('/assets/devil_hawk.glb', (gltf) => {
+  }, []);
 
-          for(let j = 0; j < config.nbVessels; j++){
-
-            const vessel = gltf.scene.clone();
-
-            vessel.scale.set(0.1, 0.1, 0.1);
-            vessel.rotation.x = -Math.PI * 0.5;
-
-            respawn(vessel);
-
-            scene.add(vessel);
-            vessels.push(vessel);
-          }
-
-        });
-
-        // ===== CONTROLS
-
-        let action = false;
-        let acceleration = 0;
-        let speed = 0;
-
-        const handleKeyDown = (event)=>{
-          if(event.key === 'ArrowLeft'){
-            acceleration = -1;
-            action = true;
-          }
-          if(event.key === 'ArrowRight'){
-            acceleration = 1;
-            action = true;
-          }
-        };
-
-        const handleKeyUp = ()=>{
-          action = false;
-        };
-
-        document.addEventListener('keydown', handleKeyDown);
-        document.addEventListener('keyup', handleKeyUp);
-
-        // ===== GAME LOOP
-
-        const tick = () => {
-
-          animationId = requestAnimationFrame(tick);
-
-          config.vesselSpeed += 0.0001;
-
-          if (!starship) {
-            renderer.render(scene, camera);
-            return;
-          }
-
-          // starship move
-          starship.position.x += speed * 0.01;
-          starship.rotation.y = speed * 0.01;
-
-          if(action) speed += acceleration;
-          speed *= 0.95;
-
-          if(starship.position.x < -2){
-            starship.position.x = -2;
-            speed *= -0.8;
-          }
-
-          if(starship.position.x > 2){
-            starship.position.x = 2;
-            speed *= -0.8;
-          }
-
-          // vessels move
-
-          vessels.forEach(v => {
-
-            v.position.z += config.vesselSpeed * 0.1;
-
-            detectCollision(v);
-
-            if(v.position.z > camera.position.z){
-              respawn(v);
-            }
-
-          });
-
-          // background fix
-
-          backgrounds.forEach(bg => {
-            bg.position.z += config.vesselSpeed * 0.1;
-
-            if (bg.position.z > camera.position.z + hideDistance) {
-              bg.position.z -= totalLength;
-            }
-          });
-
-          renderer.render(scene, camera);
-        };
-
-        tick();
-
-        // ===== UTILS
-
-        function respawn(vessel){
-          const x = Math.floor(Math.random() * 4) - 2;
-          const y = 1.25;
-          const z = -20 - Math.random() * 40;
-
-          vessel.position.set(x, y, z);
-          vessel.scale.set(0.02, 0.02, 0.02);
-
-          vessel.traverse(child => {
-            if (child.isMesh) {
-              child.material.opacity = 1;
-            }
-          });
-        }
-
-        function isPointInCircle(px, py, cx, cy, r) {
-          const dx = px - cx;
-          const dy = py - cy;
-          return (dx * dx + dy * dy) <= (r * r);
-        }
-
-        function detectCollision(vessel){
-
-          if (!starship) return;
-
-          const collide = isPointInCircle(
-            starship.position.x,
-            starship.position.z,
-            vessel.position.x,
-            vessel.position.z,
-            config.vesselRadius
-          );
-
-          if(collide){
-
-            vessel.traverse(child => {
-              if (child.isMesh) {
-                child.material.color.set(0xff0000);
-              }
-            });
-
-            vessel.scale.set(0.3, 0.3, 0.3);
-
-            setTimeout(() => {
-              vessel.scale.set(0.1, 0.1, 0.1);
-              respawn(vessel);
-            }, 200);
-          }
-        }
-
-        return () => {
-          cancelAnimationFrame(animationId);
-
-          if (mountRef.current && renderer.domElement) {
-            mountRef.current.removeChild(renderer.domElement);
-          }
-
-          document.removeEventListener('keydown', handleKeyDown);
-          document.removeEventListener('keyup', handleKeyUp);
-        };
-
-    }, []);
-
-    return <div ref={mountRef}></div>;
-}
+  return <div ref={mountRef}></div>;
+};

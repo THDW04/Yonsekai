@@ -13,6 +13,8 @@ import "./i18n";
 const Home = lazy(() => import("./pages/Home"));
 const Register = lazy(() => import("./pages/Register"));
 const Login = lazy(() => import("./pages/Login"));
+const GameEnd  = lazy(() => import("./pages/GameEnd"))
+const Victory  = lazy(() => import("./pages/Victory"))
 const Reservation = lazy(() => import("./pages/Reservation"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Admin = lazy(() => import("./pages/Admin"));
@@ -52,6 +54,9 @@ function App() {
               <Route path="/administration" element={<Admin />} />
               <Route path="/403" element={<Error403 />} />
               <Route path="/404" element={<Error404 />} />
+              <Route path="/game" element={<Game />} />
+              <Route path="/gameover" element={<GameEnd />} />
+<Route path="/victory"  element={<Victory />} />
             </Routes>
             
 
