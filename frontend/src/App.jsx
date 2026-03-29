@@ -18,6 +18,7 @@ const Profile = lazy(() => import("./pages/Profile"));
 const Admin = lazy(() => import("./pages/Admin"));
 const Error403 = lazy(() => import("./pages/Error403"));
 const Error404 = lazy(() => import("./pages/Error404"));
+const Game = lazy(() => import("./pages/Game"));
 
 function App() {
   const [isStarted, setIsStarted] = useState(false);
@@ -52,6 +53,7 @@ function App() {
               <Route path="/403" element={<Error403 />} />
               <Route path="/404" element={<Error404 />} />
             </Routes>
+            
 
             <Footer/>
           </>
