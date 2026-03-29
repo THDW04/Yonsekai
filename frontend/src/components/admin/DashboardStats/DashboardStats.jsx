@@ -64,7 +64,7 @@ export const DashboardStats = () => {
         const token = localStorage.getItem("userToken");
 
         const response = await fetch(
-            `http://localhost/yonsekai/backend/api/index.php?${params}`,
+            `https://yonsekai.vilasse.projetsmmichamps.fr/yonsekai/api/index.php??${params}`,
             {
                 headers: {
                     Authorization: "Bearer " + token

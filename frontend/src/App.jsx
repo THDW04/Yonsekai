@@ -29,21 +29,25 @@ function App() {
   return (
     <>
       <HelmetProvider>
-        <BrowserRouter>
-            <>
-              <Header/>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/inscription" element={<Register />} />
-                <Route path="/connexion" element={<Login />} />
-                <Route path="/reservation" element={<Reservation />} />
-                <Route path="/profil" element={<Profile />} />
-                <Route path="/administration" element={<Admin />} />
-                <Route path="/error403" element={<Error403 />} />
-                <Route path="/error404" element={<Error404 />} />
-              </Routes>
-            </>
-        </BrowserRouter>
+ <BrowserRouter>
+        {!isStarted && <AudioModal onStart={handleStart} />}
+
+        {isStarted && hasAudio && <AudioExperience isStarted={isStarted} />}
+
+        {isStarted && (
+          <>
+            <Header hasAudio={hasAudio} setHasAudio={setHasAudio} />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/inscription" element={<Register />} />
+              <Route path="/connexion" element={<Login />} />
+              <Route path="/reservation" element={<Reservation />} />
+              <Route path="/profil" element={<Profile />} />
+              <Route path="/administration" element={<Admin />} />
+            </Routes>
+          </>
+        )}
+      </BrowserRouter>
       </HelmetProvider>
     </>
   )

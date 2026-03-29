@@ -21,7 +21,7 @@ export const ModifyUserTab = ({ user, onUserUpdated }) => {
         };
 
         //url provisoire
-        fetch('http://localhost/yonsekai/backend/api/index.php?action=update-user', {
+        fetch('https://yonsekai.vilasse.projetsmmichamps.fr/yonsekai/api/index.php??action=update-user', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

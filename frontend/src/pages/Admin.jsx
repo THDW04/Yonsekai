@@ -55,7 +55,7 @@ const Admin = () => {
 
     const handleDelete = (id) => {
 
-        fetch("http://localhost/yonsekai/backend/api/index.php?action=delete-user", {
+        fetch("https://yonsekai.vilasse.projetsmmichamps.fr/yonsekai/api/index.php??action=delete-user", {
             method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${token}`,

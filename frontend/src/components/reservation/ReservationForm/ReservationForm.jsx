@@ -54,7 +54,7 @@ export const ReservationForm = () => {
             setSuccess(false);
 
             const response = await fetch(
-                'http://localhost/yonsekai/backend/api/apiController.php?action=create-reservation',
+                'https://yonsekai.vilasse.projetsmmichamps.fr/yonsekai/api/index.php??action=create-reservation',
                 {
                     method: 'POST',
                     headers: {
