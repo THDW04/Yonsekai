@@ -14,7 +14,7 @@
 - 🌀 **Navigation Narrative** — Transition d'images par distorsion (Shaders) synchronisée au scroll.
 - 👤 **Gestion Utilisateur** — Inscription, connexion et profil personnel.
 - 🎟️ **Billetterie** — Système de réservation avec confirmation automatique par email.
-- 🛡️ **Interface Admin** — Tableau de bord complet pour la gestion des contenus et des réservations.
+- 🛡️ **Interface Admin** — Tableau de bord complet pour la gestion des clients et visualisation des réservations.
 
 ---
 
@@ -42,7 +42,7 @@
 
 - [Node.js](https://nodejs.org/) v16+
 - Une base de données active avec MySQL
-- Un compte sur un service d'envoi d'emails ([Nodemailer](https://nodemailer.com/) / [EmailJS](https://www.emailjs.com/))
+- Un compte sur un service d'envoi d'emails
 
 ### Installation
 
@@ -55,33 +55,39 @@
 2. **Installer les dépendances**
    ```bash
    npm install
+   composer install
    ```
 
-3. **Configurer les variables d'environnement**
+3. **Base de données**
+   Importez le fichier SQL fourni : 
+   - Soit via une commande : mysql -u root -p yonsekai < database.sql
+   - Soit en important le fichier via phpmyadmin
+
+4. **Configurer les variables d'environnement**
 
    Dupliquer le fichier d'exemple et le remplir :
-   ```bash
-   cp .env.example .env
-   ```
-   ```env
+ 
    # Base de données
-   DB_HOST=localhost
-   DB_PORT=3306
-   DB_NAME=yonsekai
-   DB_USER=root
-   DB_PASSWORD=your_password
+   Dans config/database.php, renseignez vos identifiants MySQL.
 
    # Service email
-   EMAIL_SERVICE=gmail
-   EMAIL_USER=your_email@gmail.com
-   EMAIL_PASS=your_app_password
+   Dans services/MailService.php, remplacez les credentials SMTP :
+   // Développement (Mailtrap)
+   $mail->Host     = 'sandbox.smtp.mailtrap.io';
+   $mail->Username = 'votre_username';
+   $mail->Password = 'votre_password';
+   $mail->Port     = 587;
+
+   // Production (exemple Mailgun)
+   $mail->Host     = 'smtp.mailgun.org';
+   $mail->Username = 'postmaster@votre-domaine.com';
+   $mail->Password = 'votre_password';
+   $mail->Port     = 587;
 
    # Serveur
    PORT=5000
    JWT_SECRET=your_jwt_secret
-   ```
-
-   > ⚠️ **Ne jamais committer le fichier `.env`** — il est déjà inclus dans le `.gitignore`.
+   
 
 ### Lancement
 
@@ -93,7 +99,7 @@ npm run dev
 npm run build && npm start
 ```
 
-L'application sera disponible sur `http://localhost:3000`.
+L'application sera disponible sur `http://localhost:5173`.
 
 ---
 
@@ -105,71 +111,77 @@ L'API RESTful assure la communication entre le front-end React et la base de don
 
 | Méthode | Endpoint | Description | Accès |
 |:---:|:---|:---|:---:|
-| `POST` | `/api/auth/register` | Création d'un compte utilisateur | 🌐 Public |
-| `POST` | `/api/auth/login` | Connexion et retour d'un JWT | 🌐 Public |
-| `GET` | `/api/auth/me` | Récupère le profil de l'utilisateur connecté | 🔒 Auth |
+| `POST` | `?action=register` | Création d'un compte utilisateur | 🌐 Public |
+| `POST` | `?action=login` | Connexion et retourne d'un JWT | 🌐 Public |
 
+L'API utilise des tokens JWT. Incluez le token dans le header de chaque requête protégée :
+Authorization: Bearer <votre_token>
 
 ### Billetterie
 
 | Méthode | Endpoint | Description | Accès |
 |:---:|:---|:---|:---:|
-| `POST` | `/api/reservations` | Crée une réservation et envoie un email de confirmation | 🔒 Auth |
+| `POST` | `?action=create-reservation` | Crée une réservation et envoie un email de confirmation | 🔒 Authentifié |
+| `GET` | `?action=reservation` | Liste toutes les réservations | 👑 Admin |
+| `GET` | `?action=dashboard-stats` | Statistiques (par heure, jour, type de billet) | 👑 Admin |
 
-### Administration
-
-| Méthode | Endpoint | Description | Accès |
+### Utilisateurs
+|Méthode |Endpoint | Description | Accès|
 |:---:|:---|:---|:---:|
-| `GET` | `/api/admin/users` | Liste tous les utilisateurs | 👑 Admin |
-| `GET` | `/api/admin/reservations` | Liste toutes les réservations | 👑 Admin |
-| `PUT` | `/api/admin/sections/:id` | Modifie un contenu existant | 👑 Admin |
-| `DELETE` | `/api/admin/sections/:id` | Supprime un contenu | 👑 Admin |
+|`GET`  ?action=user| Profil + réservations| 🔒 Authentifié|
+|`GET`|?action=users | Liste tous les utilisateurs|👑 Admin |
+|`PUT`|?action=update-user|Modifier un utilisateur| 👑 Admin|
+|`DELETE`|?action=delete-user&id=X| Supprimer un compte| 🔒 Authentifié|
 
-### Exemple — Confirmation par Email (`POST /api/reservations`)
+## 📧 Envoi de billets
 
-**Corps de la requête (JSON) :**
-```json
-{
-  "eventId": "42",
-  "seats": 2,
-  "userEmail": "utilisateur@example.com"
-}
-```
+Lors d'une réservation, un email est automatiquement envoyé à l'utilisateur avec :
+- Un email HTML stylisé aux couleurs de Yonsekai
+- Un billet PDF en pièce jointe
 
-**Réponse (201 Created) :**
-```json
-{
-  "success": true,
-  "reservationId": "REZ-20240612-007",
-  "message": "Réservation confirmée. Un email a été envoyé à utilisateur@example.com."
-}
-```
+La langue de l'email est définie via le champ lang dans la requête (fr ou en, défaut : fr).
 
-**Flux interne :**
-1. Vérification du JWT et de la disponibilité des places.
-2. Insertion de la réservation en base de données.
-3. Envoi d'un email de confirmation via Nodemailer avec le récapitulatif et un QR code.
+### Tester en local
+Utilisez [Mailtrap](https://mailtrap.io) pour intercepter les emails en développement sans envoyer de vrais messages.
 
 ---
 
 ## 📁 Structure du Projet
 
 ```
-yonsekai/
-├── public/
-├── src/
-│   ├── assets/          # Images, sons, fonts
-│   ├── components/      # Composants React réutilisables
-│   ├── pages/           # Pages principales (Home, Tickets, Profile, Admin)
-│   ├── shaders/         # Fichiers GLSL pour les effets Three.js
-│   ├── hooks/           # Custom hooks React
-│   ├── context/         # Contextes (Auth, etc.)
-│   └── App.jsx
-├── server/              # Back-end Node.js / Express
-│   ├── routes/
+YONSEKAI/
+├── backend/
+│   ├── api/
+│   │   └── index.php
+│   ├── config/
+│   │   └── database.php
 │   ├── controllers/
-│   └── models/
-├── .env.example
-├── .gitignore
-└── README.md
+│   │   ├── ReservationController.php
+│   │   └── UtilisateursController.php
+│   ├── models/
+│   │   ├── Reservation.php
+│   │   └── Utilisateurs.php
+│   ├── services/
+│   │   └── MailService.php
+│   └── vendor/
+│
+└── frontend/
+    └── src/
+        ├── components/
+        │   ├── admin/
+        │   ├── auth/
+        │   ├── header/
+        │   ├── home/
+        │   ├── profile/
+        │   └── reservation/
+        ├── pages/
+        │   ├── Admin.jsx
+        │   ├── Home.jsx
+        │   ├── Login.jsx
+        │   ├── Profile.jsx
+        │   ├── Register.jsx
+        │   └── Reservation.jsx
+        ├── js/
+        ├── App.jsx
+        └── main.jsx
 ```
