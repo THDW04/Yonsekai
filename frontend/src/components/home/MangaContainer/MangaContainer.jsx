@@ -4,7 +4,6 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { ImageTransitionMesh } from './ImageTransitionMesh';
-import { AirInteraction } from './Interactions/AirInteraction';
 import { MangaCard } from './MangaCard/MangaCard';
 
 import data from '../../../js/data.json';
@@ -26,21 +25,13 @@ export const MangaContainer = () => {
   const imagePaths = data.map(s => s.background);
 
   return (
-    <section ref={containerRef} className={styles.container} style={{ height: `${data.length * 100}vh` }}>
+    <section  id='mangas' ref={containerRef} className={styles.container} style={{ height: `${data.length * 100}vh` }}>
       <div className={styles.scroller}>
         <Canvas orthographic camera={{ zoom: 1, position: [0, 0, 1] }}>
           <Suspense fallback={null}>
             <ImageTransitionMesh images={imagePaths} scrollContainer={containerRef} />
           </Suspense>
         </Canvas>
-
-        <div className={styles.interactionLayer}>
-          {data.map((section, i) => (
-            <div key={`inter-${i}`} className={styles.fullScreenSection}>
-              {section.element == 'air' && i === 0 && <AirInteraction />}
-            </div>
-          ))}
-        </div>
 
         <div className={styles.gl}>
           {data.map((section, i) => (

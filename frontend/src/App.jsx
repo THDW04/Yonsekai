@@ -3,6 +3,7 @@ import { useState, lazy } from "react";
 import { HelmetProvider } from "react-helmet-async";
 
 import { Header } from "./components/Header/header";
+import { Footer } from "./components/footer/Footer";
 import { AudioExperience } from "./components/AudioExperience";
 import { AudioModal } from "./components/AudioModal";
 
@@ -48,10 +49,11 @@ function App() {
               <Route path="/reservation" element={<Reservation />} />
               <Route path="/profil" element={<Profile />} />
               <Route path="/administration" element={<Admin />} />
-              <Route path="/error403" element={<Error403 />} />
-              <Route path="*" element={<Error404 />} />
+              <Route path="/403" element={<Error403 />} />
+              <Route path="/404" element={<Error404 />} />
             </Routes>
 
+            <Footer/>
           </>
         )}
 

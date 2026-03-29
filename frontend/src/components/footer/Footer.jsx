@@ -15,7 +15,7 @@ export const Footer = () => {
             </Link>
 
             <div className={styles.contact}>
-                <p>Nos contacts</p>
+                <h3>Nos contacts</h3>
 
                 <ul>
                     <li>01 73 37 28 10</li>
@@ -29,7 +29,7 @@ export const Footer = () => {
             </div>
 
             <div className={styles.infos}>
-                <p>Informations</p>
+                <h3>Informations</h3>
 
                 <ul>
                     <li>

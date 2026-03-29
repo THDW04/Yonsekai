@@ -90,8 +90,9 @@ export const HeroSection = () => {
             </div>
 
             <div ref={textRef} className={styles.heroContent}>
-                <p>{t("resumeIntro")}</p>
-                
+                {t("resumeIntro", { returnObjects: true }).map((p, i) => (
+                    <p key={i}>{p}</p>
+                ))}
             </div>
         </section>
     );

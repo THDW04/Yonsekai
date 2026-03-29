@@ -14,7 +14,7 @@ export const Informations = () => {
     useSpotlightEffect(spotlightRef, imgRef, lottieContainerRef, lottieRef, maskRef);
 
     return (
-        <div ref={spotlightRef} className={styles.spotlight}>
+        <div id='infos' ref={spotlightRef} className={styles.spotlight}>
             <div ref={lottieContainerRef} className={styles.lottieContainer}>
                 <div ref={lottieRef} className={styles.lottie}></div>
                 <div className={styles.fireGlow}></div>
