@@ -1,11 +1,14 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import styles from './Teaser.module.css'
+import { useTranslation } from "react-i18next";
+
+
 
 export const Teaser = () => {
     const sectionRef = useRef(null);
     const videoRef = useRef(null);
-
+const { t } = useTranslation();
     const isMobile = window.innerWidth <= 768;
     const isTablet = window.innerWidth <= 1024;
 
@@ -37,8 +40,8 @@ export const Teaser = () => {
                 Votre navigateur ne supporte pas la vidéo.
             </video>
             <div className={styles.links}>
-                <a href="/reservation">Reserver</a>
-                <a href="/game">Jouer au jeu</a>
+                <a href="/reservation">{t("reserve")}</a>
+                <a href="/game">{t("game")}</a>
             </div>
         </div>
         </>

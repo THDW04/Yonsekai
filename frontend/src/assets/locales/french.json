@@ -13,17 +13,17 @@
     },
     "2": {
       "title": "Le Sommet des Dieux",
-      "element": "earth",
+      "element": "terre",
       "text": "Ils avaient tous les deux un but bien différent et de cette aventure ils en ressortiront grandis. S'ils en ressortent… vivants. L’un cherche à percer le mystère qui entoure la montagne et ceux qui s’y sont perdus. L’autre n’a vécu que pour atteindre son sommet. À travers cette ascension, chacun devra affronter la nature, ses limites et l’obsession qui pousse certains hommes toujours plus haut… quitte à ne jamais redescendre."
     },
     "3": {
       "title": "Les Enfants de la Mer",
-      "element": "water",
+      "element": "eau",
       "text": "Au cœur d’un été suspendu, une rencontre inattendue vient bouleverser le cours des jours. Ruka croise le chemin de deux garçons aux yeux d’océan, Umi et Sora. À leurs côtés, elle apprend peu à peu à écouter la mer, à respirer avec elle, à s’y fondre. Les vagues murmurent alors un secret des profondeurs : nous sommes faits de la même étoffe que les étoiles et les océans."
     },
     "4": {
       "title": "Daigo,\nle Soldat du Feu",
-      "element": "fire",
+      "element": "feu",
       "text": "Les flammes ont ravagé sa vie. Survivant d’un incendie alors qu’il n’était encore qu’un enfant, il s’est juré de devenir pompier afin de pouvoir aider tel que lui l’a été. Mais Daigo va vite déchanter lorsqu’il se rend compte qu’une seule seconde de doute peut coûter une vie. Plus le danger est grand, plus Daigo est prêt à risquer la sienne. Mais attention à ne pas se brûler les ailes car face aux flammes, l’homme n’est rien."
     }
   },
@@ -39,6 +39,7 @@
   "subtitleLogIn": "Le vent se lève... Il est temps de rejoindre la Vallée.",
   "titleSignup": "Rejoignez l'expérience",
   "subtitleSignUp": "Inscrivez-vous pour réserver vos places pour l'exposition.",
+  "signUp" : "Inscription",
   "navExperience": "L'expérience",
   "navInfo": "Informations",
   "reserve": "Réserver",
@@ -48,5 +49,25 @@
   "error404Title": "Erreur 404",
   "error404text": "OH NON ! Cette page à été contaminée et à disparut ...",
   "acceuil": "Retourner à l'acceuil",
-  "legal": "Mentions Légales"
+  "legal": "Mentions Légales",
+  "noReservation" : "Aucune réservation",
+  "yourReservation" : "Vos réservations",
+  "titlInformation" : "Vos informations",
+  "titleReservation" : "Reserver vos places",
+  "disclaimer" : "Attention",
+  "closedInformation" : "La dernière admission se fait 1h avant la fermeture. L'évacuation des salles commence 30 min avant la fermeture. <br />Consulter les salles ouvertes le jour de votre visite.",
+  "titleAdmin" : "Bonjour, Admin",
+  "stats" : "Vous pouvez consulter ici les statistiques de fréquentation.",
+  "game" : "Découver le jeux",
+  "play" : "Jouer",
+
+  "again" : "Rejouer",
+  "victoryText" : "Tu as survécu à tes ennemis. Mais cela vallait-il vraiment tous les sacrifices ? Découvre le en prenant ta place ",
+  "victoryTitle" : "Tu es vivant",
+  "endTitle" : "Tu es mort",
+  "endText" : "Vos ennemis vous ont abatus et votre avions s'est crashé. Méritiez-vous vriament de mourrir de cette manière. Découvre le en prenant ta place",
+
+  "explainTitle" : "Ton royaume est en danger",
+  "explainText": "Ton royaume se fait attaquer, tu dois fuir car seul toi pourra organiser une contre attaque. Évite tous les ennemis que tu croise grâce aux flèches de ton clavier."
+
 }

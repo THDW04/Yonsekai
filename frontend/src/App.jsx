@@ -21,6 +21,7 @@ const Admin = lazy(() => import("./pages/Admin"));
 const Error403 = lazy(() => import("./pages/Error403"));
 const Error404 = lazy(() => import("./pages/Error404"));
 const Game = lazy(() => import("./pages/Game"));
+const ExplainGame = lazy(() => import("./pages/ExplainGame"));
 
 function App() {
   const [isStarted, setIsStarted] = useState(
@@ -63,7 +64,8 @@ function App() {
               <Route path="/404" element={<Error404 />} />
               <Route path="/game" element={<Game />} />
               <Route path="/gameover" element={<GameEnd />} />
-<Route path="/victory"  element={<Victory />} />
+              <Route path="/victory"  element={<Victory />} />
+<Route path="/introgame"  element={<ExplainGame />} />
             </Routes>
 
 

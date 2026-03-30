@@ -7,6 +7,7 @@ import { DashboardStats } from "../components/admin/DashboardStats/DashboardStat
 import { LogoutBtn } from "../components/auth/LogoutBtn";
 import { jwtDecode } from "jwt-decode";
 import '../assets/css/admin.css'
+import { useTranslation } from "react-i18next";
 
 const Admin = () => {
     const [users, setUsers] = useState([]);
@@ -73,8 +74,9 @@ const Admin = () => {
             prevUsers.map(u => u.id === updatedUser.id ? updatedUser : u)
         );
         setSelectedUser(null);
-    };
 
+    };
+     const { t } = useTranslation();
     return (
         <>
         <Helmet>
@@ -83,8 +85,8 @@ const Admin = () => {
         </Helmet>
         <main className="admin-main">
             <LogoutBtn />
-            <h1>Bonjour, Admin</h1>
-            <p>Vous pouvez consulter ici les statistiques de fréquentation.</p>
+            <h1>{t("titleAdmin")}</h1>
+            <p>{t("stats")}.</p>
 
             <section className="admin-container">
                 <DashboardStats />

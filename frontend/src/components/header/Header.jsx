@@ -34,7 +34,7 @@ export const Header = () => {
                     </ul>
 
                     <div className={styles.actions}>
-                        <a href="/inscription" onClick={() => setIsOpen(false)}>Inscription</a>
+                        <a href="/inscription" onClick={() => setIsOpen(false)}>{t("signUp")}</a>
                         <a href="/reservation" className={styles.reserveBtn} onClick={() => setIsOpen(false)}>
                             {t("reserve")}
                         </a>

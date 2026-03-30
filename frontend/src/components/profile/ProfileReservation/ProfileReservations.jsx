@@ -1,14 +1,17 @@
 import styles from './ProfileReservations.module.css'
 import Barcode from 'react-barcode'
+import { useTranslation } from "react-i18next";
 
 export const ProfileReservations = ({ reservations }) => {
+
+    const { t } = useTranslation();
     if (reservations.length === 0) {
-        return <p>Aucune réservation</p>;
+        return <p>{t("noReservation")}</p>;
     }
 
     return (
         <div className={styles.reservation}>
-            <h2>Vos réservations</h2>
+            <h2>{t("yourReservation")}</h2>
             <div className={styles.slider}>
                 {reservations.map(reservation => {
                     const formattedDate = reservation.date
@@ -30,7 +33,7 @@ export const ProfileReservations = ({ reservations }) => {
                                         <p>{reservation.horaire.slice(0, 5)}</p>
                                     </div>
                                     <div>
-                                        <p className={styles.slogan}>Le musée des quatres éléments</p>
+                                        <p className={styles.slogan}>{t("titleIntro")}</p>
                                         <span>
                                             <img src="assets/img/logo.svg" alt="" />
                                             <h3>Yonsekai</h3>

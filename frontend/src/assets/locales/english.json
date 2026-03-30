@@ -48,5 +48,26 @@
   "error404Title": "Erreur 404",
   "error404text": "Oh no! This page has been contaminated and disappeared…",
   "acceuil": "Back to Home",
-  "legal": "Legal Notices"
+  "legal": "Legal Notices",
+
+  "noReservation" : "No reservations",
+  "yourReservation" : "Your réservations",
+  "titlInformation" : "Your informations",
+  "titleReservation" : "Book your tickets",
+  "disclaimer" : "Disclaimer",
+  "closedInformation" : "Last admission is one hour before closing time. Evacuation of the rooms begins 30 minutes before closing. Please check which rooms are open on the day of your visit..",
+  "titleAdmin" : "Hello, Admin",
+  "stats" : "You can view the attendance statistics here.",
+  "game" : "Discover the game",
+
+  "play" : "Play",
+
+  "again" : "Play again",
+  "victoryText" : "You survived your enemies.But was it really worth all the sacrifices? Discover the answer by reserving your place. ",
+  "victoryTitle" : "You are alive",
+  "endTitle" : "You are dead",
+  "endText" : "Your enemies have shot you down, and your aircraft has crashed. Did you truly deserve to die this way? Discover the answer by reserving your place.",
+
+  "explainTitle" : "Your kigdom is in danger",
+  "explainText": "Your kingdom is under attack. You must flee, for only you can organize a counterattack. Avoid every enemy you encounter using your keyboard’s arrow keys."
 }

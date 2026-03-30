@@ -3,8 +3,11 @@ import { useSpotlightEffect } from './useSpotlightEffect';
 import { ScheduleCard } from './ScheduleCard/ScheduleCard';
 import { TransportCard } from './TransportCard/TransportCard';
 import styles from './Informations.module.css';
+import { useTranslation } from "react-i18next";
 
 export const Informations = () => {
+    
+    const { t } = useTranslation();
     const spotlightRef = useRef(null);
     const imgRef = useRef(null);
     const lottieContainerRef = useRef(null);
@@ -23,7 +26,7 @@ export const Informations = () => {
             <div className={styles.content}>
                 <section className={styles.infos}>
                     <img ref={imgRef} src="assets/img/firewood.png" alt="" />
-                    <h2>Avant le grand départ</h2>
+                    <h2>{t("titleInfos")}</h2>
                     <ScheduleCard />
                     <TransportCard />
                 </section>
