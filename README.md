@@ -4,6 +4,8 @@
 
 **Yonsekai** est une expérience web immersive conçue pour transporter l'utilisateur dans un univers inspiré du manga et de la nature. Le site combine une narration visuelle forte avec une gestion de billetterie et un espace utilisateur complet.
 
+lien : https://yonsekai.vilasse.projetsmmichamps.fr
+
 ### Fonctionnalités clés
 
 - **Navigation Narrative** — Transition d'images par distorsion (Shaders) synchronisée au scroll.

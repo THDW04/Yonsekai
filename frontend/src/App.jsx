@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, lazy } from "react";
 import { HelmetProvider } from "react-helmet-async";
 
-import { Header } from "./components/Header/header";
+import { Header } from "./components/header/Header";
 import { Footer } from "./components/footer/Footer";
 import { AudioExperience } from "./components/AudioExperience";
 import { AudioModal } from "./components/AudioModal";
@@ -13,8 +13,8 @@ import "./i18n";
 const Home = lazy(() => import("./pages/Home"));
 const Register = lazy(() => import("./pages/Register"));
 const Login = lazy(() => import("./pages/Login"));
-const GameEnd  = lazy(() => import("./pages/GameEnd"))
-const Victory  = lazy(() => import("./pages/Victory"))
+const GameEnd = lazy(() => import("./pages/GameEnd"))
+const Victory = lazy(() => import("./pages/Victory"))
 const Reservation = lazy(() => import("./pages/Reservation"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Admin = lazy(() => import("./pages/Admin"));

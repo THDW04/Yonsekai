@@ -16,7 +16,7 @@ export const Header = () => {
         <header className={styles.header}>
             <nav className={styles.nav}>
 
-                <a href="#" className={styles.logo}>
+                <a href="/" className={styles.logo}>
                     <span><img src="/assets/img/logo.svg" alt="Retour en haut" /></span>
                     <span>Yonsekai</span>
                 </a>
