@@ -14,9 +14,9 @@ export const GameAir = () => {
     const HIT_COOLDOWN = 1000;
 
     const config = {
-      nbVessels: 10,
-      vesselSpeed: 1,
-      vesselRadius: 0.2
+      nbVessels: 12,
+      vesselSpeed: 2.5,
+      vesselRadius: 0.5
     };
 
     const bgLength = 14;
@@ -145,9 +145,11 @@ export const GameAir = () => {
 
     tick();
 
+    const ENEMY_OFFSET_X = 2; 
+
     function respawn(vessel) {
       vessel.position.set(
-        Math.floor(Math.random() * 4) - 2,
+        Math.floor(Math.random() * 6) - 4 + ENEMY_OFFSET_X ,
         1.25,
         -20 - Math.random() * 40
       );

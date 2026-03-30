@@ -61,7 +61,7 @@ function App() {
               <Route path="/profil" element={<Profile />} />
               <Route path="/administration" element={<Admin />} />
               <Route path="/403" element={<Error403 />} />
-              <Route path="/404" element={<Error404 />} />
+              <Route path="*" element={<Error404 />} />
               <Route path="/game" element={<Game />} />
               <Route path="/gameover" element={<GameEnd />} />
               <Route path="/victory"  element={<Victory />} />
